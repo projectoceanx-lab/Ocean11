@@ -25,9 +25,9 @@ Why each model was chosen, cost analysis, and upgrade paths.
 - **Usage pattern:** High volume — processes many leads. ~100-200K tokens/day.
 - **Estimated daily cost:** $0.30-0.80
 
-### Shield → openai/gpt-5
-- **Why:** The most consequential decisions in the operation. One compliance miss = FTC action, buyer burn, legal exposure. Shield needs the strongest accuracy available. GPT-5 delivers top-tier reasoning for regulatory edge cases and state-specific rules.
-- **Cost:** $2.00 input / $8.00 output per 1M tokens
+### Shield → openai/gpt-5.2 (high thinking)
+- **Why:** The most consequential decisions in the operation. One compliance miss = FTC action, buyer burn, legal exposure. GPT-5.2 with high thinking budget gives Shield the deepest reasoning available for regulatory edge cases, state-specific rules, and ambiguous compliance scenarios.
+- **Cost:** $2.00 input / $8.00 output per 1M tokens (+ thinking tokens)
 - **Daily budget cap:** $5.00
 - **Usage pattern:** Low-medium — reviews each lead but checks are focused. ~30-80K tokens/day.
 - **Estimated daily cost:** $0.50-2.00
@@ -66,7 +66,7 @@ Why each model was chosen, cost analysis, and upgrade paths.
 | Trigger | Action |
 |---------|--------|
 | Scout accuracy < 80% on forms | Consider Claude Haiku or Sonnet |
-| Shield makes compliance error | Already on GPT-5; review prompt quality |
+| Shield makes compliance error | Already on GPT-5.2 high thinking; review prompt/rules quality |
 | Hawk recommendations losing money | Try DeepSeek R1 or Claude for analysis |
 | Revenue > $5K/month | Can afford better models across the board |
 | Any agent in infinite loop | Model issue — switch to different provider |

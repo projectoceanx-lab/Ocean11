@@ -47,7 +47,7 @@ Consolidated from original 10 (Arif's decision: "more are tough to manage").
 |---|---|---|---|
 | **CAPTAIN** | CEO — outreach, sales, P&L ownership, cost/spend analysis, strategy, ruthless executive | Claude Opus 4.6 (fallback: GPT-5.3 Codex) | $15 in / $75 out |
 | **SCOUT** | Lead acquisition + DB verification + enrichment validation + quality scoring per vertical | DeepSeek V3.2 | $0.25 / $0.38 |
-| **SHIELD** | Compliance — TSR, FTC, TCPA, state rules. Has VETO power. | GPT-5 | $2.00 / $8.00 |
+| **SHIELD** | Compliance — TSR, FTC, TCPA, state rules. Has VETO power. | GPT-5.2 (high thinking) | $2.00 / $8.00 |
 | **HAWK** | Media buying + quant optimization + spend analysis. Gambler + quant + scientist. | GLM-4.7 | ~$0.50 / $1.00 |
 | **SIGNAL** | CRO + offer wall + email deliverability + call routing + buyer handoff. Conversion obsessive. | DeepSeek V3.2 | $0.25 / $0.38 |
 | **WATCHTOWER** | System monitoring, health checks, alerting. Nocturnal sentinel. | GPT-5-nano | $0.05 / $0.40 |
@@ -59,7 +59,7 @@ Consolidated from original 10 (Arif's decision: "more are tough to manage").
 
 ### Why These Models?
 - **Claude Opus 4.6** — for Captain because CEO decisions need the best strategic reasoning; GPT-5.3 Codex as fallback
-- **GPT-5** — for Shield because compliance decisions are consequential and need top-tier accuracy
+- **GPT-5.2 (high thinking)** — for Shield because compliance decisions are the most consequential in the operation; high thinking budget gives depth for regulatory edge cases and state-specific rules
 - **DeepSeek V3.2** (#40 Arena) — for Scout & Signal because they need reliable execution at low cost
 - **GLM-4.7** (#22 Arena, #21 math) — for Hawk because media buying is math-heavy
 - **GPT-5-nano** (#129 Arena) — for Watchtower because monitoring just needs "good enough" at minimum cost
