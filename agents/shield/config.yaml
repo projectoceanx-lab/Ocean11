@@ -1,7 +1,7 @@
 agent:
   name: shield
   role: Compliance Officer
-  model: kimi/kimi-k2.5-thinking
+  model: openai/gpt-5
 
   heartbeat:
     interval: 20m
@@ -18,9 +18,9 @@ agent:
     - block_leads      # Can block non-compliant leads from delivery
 
   cost:
-    input_per_1m: 0.45
-    output_per_1m: 2.25
-    daily_budget_cap: 3.00
+    input_per_1m: 2.00
+    output_per_1m: 8.00
+    daily_budget_cap: 5.00
 
   context_files:
     - SOUL.md

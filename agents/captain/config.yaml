@@ -1,7 +1,8 @@
 agent:
   name: captain
   role: CEO / Orchestrator
-  model: kimi/kimi-k2.5-thinking
+  model: anthropic/claude-opus-4-6
+  fallback_model: openai/gpt-5.3-codex
   
   heartbeat:
     interval: 30m
@@ -22,9 +23,11 @@ agent:
     - escalate         # Can escalate to human (Arif)
 
   cost:
-    input_per_1m: 0.45
-    output_per_1m: 2.25
-    daily_budget_cap: 5.00  # Alert if exceeded
+    input_per_1m: 15.00
+    output_per_1m: 75.00
+    fallback_input_per_1m: 2.00
+    fallback_output_per_1m: 8.00
+    daily_budget_cap: 10.00  # Alert if exceeded
 
   context_files:
     - SOUL.md

@@ -45,9 +45,9 @@ Consolidated from original 10 (Arif's decision: "more are tough to manage").
 
 | Agent | Role | Model | Cost/M tokens |
 |---|---|---|---|
-| **CAPTAIN** | CEO — outreach, sales, P&L ownership, cost/spend analysis, strategy, ruthless executive | Kimi K2.5-thinking | $0.45 in / $2.25 out |
+| **CAPTAIN** | CEO — outreach, sales, P&L ownership, cost/spend analysis, strategy, ruthless executive | Claude Opus 4.6 (fallback: GPT-5.3 Codex) | $15 in / $75 out |
 | **SCOUT** | Lead acquisition + DB verification + enrichment validation + quality scoring per vertical | DeepSeek V3.2 | $0.25 / $0.38 |
-| **SHIELD** | Compliance — TSR, FTC, TCPA, state rules. Has VETO power. | Kimi K2.5-thinking | $0.45 / $2.25 |
+| **SHIELD** | Compliance — TSR, FTC, TCPA, state rules. Has VETO power. | GPT-5 | $2.00 / $8.00 |
 | **HAWK** | Media buying + quant optimization + spend analysis. Gambler + quant + scientist. | GLM-4.7 | ~$0.50 / $1.00 |
 | **SIGNAL** | CRO + offer wall + email deliverability + call routing + buyer handoff. Conversion obsessive. | DeepSeek V3.2 | $0.25 / $0.38 |
 | **WATCHTOWER** | System monitoring, health checks, alerting. Nocturnal sentinel. | GPT-5-nano | $0.05 / $0.40 |
@@ -58,7 +58,8 @@ Consolidated from original 10 (Arif's decision: "more are tough to manage").
 - **CAPTAIN arbitrates** — When agents disagree, Captain decides based on P&L impact.
 
 ### Why These Models?
-- **Kimi K2.5-thinking** (#18 on Chatbot Arena, #4 reasoning) — for Captain & Shield because they need strategic reasoning
+- **Claude Opus 4.6** — for Captain because CEO decisions need the best strategic reasoning; GPT-5.3 Codex as fallback
+- **GPT-5** — for Shield because compliance decisions are consequential and need top-tier accuracy
 - **DeepSeek V3.2** (#40 Arena) — for Scout & Signal because they need reliable execution at low cost
 - **GLM-4.7** (#22 Arena, #21 math) — for Hawk because media buying is math-heavy
 - **GPT-5-nano** (#129 Arena) — for Watchtower because monitoring just needs "good enough" at minimum cost

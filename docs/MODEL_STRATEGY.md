@@ -11,12 +11,12 @@ Why each model was chosen, cost analysis, and upgrade paths.
 
 ## Model Assignments
 
-### Captain → kimi/kimi-k2.5-thinking
-- **Why:** Orchestrator needs strong reasoning for strategy, P&L analysis, and multi-agent coordination. Kimi K2.5 Thinking excels at complex planning and multi-step reasoning.
-- **Cost:** $0.45 input / $2.25 output per 1M tokens
-- **Daily budget cap:** $5.00
-- **Usage pattern:** Moderate — daily standups, buyer decisions, strategy. ~50-100K tokens/day.
-- **Estimated daily cost:** $0.50-1.50
+### Captain → anthropic/claude-opus-4-6 (fallback: openai/gpt-5.3-codex)
+- **Why:** CEO decisions — P&L, buyer negotiations, agent arbitration — need the strongest strategic reasoning available. Opus 4.6 is top-tier. GPT-5.3 Codex as fallback for resilience.
+- **Cost:** $15 input / $75 output per 1M tokens (fallback: $2/$8)
+- **Daily budget cap:** $10.00
+- **Usage pattern:** Moderate but consequential — daily standups, buyer decisions, strategy. ~50-100K tokens/day.
+- **Estimated daily cost:** $1.50-5.00
 
 ### Scout → deepseek/deepseek-v3-0324
 - **Why:** Lead acquisition is mechanical — fill forms, check DBs, call APIs. Doesn't need deep reasoning. DeepSeek V3 is cheap and competent for structured tasks.
@@ -25,12 +25,12 @@ Why each model was chosen, cost analysis, and upgrade paths.
 - **Usage pattern:** High volume — processes many leads. ~100-200K tokens/day.
 - **Estimated daily cost:** $0.30-0.80
 
-### Shield → kimi/kimi-k2.5-thinking
-- **Why:** Compliance requires careful reasoning about regulations, edge cases, and state-specific rules. A wrong compliance decision has legal consequences. Worth paying for quality.
-- **Cost:** $0.45 input / $2.25 output per 1M tokens
-- **Daily budget cap:** $3.00
+### Shield → openai/gpt-5
+- **Why:** The most consequential decisions in the operation. One compliance miss = FTC action, buyer burn, legal exposure. Shield needs the strongest accuracy available. GPT-5 delivers top-tier reasoning for regulatory edge cases and state-specific rules.
+- **Cost:** $2.00 input / $8.00 output per 1M tokens
+- **Daily budget cap:** $5.00
 - **Usage pattern:** Low-medium — reviews each lead but checks are focused. ~30-80K tokens/day.
-- **Estimated daily cost:** $0.30-1.00
+- **Estimated daily cost:** $0.50-2.00
 
 ### Hawk → zhipu/glm-4.7
 - **Why:** Analytics and optimization require mathematical reasoning. GLM-4.7 ranks #21 on the math arena — strong quantitative capability at low cost.
@@ -57,16 +57,16 @@ Why each model was chosen, cost analysis, and upgrade paths.
 
 | Scenario | Daily | Monthly |
 |----------|-------|---------|
-| Low (5 leads/day) | $1.50 | $45 |
-| Medium (15 leads/day) | $3.00 | $90 |
-| High (30 leads/day) | $5.00 | $150 |
+| Low (5 leads/day) | $3.00 | $90 |
+| Medium (15 leads/day) | $6.00 | $180 |
+| High (30 leads/day) | $10.00 | $300 |
 
 ## When to Upgrade Models
 
 | Trigger | Action |
 |---------|--------|
 | Scout accuracy < 80% on forms | Consider Claude Haiku or Sonnet |
-| Shield makes compliance error | Upgrade to Claude Sonnet for reasoning |
+| Shield makes compliance error | Already on GPT-5; review prompt quality |
 | Hawk recommendations losing money | Try DeepSeek R1 or Claude for analysis |
 | Revenue > $5K/month | Can afford better models across the board |
 | Any agent in infinite loop | Model issue — switch to different provider |
@@ -75,6 +75,6 @@ Why each model was chosen, cost analysis, and upgrade paths.
 
 - Every agent has a `daily_budget_cap` in config
 - Watchtower monitors total AI spend
-- Alert at $10/day, critical at $15/day
+- Alert at $15/day, critical at $25/day
 - If an agent hits its cap, it pauses until the next day
 - Captain can override caps in emergencies
