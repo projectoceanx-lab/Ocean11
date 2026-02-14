@@ -25,6 +25,13 @@ venv/
 logs/
 *.log
 
+# OpenClaw workspace artifacts (don't let bootstrap overwrite our files)
+BOOTSTRAP.md
+IDENTITY.md
+TOOLS.md
+HEARTBEAT.md
+MEMORY.md
+
 # OS
 .DS_Store
 Thumbs.db
