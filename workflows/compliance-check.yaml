@@ -1,0 +1,147 @@
+# Compliance Check Pipeline — Shield
+# Triggered: When Scout hands off a scored lead
+
+name: compliance-check
+agent: shield
+trigger: agent_notification
+
+steps:
+  - id: receive_lead
+    action: read_database
+    description: Fetch the lead data for compliance review
+    tool: supabase
+    query: |
+      SELECT * FROM leads WHERE id = :lead_id AND status = 'scored'
+
+  - id: check_tsr
+    action: compliance_check
+    description: Verify TSR (Telemarketing Sales Rule) compliance
+    check_type: tsr
+    rules:
+      - name: no_advance_fee_promises
+        description: Source form/landing page does not promise advance fee structures
+        check: lead.form_url NOT IN blocked_urls
+      - name: required_disclosures
+        description: Verify source has required FTC disclosures
+        check: source_form_has_disclosures(lead.form_url)
+      - name: no_false_claims
+        description: No guaranteed debt reduction amounts or timelines in source
+        check: source_content_compliant(lead.form_url)
+    on_fail: block
+    on_pass: next
+
+  - id: check_state_rules
+    action: compliance_check
+    description: Check state-specific debt relief regulations
+    check_type: state_rules
+    rules:
+      - name: state_allows_lead_gen
+        description: Verify state permits debt relief lead generation
+        check: lead.state NOT IN prohibited_states
+        prohibited_states: []  # Currently none fully prohibited, but monitor
+      - name: state_licensing
+        description: If state requires licensing, verify buyer is licensed
+        check: buyer_licensed_in_state(lead.state)
+        high_regulation_states: [CA, NY, TX, FL, IL, MD, NJ, OH, PA, VA]
+      - name: state_disclosures
+        description: State-specific disclosure requirements met
+        check: state_disclosures_present(lead.state, lead.form_url)
+    on_fail: flag  # Flag rather than block — may need human review
+    on_pass: next
+
+  - id: check_tcpa
+    action: compliance_check
+    description: TCPA compliance (only if delivery will be via call)
+    check_type: tcpa
+    condition: delivery_channel == 'call'
+    rules:
+      - name: prior_written_consent
+        description: Documented prior express written consent exists
+        check: consent_documented(lead.id)
+        required_evidence: [form_submission_timestamp, ip_address, consent_language]
+      - name: dnc_check
+        description: Phone number not on National Do Not Call Registry
+        check: phone_not_on_dnc(lead.phone)
+      - name: calling_hours
+        description: Delivery will be within 8AM-9PM consumer's local time
+        check: within_calling_hours(lead.state, delivery_time)
+      - name: caller_id
+        description: Accurate caller ID will be displayed
+        check: caller_id_configured()
+    on_fail: block
+    on_pass: next
+
+  - id: check_can_spam
+    action: compliance_check
+    description: CAN-SPAM compliance (only if delivery involves email)
+    check_type: can_spam
+    condition: delivery_channel == 'email'
+    rules:
+      - name: opt_out_mechanism
+        description: Email template includes working unsubscribe link
+        check: email_template_has_unsubscribe()
+      - name: physical_address
+        description: Sender's physical address included in email
+        check: email_template_has_address()
+      - name: accurate_subject
+        description: Subject line accurately reflects content
+        check: true  # Verified at template level
+      - name: not_opted_out
+        description: Consumer has not previously opted out
+        check: NOT opted_out(lead.email)
+    on_fail: block
+    on_pass: next
+
+  - id: check_data_accuracy
+    action: compliance_check
+    description: Verify lead data is internally consistent and plausible
+    check_type: data_accuracy
+    rules:
+      - name: valid_phone
+        description: Phone number is valid US format
+        check: valid_us_phone(lead.phone)
+      - name: state_zip_match
+        description: State and ZIP code are geographically consistent
+        check: state_matches_zip(lead.state, lead.zip)
+      - name: plausible_debt
+        description: Debt amount is plausible ($1K - $500K)
+        check: lead.debt_amount BETWEEN 1000 AND 500000
+      - name: not_test_data
+        description: Not obvious test/fake data
+        check: |
+          lead.email NOT LIKE '%test%' AND
+          lead.email NOT LIKE '%example.com' AND
+          lead.phone NOT LIKE '555%'
+    on_fail: block
+    on_pass: next
+
+  - id: record_result
+    action: write_database
+    description: Log compliance check result
+    tool: supabase
+    table: compliance_log
+    data:
+      lead_id: ${lead_id}
+      agent: shield
+      check_type: ${failed_check_type or 'all'}
+      result: ${overall_result}  # pass, flag, or block
+      reason: ${reason}
+
+  - id: route_result
+    action: conditional
+    description: Route lead based on compliance result
+    conditions:
+      - if: result == 'pass'
+        then:
+          - notify_agent: signal
+            message: "Lead ${lead_id} compliance PASSED — ready for delivery"
+      - if: result == 'flag'
+        then:
+          - notify_agent: signal
+            message: "Lead ${lead_id} compliance FLAGGED — deliver with caution: ${reason}"
+      - if: result == 'block'
+        then:
+          - update_lead:
+              status: rejected
+          - notify_agent: captain
+            message: "Lead ${lead_id} BLOCKED — ${reason}"

@@ -1,0 +1,27 @@
+agent:
+  name: watchtower
+  role: Monitoring & Observability
+  model: openai/gpt-5-nano
+
+  heartbeat:
+    interval: 10m
+    prompt: |
+      Check system health, agent activity, error rates, costs.
+      Alert on anomalies. If all normal, reply HEARTBEAT_OK.
+
+  tools:
+    - supabase         # Query agent_activity, error logs
+
+  permissions:
+    - read_all          # Can read all tables for monitoring
+    - write_activity    # Log monitoring events
+    - alert_human       # Can escalate critical alerts to Arif
+
+  cost:
+    input_per_1m: 0.05
+    output_per_1m: 0.40
+    daily_budget_cap: 1.00
+
+  context_files:
+    - SOUL.md
+    - MISSIONS.md

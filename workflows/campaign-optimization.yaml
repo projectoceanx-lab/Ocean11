@@ -1,0 +1,131 @@
+# Campaign Optimization Pipeline — Hawk
+# Triggered: Daily at 10 AM EST, or on-demand by Captain
+
+name: campaign-optimization
+agent: hawk
+trigger:
+  schedule: "0 10 * * *"  # 10 AM EST daily
+  on_demand: captain
+
+steps:
+  - id: pull_metrics
+    action: aggregate_data
+    description: Pull campaign performance metrics from all sources
+    queries:
+      campaigns: |
+        SELECT c.*, 
+          COUNT(l.id) as leads_today,
+          AVG(l.quality_score) as avg_quality
+        FROM campaigns c
+        LEFT JOIN leads l ON l.source = c.source 
+          AND l.created_at > NOW() - INTERVAL '24h'
+        WHERE c.status = 'active'
+        GROUP BY c.id
+      pnl_week: |
+        SELECT date, revenue, cost_media, gross_profit, margin_pct
+        FROM pnl_daily 
+        WHERE date > NOW() - INTERVAL '7 days'
+        ORDER BY date
+      delivery_rates: |
+        SELECT 
+          l.source,
+          COUNT(d.id) as total_delivered,
+          SUM(CASE WHEN d.status = 'accepted' THEN 1 ELSE 0 END) as accepted,
+          SUM(d.payout) as revenue
+        FROM leads l
+        JOIN deliveries d ON l.id = d.lead_id
+        WHERE d.created_at > NOW() - INTERVAL '7 days'
+        GROUP BY l.source
+
+  - id: analyze_cpl
+    action: calculate
+    description: Calculate CPL and ROI by channel
+    metrics:
+      - name: cpl_by_source
+        formula: total_spend / lead_count
+        group_by: source
+      - name: roi_by_source
+        formula: (revenue - total_spend) / total_spend
+        group_by: source
+      - name: quality_by_source
+        formula: AVG(quality_score)
+        group_by: source
+      - name: acceptance_rate_by_source
+        formula: accepted / total_delivered
+        group_by: source
+
+  - id: identify_winners_losers
+    action: classify
+    description: Classify campaigns as winners, neutral, or losers
+    rules:
+      winner:
+        - cpl < target_cpl * 0.8
+        - roi > 1.5
+        - avg_quality_score > 70
+      neutral:
+        - cpl BETWEEN target_cpl * 0.8 AND target_cpl * 1.2
+        - roi BETWEEN 0.8 AND 1.5
+      loser:
+        - cpl > target_cpl * 1.5
+        - roi < 0.5
+        - OR: lead_count < 3 after 7 days
+
+  - id: recommend_budget_shifts
+    action: generate_recommendations
+    description: Recommend budget changes based on performance
+    rules:
+      - if: campaign.classification == 'winner'
+        recommendation: increase_budget
+        amount: "+20% daily budget"
+        max_increase: 50  # Never more than 50% increase at once
+      - if: campaign.classification == 'loser' AND days_active > 7
+        recommendation: kill_campaign
+        reason: "CPL ${cpl} exceeds target by ${pct}%"
+      - if: campaign.classification == 'loser' AND days_active <= 7
+        recommendation: reduce_budget
+        amount: "-30% daily budget"
+      - if: campaign.classification == 'neutral'
+        recommendation: hold
+        note: "Monitor for 3 more days"
+
+  - id: ab_test_results
+    action: evaluate_tests
+    description: Check A/B test results for statistical significance
+    config:
+      min_sample_size: 100  # Clicks per variant
+      confidence_level: 0.95
+      metrics: [cvr, cpl, quality_score]
+    on_significant:
+      - declare_winner
+      - pause_loser_variant
+      - notify_captain
+
+  - id: compile_report
+    action: generate_report
+    description: Create daily optimization report for Captain
+    template: |
+      ## 📊 Campaign Optimization Report — ${date}
+      
+      ### Performance Summary
+      | Source | Spend | Leads | CPL | Avg Quality | ROI |
+      |--------|-------|-------|-----|-------------|-----|
+      ${campaign_rows}
+      
+      ### Recommendations
+      ${recommendations}
+      
+      ### A/B Test Updates
+      ${ab_test_summary}
+      
+      ### 7-Day Trend
+      - Total spend: ${week_spend}
+      - Total revenue: ${week_revenue}
+      - Gross profit: ${week_profit}
+      - Avg margin: ${week_margin}%
+
+  - id: send_to_captain
+    action: notify_agent
+    description: Send report to Captain for review
+    target_agent: captain
+    message: ${compiled_report}
+    priority: normal

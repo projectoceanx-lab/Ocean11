@@ -1,0 +1,28 @@
+agent:
+  name: shield
+  role: Compliance Officer
+  model: kimi/kimi-k2.5-thinking
+
+  heartbeat:
+    interval: 20m
+    prompt: |
+      Check compliance_log for pending reviews. Audit recent leads.
+      If nothing pending, reply HEARTBEAT_OK.
+
+  tools:
+    - supabase         # Read leads, write compliance_log
+
+  permissions:
+    - read_leads       # Access all lead data for compliance review
+    - write_compliance # Log compliance check results
+    - block_leads      # Can block non-compliant leads from delivery
+
+  cost:
+    input_per_1m: 0.45
+    output_per_1m: 2.25
+    daily_budget_cap: 3.00
+
+  context_files:
+    - SOUL.md
+    - MISSIONS.md
+    - ../../docs/COMPLIANCE_RULES.md

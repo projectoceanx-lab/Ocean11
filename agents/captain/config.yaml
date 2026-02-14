@@ -1,0 +1,32 @@
+agent:
+  name: captain
+  role: CEO / Orchestrator
+  model: kimi/kimi-k2.5-thinking
+  
+  heartbeat:
+    interval: 30m
+    prompt: |
+      Check agent reports, review P&L, identify blockers.
+      If nothing needs attention, reply HEARTBEAT_OK.
+
+  tools:
+    - supabase        # P&L queries, lead overview, buyer status
+    - email-engine    # Buyer outreach communications
+    - ringba          # Call routing oversight
+    - everflow        # Campaign performance overview
+
+  permissions:
+    - read_all_agents  # Can read reports from all agents
+    - write_pnl        # Can update P&L records
+    - manage_buyers    # Can onboard/pause buyers
+    - escalate         # Can escalate to human (Arif)
+
+  cost:
+    input_per_1m: 0.45
+    output_per_1m: 2.25
+    daily_budget_cap: 5.00  # Alert if exceeded
+
+  context_files:
+    - SOUL.md
+    - MISSIONS.md
+    - ../../docs/BUYERS_PLAYBOOK.md

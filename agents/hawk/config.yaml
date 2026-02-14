@@ -1,0 +1,30 @@
+agent:
+  name: hawk
+  role: Media Buying & Analytics
+  model: zhipu/glm-4.7
+
+  heartbeat:
+    interval: 30m
+    prompt: |
+      Check campaign metrics. Analyze CPL trends. 
+      If nothing needs adjustment, reply HEARTBEAT_OK.
+
+  tools:
+    - supabase         # Campaign data, P&L queries
+    - facebook-ads     # Ad management, reporting
+    - everflow         # Offer tracking, conversion data
+    - revpie           # Traffic source management
+
+  permissions:
+    - read_campaigns   # Access all campaign data
+    - write_campaigns  # Update budgets, pause/resume
+    - read_pnl         # Access cost data for ROI analysis
+
+  cost:
+    input_per_1m: 0.10
+    output_per_1m: 0.10
+    daily_budget_cap: 2.00
+
+  context_files:
+    - SOUL.md
+    - MISSIONS.md

@@ -1,0 +1,142 @@
+# Lead Acquisition Pipeline — Scout
+# Triggered: On heartbeat (every 15 min) or on-demand by Captain
+
+name: lead-acquisition
+agent: scout
+trigger: heartbeat
+
+steps:
+  - id: detect_opportunities
+    action: scan_sources
+    description: Check active campaigns for new lead opportunities
+    sources:
+      - type: form
+        description: Scan mapped debt relief forms for availability
+        tool: stealth-browser
+      - type: revpie
+        description: Check RevPie for new aged leads matching our criteria
+        tool: revpie
+        filters:
+          vertical: debt_relief
+          min_debt: 10000
+          max_age_days: 60
+          states: [CA, TX, FL, NY, IL, OH, PA, GA, NC, MI]
+    on_failure: log_and_continue
+
+  - id: fill_form
+    action: submit_form
+    description: Fill and submit lead form using stealth browser
+    tool: stealth-browser
+    config:
+      proxy_rotation: per_request
+      typing_delay_ms: [50, 150]  # Random range for human-like behavior
+      screenshot: true             # Capture for compliance audit
+      max_retries: 3
+    on_failure: log_error
+    on_success: next
+
+  - id: check_duplicate
+    action: query_database
+    description: Check if this lead already exists in our database
+    tool: supabase
+    query: |
+      SELECT id FROM leads 
+      WHERE email = :email OR phone = :phone 
+      LIMIT 1
+    on_duplicate: skip_and_log
+    on_new: next
+
+  - id: insert_lead
+    action: write_database
+    description: Insert new lead with status 'new'
+    tool: supabase
+    table: leads
+    data:
+      source: ${source}
+      form_url: ${form_url}
+      first_name: ${first_name}
+      last_name: ${last_name}
+      email: ${email}
+      phone: ${phone}
+      state: ${state}
+      zip: ${zip}
+      debt_amount: ${debt_amount}
+      debt_type: ${debt_type}
+      status: new
+    on_success: next
+
+  - id: enrich_lead
+    action: call_api
+    description: Enrich lead with FastDebt API (income, employment, debt verification)
+    tool: fast-debt-api
+    input:
+      first_name: ${first_name}
+      last_name: ${last_name}
+      email: ${email}
+      phone: ${phone}
+      state: ${state}
+      zip: ${zip}
+    on_success:
+      - update_lead:
+          enrichment_data: ${api_response}
+          income_range: ${api_response.income_range}
+          employment_status: ${api_response.employment_status}
+          status: enriched
+    on_failure:
+      - update_lead:
+          status: enriched  # Continue without enrichment, lower score
+          enrichment_data: {"error": "enrichment_failed"}
+
+  - id: score_lead
+    action: calculate_score
+    description: Calculate quality score (0-100) based on available data
+    scoring_rules:
+      base_score: 40
+      modifiers:
+        - condition: debt_amount >= 25000
+          points: +20
+        - condition: debt_amount >= 10000
+          points: +10
+        - condition: enrichment_data.income_verified == true
+          points: +15
+        - condition: enrichment_data.employment_status == 'employed'
+          points: +10
+        - condition: enrichment_data.phone_type == 'mobile'
+          points: +5
+        - condition: enrichment_data.email_valid == true
+          points: +5
+        - condition: state IN ['CA', 'TX', 'FL', 'NY']
+          points: +5
+        - condition: enrichment_failed
+          points: -15
+    tier_mapping:
+      A: [80, 100]
+      B: [60, 79]
+      C: [40, 59]
+      D: [0, 39]
+    on_success:
+      - update_lead:
+          quality_score: ${calculated_score}
+          quality_tier: ${calculated_tier}
+          status: scored
+
+  - id: hand_to_compliance
+    action: notify_agent
+    description: Hand scored lead to Shield for compliance review
+    target_agent: shield
+    message: "New lead scored: ${lead_id} — Tier ${quality_tier} (${quality_score}/100)"
+    on_success: complete
+
+  - id: log_activity
+    action: write_database
+    description: Log this acquisition in agent_activity
+    tool: supabase
+    table: agent_activity
+    data:
+      agent_name: scout
+      action: lead_acquired
+      details:
+        lead_id: ${lead_id}
+        source: ${source}
+        quality_score: ${quality_score}
+        quality_tier: ${quality_tier}

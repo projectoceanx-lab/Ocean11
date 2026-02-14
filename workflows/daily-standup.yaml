@@ -1,0 +1,168 @@
+# Daily Standup Pipeline — Captain
+# Triggered: Every day at 9 AM EST
+
+name: daily-standup
+agent: captain
+trigger:
+  schedule: "0 9 * * *"  # 9 AM EST daily
+
+steps:
+  - id: collect_pnl
+    action: query_database
+    description: Get yesterday's P&L
+    tool: supabase
+    query: |
+      SELECT * FROM pnl_daily WHERE date = CURRENT_DATE - 1
+
+  - id: collect_lead_stats
+    action: query_database
+    description: Get lead pipeline stats (last 24h)
+    tool: supabase
+    queries:
+      pipeline: |
+        SELECT status, COUNT(*), AVG(quality_score)
+        FROM leads WHERE created_at > NOW() - INTERVAL '24h'
+        GROUP BY status
+      by_source: |
+        SELECT source, COUNT(*), AVG(quality_score)
+        FROM leads WHERE created_at > NOW() - INTERVAL '24h'
+        GROUP BY source
+      quality_dist: |
+        SELECT quality_tier, COUNT(*)
+        FROM leads WHERE created_at > NOW() - INTERVAL '24h'
+        GROUP BY quality_tier
+
+  - id: collect_compliance
+    action: query_database
+    description: Get Shield's compliance stats
+    tool: supabase
+    query: |
+      SELECT result, COUNT(*), 
+        array_agg(DISTINCT reason) as reasons
+      FROM compliance_log 
+      WHERE checked_at > NOW() - INTERVAL '24h'
+      GROUP BY result
+
+  - id: collect_delivery_stats
+    action: query_database
+    description: Get Signal's delivery performance
+    tool: supabase
+    query: |
+      SELECT 
+        d.status, COUNT(*), SUM(d.payout),
+        b.name as buyer_name
+      FROM deliveries d
+      JOIN buyers b ON d.buyer_id = b.id
+      WHERE d.created_at > NOW() - INTERVAL '24h'
+      GROUP BY d.status, b.name
+
+  - id: collect_buyer_health
+    action: query_database
+    description: Check buyer status and cap utilization
+    tool: supabase
+    query: |
+      SELECT name, status, current_daily_count, daily_cap,
+        payout_per_lead, relationship_score
+      FROM buyers WHERE status = 'active'
+
+  - id: collect_agent_health
+    action: query_database
+    description: Check agent activity levels
+    tool: supabase
+    query: |
+      SELECT agent_name, 
+        COUNT(*) as actions_24h,
+        MAX(created_at) as last_active
+      FROM agent_activity 
+      WHERE created_at > NOW() - INTERVAL '24h'
+      GROUP BY agent_name
+
+  - id: check_hawk_report
+    action: check_for_report
+    description: See if Hawk's campaign optimization report is ready
+    source: agent_notifications
+    from: hawk
+    timeout: 30m
+
+  - id: synthesize_standup
+    action: generate_report
+    description: Compile all data into daily standup report
+    template: |
+      # 🌊 Daily Standup — ${date}
+      
+      ## 💰 P&L (Yesterday)
+      - Revenue: $${pnl.revenue}
+      - Media cost: $${pnl.cost_media}
+      - AI cost: $${pnl.cost_ai}
+      - Gross profit: $${pnl.gross_profit}
+      - Margin: ${pnl.margin_pct}%
+      
+      ## 📊 Lead Pipeline (24h)
+      - New: ${leads.new}
+      - Enriched: ${leads.enriched}
+      - Scored: ${leads.scored}
+      - Delivered: ${leads.delivered}
+      - Rejected: ${leads.rejected}
+      - Avg quality: ${leads.avg_quality}/100
+      
+      ## ✅ Compliance
+      - Passed: ${compliance.pass}
+      - Flagged: ${compliance.flag}
+      - Blocked: ${compliance.block} ${block_reasons}
+      
+      ## 📦 Deliveries
+      ${delivery_summary}
+      
+      ## 🏢 Buyer Status
+      ${buyer_summary}
+      
+      ## 🤖 Agent Health
+      ${agent_health_summary}
+      
+      ## 🎯 Strategy Adjustments
+      ${ai_generated_strategy_notes}
+
+  - id: identify_blockers
+    action: analyze
+    description: Identify any blockers or issues needing attention
+    checks:
+      - name: any_agent_silent
+        condition: agent last_active > 2h ago
+        severity: high
+      - name: negative_pnl
+        condition: gross_profit < 0
+        severity: medium
+      - name: high_block_rate
+        condition: compliance.block / total > 0.20
+        severity: medium
+      - name: buyer_at_cap
+        condition: all buyers at daily cap
+        severity: high
+      - name: no_deliveries
+        condition: delivered count == 0
+        severity: high
+
+  - id: adjust_strategy
+    action: decide
+    description: Make strategic adjustments based on standup data
+    possible_actions:
+      - increase_scout_activity  # If lead pipeline is thin
+      - pause_underperforming_campaigns  # If CPL too high
+      - onboard_new_buyer  # If at buyer capacity
+      - adjust_quality_thresholds  # If too many blocks or too few A-tier
+      - escalate_to_arif  # If critical blocker
+
+  - id: log_standup
+    action: write_database
+    tool: supabase
+    table: agent_activity
+    data:
+      agent_name: captain
+      action: daily_standup
+      details:
+        date: ${date}
+        revenue: ${pnl.revenue}
+        profit: ${pnl.gross_profit}
+        leads_24h: ${total_leads}
+        blockers: ${blockers}
+        adjustments: ${strategy_adjustments}

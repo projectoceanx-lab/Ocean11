@@ -1,0 +1,45 @@
+# Environment & Credentials
+.env
+.env.local
+.env.production
+*.key
+*.pem
+credentials.json
+
+# Agent Memory (structure kept, contents ignored)
+memory/*.md
+memory/*.json
+!memory/.gitkeep
+
+# Node
+node_modules/
+package-lock.json
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build
+dist/
+build/
+*.egg-info/
+
+# Camoufox / Browser
+browser-profiles/
+screenshots/

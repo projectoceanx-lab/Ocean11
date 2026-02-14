@@ -1,0 +1,145 @@
+# Buyer Delivery Pipeline — Signal
+# Triggered: When Shield approves a lead (pass or flag)
+
+name: buyer-delivery
+agent: signal
+trigger: agent_notification
+
+steps:
+  - id: receive_lead
+    action: read_database
+    description: Fetch the compliance-approved lead
+    tool: supabase
+    query: |
+      SELECT l.*, cl.result as compliance_result
+      FROM leads l
+      JOIN compliance_log cl ON l.id = cl.lead_id
+      WHERE l.id = :lead_id AND l.status = 'scored'
+      ORDER BY cl.checked_at DESC LIMIT 1
+
+  - id: match_buyer
+    action: query_database
+    description: Find the best available buyer for this lead
+    tool: supabase
+    query: |
+      SELECT * FROM buyers 
+      WHERE status = 'active'
+        AND current_daily_count < daily_cap
+        AND :lead_vertical = ANY(verticals)
+      ORDER BY payout_per_lead DESC, relationship_score DESC
+      LIMIT 3
+    matching_criteria:
+      - buyer.verticals contains lead.vertical
+      - buyer.current_daily_count < buyer.daily_cap
+      - current_time within buyer.preferred_hours
+      - buyer.status == 'active'
+    priority: highest_payout_then_relationship
+    on_no_match:
+      - queue_for_later:
+          retry_in: 4h
+          max_retries: 3
+      - if_max_retries: notify_captain
+
+  - id: determine_channel
+    action: conditional
+    description: Choose delivery channel based on buyer preference and lead quality
+    conditions:
+      - if: lead.quality_tier IN ['A'] AND buyer.accepts_calls
+        then: channel = 'call'
+      - if: buyer.preferred_channel == 'api'
+        then: channel = 'api'
+      - else: channel = 'email'
+
+  - id: create_delivery
+    action: write_database
+    description: Create delivery record
+    tool: supabase
+    table: deliveries
+    data:
+      lead_id: ${lead_id}
+      buyer_id: ${matched_buyer.id}
+      channel: ${channel}
+      status: queued
+
+  - id: execute_delivery
+    action: deliver_lead
+    description: Actually deliver the lead via chosen channel
+    channels:
+      call:
+        tool: ringba
+        action: initiate_transfer
+        params:
+          lead_phone: ${lead.phone}
+          buyer_routing: ${matched_buyer.ringba_target}
+          campaign_id: ${campaign_id}
+      email:
+        tool: email-engine
+        action: send_lead
+        params:
+          to: ${matched_buyer.contact_email}
+          template: lead_delivery
+          data: ${lead}
+      api:
+        tool: everflow
+        action: post_lead
+        params:
+          offer_id: ${matched_buyer.everflow_offer}
+          lead_data: ${lead}
+    on_success:
+      - update_delivery:
+          status: sent
+          delivered_at: NOW()
+    on_failure:
+      - update_delivery:
+          status: rejected
+          response: ${error_message}
+      - try_next_buyer: true
+
+  - id: confirm_acceptance
+    action: wait_for_response
+    description: Wait for buyer to accept or reject (timeout 24h)
+    timeout: 24h
+    check_interval: 1h
+    on_accepted:
+      - update_delivery:
+          status: accepted
+          payout: ${matched_buyer.payout_per_lead}
+      - update_lead:
+          status: delivered
+      - update_buyer:
+          current_daily_count: current_daily_count + 1
+      - log_revenue: true
+    on_rejected:
+      - update_delivery:
+          status: rejected
+          response: ${rejection_reason}
+      - try_next_buyer: true
+    on_timeout:
+      - update_delivery:
+          status: sent  # Assume accepted if no response
+          payout: ${matched_buyer.payout_per_lead}
+      - flag_for_review: true
+
+  - id: log_pnl
+    action: update_pnl
+    description: Record revenue in daily P&L
+    tool: supabase
+    query: |
+      INSERT INTO pnl_daily (date, revenue) 
+      VALUES (CURRENT_DATE, :payout)
+      ON CONFLICT (date) DO UPDATE 
+      SET revenue = pnl_daily.revenue + :payout
+
+  - id: log_activity
+    action: write_database
+    tool: supabase
+    table: agent_activity
+    data:
+      agent_name: signal
+      action: lead_delivered
+      details:
+        lead_id: ${lead_id}
+        buyer_id: ${matched_buyer.id}
+        channel: ${channel}
+        payout: ${payout}
+        status: ${delivery_status}

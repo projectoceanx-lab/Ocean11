@@ -1,0 +1,30 @@
+agent:
+  name: scout
+  role: Lead Acquisition & Enrichment
+  model: deepseek/deepseek-v3-0324
+
+  heartbeat:
+    interval: 15m
+    prompt: |
+      Check for new lead opportunities. Process any pending forms.
+      Report lead counts. If nothing pending, reply HEARTBEAT_OK.
+
+  tools:
+    - stealth-browser  # Camoufox form filling, anti-detection
+    - supabase         # Lead CRUD, dedup checking
+    - fast-debt-api    # Income/employment enrichment
+    - revpie           # Aged lead sourcing
+
+  permissions:
+    - write_leads      # Insert/update leads in DB
+    - read_campaigns   # Know which campaigns are active
+    - use_proxy        # Residential proxy access
+
+  cost:
+    input_per_1m: 0.25
+    output_per_1m: 0.38
+    daily_budget_cap: 3.00
+
+  context_files:
+    - SOUL.md
+    - MISSIONS.md
