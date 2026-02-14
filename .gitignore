@@ -25,12 +25,10 @@ venv/
 logs/
 *.log
 
-# OpenClaw workspace artifacts (don't let bootstrap overwrite our files)
-BOOTSTRAP.md
-IDENTITY.md
-TOOLS.md
-HEARTBEAT.md
+# Agent memory contents (structure kept, contents private)
 MEMORY.md
+agents/*/memory/*.md
+agents/*/memory/*.json
 
 # OS
 .DS_Store
