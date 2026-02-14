@@ -17,7 +17,8 @@ Arif's other ventures (Home Away STR, HostAI SaaS) are 6+ months out — needs v
 ## Budget
 
 - **$5K testing budget** — tight, every dollar tracked
-- **Phase 1:** Local (laptop/Mac mini), ~$50-100/mo in API costs
+- **Subscriptions:** Claude Max (Opus 4.6 for Captain) + ChatGPT Max (GPT-5.2 for Shield) — both unlimited, $0 marginal cost
+- **Phase 1:** Local (laptop/Mac mini), ~$20-50/mo in API costs (only worker agents: Scout, Signal, Hawk, Watchtower)
 - **Phase 2:** Cloud (Railway/Vercel) when unit economics proven, ~$200-500/mo
 - Zero cloud spend until we PROVE the system works locally
 

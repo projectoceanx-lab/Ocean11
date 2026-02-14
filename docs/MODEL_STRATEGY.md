@@ -7,7 +7,13 @@ Why each model was chosen, cost analysis, and upgrade paths.
 1. **Cost efficiency** — We're bootstrapping with $5K. Every token matters.
 2. **Task fit** — Match model strength to agent needs.
 3. **Quality floor** — Must be good enough. "Good enough" means the agent accomplishes its task without human intervention 90%+ of the time.
-4. **Availability** — Must be accessible via OpenRouter.
+4. **Availability** — Must be accessible via OpenRouter or subscription CLIs.
+
+## Subscription Strategy
+
+- **Claude Max subscription** — Covers Captain (Opus 4.6). Unlimited usage, $0 marginal cost.
+- **ChatGPT Max subscription** — Covers Shield (GPT-5.2). Unlimited usage via CLI, $0 marginal cost.
+- Only Scout, Signal, Hawk, and Watchtower incur per-token API costs (~$20-50/mo total).
 
 ## Model Assignments
 
@@ -57,9 +63,11 @@ Why each model was chosen, cost analysis, and upgrade paths.
 
 | Scenario | Daily | Monthly |
 |----------|-------|---------|
-| Low (5 leads/day) | $3.00 | $90 |
-| Medium (15 leads/day) | $6.00 | $180 |
-| High (30 leads/day) | $10.00 | $300 |
+| Low (5 leads/day) | $0.70 | $21 |
+| Medium (15 leads/day) | $1.50 | $45 |
+| High (30 leads/day) | $3.00 | $90 |
+
+*Captain and Shield excluded — covered by Max subscriptions at $0 marginal cost.*
 
 ## When to Upgrade Models
 
