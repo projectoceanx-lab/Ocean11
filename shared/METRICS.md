@@ -28,5 +28,20 @@ _Updated by Watchtower every heartbeat cycle. All agents reference this for deci
 |---|---|---|---|---|---|
 | — | — | — | — | — | — |
 
+## System Health
+_Last checked: 2026-02-14 23:53 GMT+4 by Watchtower_
+
+| Metric | Value |
+|---|---|
+| Total files in repo | 106 |
+| Last commit | `96d888a` — Document Max subscriptions |
+| Git status | Clean (1 tracked modification: shared/CONTEXT.md) |
+| Agent files (SOUL/config/MISSIONS) | 18/18 ✅ |
+| Docs files | 7 ✅ |
+| Shared files | 7 ✅ |
+| DB files | 3 ✅ |
+| Missing files | None |
+| Infrastructure status | Pre-launch — Supabase, Ringba, FastDebt all pending |
+
 ## Alerts
 <!-- Watchtower flags anomalies here -->

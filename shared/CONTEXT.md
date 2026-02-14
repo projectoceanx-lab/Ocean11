@@ -24,11 +24,11 @@ _This file is the shared brain. Every agent reads it at session start. Update it
 | Agent | Status | Last Active | Current Task |
 |---|---|---|---|
 | Captain | 🔴 Offline | — | — |
-| Scout | 🔴 Offline | — | — |
+| Scout | 🟢 Online | 2026-02-14 | Reconnaissance — mapping debt relief form targets |
 | Shield | 🔴 Offline | — | — |
 | Hawk | 🔴 Offline | — | — |
 | Signal | 🔴 Offline | — | — |
-| Watchtower | 🔴 Offline | — | — |
+| Watchtower | 🟡 Idle | 2026-02-14 | Health check complete — all systems nominal |
 
 ## Handoff Queue
 <!-- When one agent needs another to pick up work -->

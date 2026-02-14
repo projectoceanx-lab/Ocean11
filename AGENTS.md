@@ -32,13 +32,18 @@ All agents read and write to `shared/`:
 | `FAILURES.md` | Failure log with root cause + lesson | Agent who failed |
 | `METRICS.md` | Numbers dashboard, source of truth | Watchtower (primary), Captain (review) |
 | `PLAYBOOK_RULES.md` | Hard rules, non-negotiable | Captain (only Captain can change rules) |
+| `LEARNING_LOOP.md` | Reinforcement system — how agents learn from outcomes | Captain (defines), ALL (read) |
+| `ACTION_LOG.md` | Intent + outcome log for every significant action | ALL agents (write), Captain (review + score) |
+| `FEEDBACK_LOG.md` | Captain's scored reviews — agents check for precedent | Captain (write), ALL (read) |
 
 ### How Shared Context Works
-1. **Before acting:** Read shared/ files to know current state
-2. **After acting:** Update your status in CONTEXT.md
-3. **When you learn something:** Add to KNOWLEDGE_HUB.md
-4. **When something breaks:** Log in FAILURES.md with root cause + lesson
-5. **Handoffs:** Write to CONTEXT.md handoff queue → receiving agent picks up
+1. **Before acting:** Read shared/ files to know current state + check FEEDBACK_LOG for precedent
+2. **Before significant actions:** Log intent in ACTION_LOG.md (what, why, expected outcome, risk)
+3. **After acting:** Log outcome in ACTION_LOG.md + update status in CONTEXT.md
+4. **When you learn something:** Add to KNOWLEDGE_HUB.md
+5. **When something breaks:** Log in FAILURES.md with root cause + lesson
+6. **Handoffs:** Write to CONTEXT.md handoff queue → receiving agent picks up
+7. **Weekly:** Captain reviews ACTION_LOG, scores in FEEDBACK_LOG, updates trust tiers in LEARNING_LOOP.md
 
 ### Evidence-Based Protocol (from Mak)
 - Never claim a number without citing the source
