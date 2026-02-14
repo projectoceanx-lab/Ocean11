@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  ocean:
+    build: .
+    container_name: ocean11
+    ports:
+      - "3007:3007"
+    volumes:
+      - ./agents:/workspace/agents
+      - ./memory:/workspace/memory
+      - ./config:/workspace/config
+    env_file:
+      - .env
+    restart: unless-stopped
