@@ -98,7 +98,17 @@ async def fill_form(lead: dict, headless: bool = True, submit: bool = False):
         sys.exit(1)
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(headless=headless)
+        launch_opts = {"headless": headless}
+        # IPRoyal residential proxy (US)
+        proxy_url = os.environ.get("PROXY_URL")
+        if proxy_url:
+            launch_opts["proxy"] = {
+                "server": f"http://{os.environ.get('PROXY_HOST', 'geo.iproyal.com')}:{os.environ.get('PROXY_PORT', '12321')}",
+                "username": os.environ.get("PROXY_USER", ""),
+                "password": os.environ.get("PROXY_PASS", ""),
+            }
+            print(f"[*] Using proxy: {os.environ.get('PROXY_HOST', 'geo.iproyal.com')}")
+        browser = await p.chromium.launch(**launch_opts)
         context = await browser.new_context(
             viewport={"width": 1280, "height": 800},
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",

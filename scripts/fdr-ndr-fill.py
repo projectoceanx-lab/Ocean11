@@ -201,6 +201,15 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
                 if (Path(CHROMIUM_PATH) / "headless_shell").exists()
                 else CHROMIUM_PATH
             )
+        # IPRoyal residential proxy (US) — rotates per session
+        proxy_url = os.environ.get("PROXY_URL")
+        if proxy_url:
+            launch_args["proxy"] = {
+                "server": f"http://{os.environ.get('PROXY_HOST', 'geo.iproyal.com')}:{os.environ.get('PROXY_PORT', '12321')}",
+                "username": os.environ.get("PROXY_USER", ""),
+                "password": os.environ.get("PROXY_PASS", ""),
+            }
+            print(f"[*] Using proxy: {os.environ.get('PROXY_HOST', 'geo.iproyal.com')}")
 
         browser = await p.chromium.launch(**launch_args)
         context = await browser.new_context(
