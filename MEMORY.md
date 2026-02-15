@@ -146,6 +146,33 @@ New domains need 4-6 weeks warming before full volume:
 - Monitor: bounce rate <2%, complaint rate <0.1%
 - Kill switch: if complaint rate >0.3%, pause ALL sends
 
+## Lead Quality & Debt Economics — FROM AK
+
+**This is the single most important business logic in the operation.**
+
+### Only Unsecured Debt Qualifies
+- ✅ **Credit card debt** — primary component (~70-80% of what buyers want)
+- ✅ **Personal loan debt** — secondary, accepted
+- ❌ Mortgage, student loans, auto loans, medical debt — ALL rejected
+
+### CPA = Quality Signal, Not Profit
+- $60 CPA = buyer wants $30K+ unsecured debt leads
+- $22-25 CPA = buyer accepts $10K+ unsecured debt leads
+- **Don't chase highest CPA. Chase quality match.**
+- A $25 CPA lead that converts > a $60 CPA lead that gets rejected
+
+### FastDebt Enrichment is Mandatory
+Every lead MUST be enriched before delivery to confirm:
+1. Total unsecured debt amount
+2. Debt composition (% credit card vs personal loan)
+3. Number of accounts
+**No enrichment = no delivery. No exceptions.**
+
+### Lead Routing Logic
+- Lead with $12K CC debt → JGW ($22-25 CPA tier)
+- Lead with $35K CC debt → NDR/FDR ($50-60 CPA tier)
+- Lead with mostly mortgage debt → REJECT (wrong debt type)
+
 ## Revenue Model
 
 ```
