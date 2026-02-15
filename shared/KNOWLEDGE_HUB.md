@@ -264,6 +264,46 @@ _Next steps: (1) Get Brave API key configured for deeper research. (2) Run Faceb
 <!-- Captain + Signal write here -->
 <!-- Buyer profiles, payout history, reliability scores, negotiation notes -->
 
+### CPA vs Quality — The Real Economics (from AK, Feb 15 2026)
+
+**Higher CPA ≠ better deal.** CPA is a function of lead quality requirements:
+- **$60 CPA** (FDR) = they want HIGH debt amount leads. Average unsecured debt $30K+.
+- **$22-$25 CPA** (JGW) = they accept LOWER debt amounts. Maybe $10K-$15K+.
+- **The CPA reflects what the buyer expects to close, not our profit.**
+
+**What matters is: can we source leads that match the quality tier at a cost below the CPA?**
+
+### Debt Type — CRITICAL Filter
+
+**Only unsecured debt qualifies for debt settlement:**
+- ✅ **Credit card debt** — THE biggest component. This is 70-80% of what settlement companies work with.
+- ✅ **Personal loan debt** — smaller component, accepted.
+- ❌ **Mortgage** — secured, NOT eligible
+- ❌ **Student loans** — NOT eligible for these buyers
+- ❌ **Auto loans** — secured, NOT eligible
+- ❌ **Medical debt** — varies by buyer, usually separate programs
+
+**If a lead has mostly mortgage or student loan debt, it's worthless to debt settlement buyers.** Doesn't matter if they owe $100K — wrong debt type = rejected.
+
+### Why FastDebt API is Critical
+
+Before delivering ANY lead to a buyer, we need to know:
+1. **Total unsecured debt amount** — determines which CPA tier/buyer
+2. **Debt composition** — what % is credit card vs personal loan vs other
+3. **Number of accounts** — more accounts = more settlement opportunities = higher value
+
+**FastDebt enrichment is NOT optional — it's the gatekeeper between acquiring garbage and delivering quality.**
+
+Without enrichment, we're guessing. Guessing at $5K budget = dead in 2 weeks.
+
+### Revised Unit Economics
+
+Don't chase the $60 CPA. Chase the **quality match**:
+- Source leads with $15K+ unsecured debt (mostly credit card)
+- Enrich via FastDebt to confirm debt type + amount
+- Route to the right buyer based on their debt profile
+- A $25 CPA lead that converts is worth more than a $60 CPA lead that gets rejected
+
 ### Debt Relief Lead Buyer Landscape — 2026-02-14
 *Added by Signal 📡 | Sources: BUYERS_PLAYBOOK.md benchmarks, industry knowledge, boberdoo.com (verified accessible). NOTE: Web search API unavailable during research. Payout ranges are industry-standard estimates — MUST be verified with live buyer conversations before committing to any pricing.*
 
