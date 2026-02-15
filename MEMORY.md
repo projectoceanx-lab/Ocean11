@@ -110,7 +110,9 @@ RevPie (buy aged leads) → Our Website (landing/offer wall)
 - **Zero acquisition cost** — they're already in our system
 - Backend feeds these leads directly into Ocean DB
 - FastDebt enriches → Scout delivers to matching buyer
-- **This is our highest-margin source** — $0 acquisition cost + warm intent
+- **Caveat: quality is low.** Most payday borrowers want $200-$500, wrong debt type (payday loans, mortgages). Few will have qualifying CC debt.
+- **Primary value: test volume.** Use these leads to validate dedup logic, enrichment pipeline, and routing before spending on RevPie/FB.
+- When a qualifying lead DOES come through, it's pure margin ($0 CPL).
 
 ### Source Priority
 1. **Own loan sites** (zero cost, pre-qualified, highest margin)
