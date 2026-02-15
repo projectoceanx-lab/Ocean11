@@ -11,5 +11,9 @@
 - Rotation: per_request
 - Typing delay: 50-150ms randomized
 
+## Memory Vault
+- **Search:** `python3 scripts/memory-search.py "query" --agent scout --limit 5`
+- Write observations after form changes, source discoveries, quality shifts
+
 ## Notes
 - Update as tools come online

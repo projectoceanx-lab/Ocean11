@@ -7,4 +7,9 @@ Every 30 min:
 4. Check A/B test status for statistical significance
 5. Report daily optimization summary to Captain
 
+## Memory Vault
+6. **Recall** — Before optimizing, search vault for past campaign patterns:
+   `python3 scripts/memory-search.py "campaign performance" --agent hawk --limit 3`
+7. **Record** — After analysis, write observations to `memory/vault/obs-YYYY-MM-DD-NNN.md`
+
 If nothing needs adjustment, reply HEARTBEAT_OK.

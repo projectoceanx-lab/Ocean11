@@ -12,6 +12,15 @@
 | Delivery failure | > 10% | > 20% |
 | DB rows | > 8K | > 9K |
 
+## Memory Vault
+- **Search:** `python3 scripts/memory-search.py "query" --agent watchtower --limit 5`
+- **Decay:** `python3 scripts/memory-decay.py` (daily cron)
+- **Promote:** `python3 scripts/memory-promote.py` (auto-promote high-confidence observations)
+
+## Google Services (gog CLI)
+- `gog` CLI available for Google Drive — useful for uploading daily ops reports
+- Example: `gog drive upload ./daily-report.md`
+
 ## Notes
 - Cheapest agent — check often, report concisely
 - Escalate critical alerts directly to AK

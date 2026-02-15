@@ -8,6 +8,12 @@ trigger:
   on_demand: captain
 
 steps:
+  - id: memory_recall
+    action: search_memory
+    description: Search vault for past campaign patterns before optimizing
+    command: python3 scripts/memory-search.py "campaign CPL performance" --agent hawk --limit 3 --json
+    use_results: true
+
   - id: pull_metrics
     action: aggregate_data
     description: Pull campaign performance metrics from all sources
@@ -122,6 +128,21 @@ steps:
       - Total revenue: ${week_revenue}
       - Gross profit: ${week_profit}
       - Avg margin: ${week_margin}%
+
+  - id: write_observation
+    action: write_memory
+    description: Record optimization findings as a vault observation
+    template: |
+      ---
+      tags: [campaign, optimization, cpl]
+      confidence: 0.85
+      created: ${date}
+      decay: linear-30d
+      source: hawk
+      backlinks: []
+      ---
+      Daily optimization: ${winner_count} winners, ${loser_count} losers. Best CPL: $${best_cpl} (${best_source}). Worst: $${worst_cpl} (${worst_source}). Budget shifts: ${budget_changes}.
+    destination: agents/hawk/memory/vault/obs-${date}-${sequence}.md
 
   - id: send_to_captain
     action: notify_agent

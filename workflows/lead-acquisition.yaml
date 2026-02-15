@@ -6,6 +6,12 @@ agent: scout
 trigger: heartbeat
 
 steps:
+  - id: memory_recall
+    action: search_memory
+    description: Search vault for relevant context before processing
+    command: python3 scripts/memory-search.py "lead source form quality" --agent scout --limit 3 --json
+    use_results: true  # Inject results into agent context
+
   - id: detect_opportunities
     action: scan_sources
     description: Check active campaigns for new lead opportunities
@@ -126,6 +132,21 @@ steps:
     target_agent: shield
     message: "New lead scored: ${lead_id} — Tier ${quality_tier} (${quality_score}/100)"
     on_success: complete
+
+  - id: write_observation
+    action: write_memory
+    description: Record acquisition results as a vault observation
+    template: |
+      ---
+      tags: [lead, acquisition, ${source}]
+      confidence: 0.85
+      created: ${date}
+      decay: linear-14d
+      source: scout
+      backlinks: []
+      ---
+      Acquired ${lead_count} leads from ${source}. Quality tier distribution: ${tier_summary}. Form success rate: ${success_rate}%.
+    destination: agents/scout/memory/vault/obs-${date}-${sequence}.md
 
   - id: log_activity
     action: write_database
