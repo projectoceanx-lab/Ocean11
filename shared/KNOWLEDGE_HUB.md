@@ -296,6 +296,14 @@ Before delivering ANY lead to a buyer, we need to know:
 
 Without enrichment, we're guessing. Guessing at $5K budget = dead in 2 weeks.
 
+### Lead Source 3: Our Own Payday/Personal Loan Sites (from AK, Feb 15)
+- AK owns payday + personal loan websites with live applicant traffic
+- Loan application asks "reason for loan" — when answer is "debt consolidation" = debt relief signal
+- These applicants are WARMER than RevPie/FB: self-qualified, zero acquisition cost, real-time
+- Backend can push these leads directly to Ocean DB
+- Already have: name, phone, email, income, loan amount — most fields needed for buyer forms
+- **Highest margin source** — $0 CPL, just enrichment + delivery cost
+
 ### Revised Unit Economics
 
 Don't chase the $60 CPA. Chase the **quality match**:

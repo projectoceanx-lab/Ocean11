@@ -90,6 +90,33 @@ RevPie (buy aged leads) → Our Website (landing/offer wall)
 
 **Key insight #2: Dedup + routing is the brain.** Most leads across RevPie and FB will overlap. Before every fill, check the `deliveries` table: has this lead already been sent to this buyer? If yes, route to the next eligible buyer who hasn't seen it. Without dedup, we're burning acquisition dollars sending duplicates that get rejected. The routing intelligence — which lead goes to which buyer, based on debt profile + delivery history — is what makes the difference between profitable and bankrupt.
 
+## Lead Sources — Three Channels
+
+### Source 1: RevPie (Aged Leads)
+- Buy aged leads in bulk at low cost ($2-5 per lead)
+- Land on our website → enrich → filter → deliver
+- Volume play, lower quality, needs heavy enrichment/filtering
+
+### Source 2: Facebook Ads
+- Drive traffic to our website/landing pages
+- Higher cost per lead ($15-35) but fresher
+- Needs creative, compliance review, landing page optimization
+
+### Source 3: OUR OWN Payday/Personal Loan Websites (ZERO COST)
+- We own and operate payday + personal loan sites
+- Applicants fill loan applications — some select "debt consolidation" as loan purpose
+- **"Debt consolidation" = buying signal** — they have high debt, they're seeking solutions
+- These leads are pre-qualified: they self-selected, we already have their data (name, phone, email, income)
+- **Zero acquisition cost** — they're already in our system
+- Backend feeds these leads directly into Ocean DB
+- FastDebt enriches → Scout delivers to matching buyer
+- **This is our highest-margin source** — $0 acquisition cost + warm intent
+
+### Source Priority
+1. **Own loan sites** (zero cost, pre-qualified, highest margin)
+2. **RevPie** (low cost, aged, volume play)
+3. **Facebook** (higher cost, needs optimization, scale channel)
+
 ## The 7 Pillars (Zappian Playbook Digitized)
 
 1. **Websites** — OUR landing pages + offer wall. Leads land here first. Compliant disclaimers, trust signals.
