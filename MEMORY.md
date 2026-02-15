@@ -68,15 +68,35 @@ Consolidated from original 10 (Arif's decision: "more are tough to manage").
 - **MiniMax M2.5 rejected** — M2.1 only #82 on Arena, M2.5 benchmarks self-reported/unverified
 - This hybrid saves **95%+ vs using Claude Opus for everything**
 
+## The Lead Flow — How We Actually Make Money
+
+**This is the real pipeline. Not theory — this is the Zappian playbook.**
+
+```
+RevPie (buy aged leads) → Our Website (landing/offer wall)
+         ↓
+   FastDebt API (enrich: debt type, amount, composition)
+         ↓
+   Quality Filter (unsecured debt? CC primary? $10K+?)
+         ↓
+   Offer Wall (show personalized offers on our site)
+         ↓
+   Scout Form Filler (fill buyer forms with TOP quality leads only)
+         ↓
+   Buyer (JGW $25, NDR $50, FDR $60) → Revenue
+```
+
+**Key insight:** We don't fill forms to GET leads. We fill forms to DELIVER leads. The form filler is the last mile — delivering pre-qualified, enriched leads to buyers.
+
 ## The 7 Pillars (Zappian Playbook Digitized)
 
-1. **Websites** — Landing pages with debt relief forms, compliant disclaimers, trust signals
-2. **FB/RevPie traffic** — Paid acquisition via Facebook Ads and RevPie aged leads
-3. **Email triggers** — Welcome sequences, follow-ups, re-engagement (warmed domains required)
-4. **Fast Debt API enrichment** — Income verification, employment status, debt validation
-5. **Ringba call tracking** — Inbound/outbound call routing to buyers, IVR, recording
-6. **Offer wall** — Personalized offers based on lead profile (debt amount, type, state)
-7. **Lead delivery bot** — Automated handoff to buyers via API/email/call
+1. **Websites** — OUR landing pages + offer wall. Leads land here first. Compliant disclaimers, trust signals.
+2. **RevPie/FB traffic** — Buy aged leads from RevPie, drive FB traffic to our site
+3. **FastDebt enrichment** — MANDATORY. Confirms debt type, amount, composition before any delivery
+4. **Email triggers** — Welcome sequences, follow-ups, re-engagement (warmed domains required)
+5. **Offer wall** — Personalized offers on OUR site based on enriched lead profile
+6. **Scout form filler** — Automated delivery to buyers by filling THEIR forms with our best leads
+7. **Ringba call tracking** — Inbound/outbound call routing to buyers, IVR, recording
 
 ## Existing Assets (Arif Already Has)
 

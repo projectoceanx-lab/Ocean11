@@ -46,6 +46,8 @@ _These are non-negotiable. Not guidelines — RULES. Violate them and Captain es
 
 11. **Route leads to matching buyers.** Different buyers have different debt amount thresholds. A lead with $12K credit card debt goes to the $22-25 CPA buyer, not the $60 CPA buyer who needs $30K+. Sending mismatched leads burns buyer relationships and wastes our conversion rate.
 
+11b. **The pipeline is: BUY → ENRICH → FILTER → DELIVER.** We buy leads from RevPie (or drive traffic via FB). Leads land on OUR website. We enrich via FastDebt. We show our offer wall. Scout fills buyer forms ONLY with top-quality enriched leads. The form filler is the DELIVERY mechanism, not acquisition.
+
 ## Operational Rules
 
 12. **Shield approves before delivery.** No lead goes to a buyer without compliance check. No exceptions. Not even if Captain is in a rush.
