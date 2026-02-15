@@ -15,7 +15,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = REPO_ROOT / "scripts"
-AGENTS = ["captain", "scout", "shield", "hawk", "signal", "watchtower"]
+AGENTS = ["captain", "scout", "shield", "hawk", "forge", "watchtower"]
 
 # Test workspace — isolated from real data
 TEST_DIR = REPO_ROOT / "tests" / "memory_sandbox"
@@ -168,7 +168,7 @@ def test_reference_cross_agent():
 
     # Captain writes obs, Signal references it
     write_obs("captain", "obs-2026-02-10-001", ["buyer", "payout"], 0.5, "90d")
-    write_obs("signal", "obs-2026-02-10-001", ["delivery", "buyer"], 0.5, "30d",
+    write_obs("forge", "obs-2026-02-10-001", ["delivery", "buyer"], 0.5, "30d",
               backlinks=["obs-2026-02-10-001"])
 
     out, err, rc = run_patched("memory-ref.py")
@@ -188,7 +188,7 @@ def test_importance_cap():
     write_obs("captain", "obs-2026-02-10-001", ["strategy"], 0.90, "90d")
 
     # Multiple agents reference it
-    for agent in ["scout", "shield", "hawk", "signal", "watchtower"]:
+    for agent in ["scout", "shield", "hawk", "forge", "watchtower"]:
         write_obs(agent, "obs-2026-02-10-001", ["misc"], 0.5, "30d",
                   backlinks=["obs-2026-02-10-001"])
 
@@ -342,7 +342,7 @@ def test_full_pipeline():
               created=(datetime.now() - timedelta(days=10)).strftime("%Y-%m-%d"))
 
     # Day 3: Signal references it
-    write_obs("signal", "obs-2026-02-03-001", ["delivery", "buyer"], 0.5, "30d",
+    write_obs("forge", "obs-2026-02-03-001", ["delivery", "buyer"], 0.5, "30d",
               backlinks=["obs-2026-02-01-001"],
               created=(datetime.now() - timedelta(days=8)).strftime("%Y-%m-%d"))
 
@@ -393,9 +393,9 @@ def test_full_pipeline():
     shared = TEST_DIR / "shared" / "observations" / "captain-obs-2026-02-01-001.md"
     assert_true(file_exists(shared), "Captain's high-ref obs promoted to shared")
 
-    # Signal/Shield/Hawk obs should NOT be promoted (importance 0.5)
-    for agent in ["signal", "shield", "hawk"]:
-        shared_other = TEST_DIR / "shared" / "observations" / f"{agent}-obs-2026-02-{['03','05','07'][['signal','shield','hawk'].index(agent)]}-001.md"
+    # Forge/Shield/Hawk obs should NOT be promoted (importance 0.5)
+    for agent, day in [("forge", "03"), ("shield", "05"), ("hawk", "07")]:
+        shared_other = TEST_DIR / "shared" / "observations" / f"{agent}-obs-2026-02-{day}-001.md"
         assert_true(not file_exists(shared_other), f"{agent}'s obs NOT promoted (importance 0.5)")
 
 

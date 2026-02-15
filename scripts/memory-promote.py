@@ -24,7 +24,7 @@ from datetime import datetime
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-AGENTS = ["captain", "scout", "shield", "hawk", "signal", "watchtower"]
+AGENTS = ["captain", "scout", "shield", "hawk", "forge", "watchtower"]
 SHARED_DIR = REPO_ROOT / "shared" / "observations"
 
 

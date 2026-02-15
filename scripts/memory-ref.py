@@ -28,7 +28,7 @@ from datetime import datetime
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-AGENTS = ["captain", "scout", "shield", "hawk", "signal", "watchtower"]
+AGENTS = ["captain", "scout", "shield", "hawk", "forge", "watchtower"]
 DRY_RUN = "--dry-run" in sys.argv
 VERBOSE = "--verbose" in sys.argv or "-v" in sys.argv
 

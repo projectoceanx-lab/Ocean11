@@ -49,13 +49,14 @@ Consolidated from original 10 (Arif's decision: "more are tough to manage").
 | **CAPTAIN** | CEO — outreach, sales, P&L ownership, cost/spend analysis, strategy, ruthless executive | Claude Opus 4.6 (fallback: GPT-5.3 Codex) | $15 in / $75 out |
 | **SCOUT** | Lead acquisition + DB verification + enrichment validation + quality scoring per vertical | DeepSeek V3.2 | $0.25 / $0.38 |
 | **SHIELD** | Compliance — TSR, FTC, TCPA, state rules. Has VETO power. | GPT-5.2 (high thinking) | $2.00 / $8.00 |
-| **HAWK** | Media buying + quant optimization + spend analysis. Gambler + quant + scientist. | GLM-4.7 | ~$0.50 / $1.00 |
-| **SIGNAL** | CRO + offer wall + email deliverability + call routing + buyer handoff. Conversion obsessive. | DeepSeek V3.2 | $0.25 / $0.38 |
+| **HAWK** | Media buying (FB, RevPie) + email marketing (copy, sequences, deliverability) + quant optimization + spend analysis. Gambler + quant + scientist. | GLM-4.7 | ~$0.50 / $1.00 |
+| **FORGE** | Website/funnel builder (Next.js) + offer wall + redirect management + FastDebt integration + buyer delivery + call routing (Ringba) + CRO | DeepSeek V3.2 | $0.25 / $0.38 |
 | **WATCHTOWER** | System monitoring, health checks, alerting. Nocturnal sentinel. | GPT-5-nano | $0.05 / $0.40 |
 
 ### Built-in Tensions (by design)
-- **HAWK vs SHIELD** — Speed vs compliance. Hawk wants to scale spend, Shield wants to verify everything. This tension is healthy.
-- **SIGNAL vs HAWK** — Signal protects sender reputation and buyer relationships. Hawk wants leads delivered NOW before they go cold.
+- **HAWK vs SHIELD** — Speed vs compliance. Hawk wants to scale spend and blast emails, Shield wants to verify everything. This tension is healthy.
+- **FORGE vs HAWK** — Forge protects buyer relationships and sender reputation. Hawk wants leads delivered NOW before they go cold.
+- **HAWK (email) vs SHIELD** — Hawk pushes email volume, Shield enforces CAN-SPAM and complaint rate limits.
 - **CAPTAIN arbitrates** — When agents disagree, Captain decides based on P&L impact.
 
 ### Why These Models?

@@ -1,0 +1,42 @@
+agent:
+  name: forge
+  role: Pipeline Builder — Website, Funnel, Delivery, CRO
+  model: deepseek/deepseek-v3-0324
+
+  heartbeat:
+    interval: 15m
+    prompt: |
+      Check for scored leads ready for delivery. Process delivery queue.
+      Monitor landing page health and form submission rates.
+      If nothing pending, reply HEARTBEAT_OK.
+
+  tools:
+    - supabase         # Read scored leads, write deliveries
+    - ringba           # Call routing to buyers
+    - everflow         # Conversion postback on successful delivery
+    - vercel           # Landing page deployment (via Watchtower)
+    - fastdebt         # Lead enrichment API
+    - browser          # Landing page testing, buyer portal access
+
+  permissions:
+    - read_leads       # Access scored, compliance-passed leads
+    - write_deliveries # Log delivery attempts and results
+    - write_buyers     # Update buyer preferences, caps, relationship scores
+    - read_campaigns   # Attribution tracking
+    - manage_routing   # Configure call/email routing rules
+    - build_pages      # Create/edit landing pages, offer walls
+
+  # NOT permitted:
+  # - write_campaigns (Hawk owns spend)
+  # - write_pnl (Watchtower owns)
+  # - write_compliance_log (Shield owns)
+  # - credential_access (goes through .env only)
+
+  cost:
+    input_per_1m: 0.25
+    output_per_1m: 0.38
+    daily_budget_cap: 3.00
+
+  context_files:
+    - SOUL.md
+    - MISSIONS.md

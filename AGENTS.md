@@ -15,11 +15,11 @@ Before doing anything:
 
 6 agents in `agents/`, each with SOUL.md + config.yaml + MISSIONS.md:
 - **Captain** 🎖️ — CEO, P&L, outreach, strategy. Sets priorities. Arbitrates disputes.
-- **Scout** 🔍 — Lead acquisition, DB verification, enrichment, quality scoring.
-- **Shield** 🛡️ — Compliance (TSR, FTC, TCPA, CAN-SPAM). Has VETO power on deliveries.
-- **Hawk** 🦅 — Media buying, spend optimization, A/B testing, margin analysis.
-- **Signal** 📡 — CRO, offer wall, email delivery, call routing, buyer handoff.
-- **Watchtower** 🗼 — System monitoring, health checks, metrics, alerting.
+- **Scout** 🔍 — Lead acquisition (external form filling, RevPie aged leads), enrichment, quality scoring.
+- **Shield** 🛡️ — Compliance (TSR, FTC, TCPA, CAN-SPAM) + agent security & access control. Has VETO power.
+- **Hawk** 🦅 — Media buying (FB, RevPie), email marketing (copy, sequences, deliverability), spend optimization, A/B testing.
+- **Forge** 🔥 — Website/funnel builder (Next.js), offer wall, redirect management, FastDebt integration, buyer delivery, call routing (Ringba), CRO.
+- **Watchtower** 🗼 — DB management (Supabase), Vercel deployment, system monitoring, health checks, metrics, alerting.
 
 ## Shared Context System
 
