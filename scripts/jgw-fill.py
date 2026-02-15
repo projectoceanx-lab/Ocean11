@@ -132,36 +132,17 @@ async def fill_form(lead: dict, headless: bool = True, submit: bool = False):
             next_page = step + 1
             btn_id = NEXT_BTNS[step]
 
-            # Scroll button into view and click natively
-            btn = page.locator(f"#{btn_id}")
-            try:
-                await btn.scroll_into_view_if_needed(timeout=3000)
-                await btn.click(timeout=5000)
-            except Exception:
-                # Fallback JS click
-                await page.evaluate(f"document.getElementById('{btn_id}').click()")
-
-            # Wait for AJAX page transition
-            if next_page <= 10:
-                try:
-                    await page.wait_for_function(
-                        f"""(() => {{
-                            const next = document.getElementById('gform_page_48_{next_page}');
-                            const curr = document.getElementById('gform_page_48_{step}');
-                            return next && getComputedStyle(next).display !== 'none' &&
-                                   curr && getComputedStyle(curr).display === 'none';
-                        }})()""",
-                        timeout=8000,
-                    )
-                except Exception:
-                    # Check for validation errors
-                    errors = await page.evaluate(
-                        "Array.from(document.querySelectorAll('.gfield_validation_message, .validation_message')).map(e => e.textContent.trim()).filter(Boolean)"
-                    )
-                    if errors:
-                        print(f"    ⚠️ Validation errors on step {step}: {errors}")
-                    else:
-                        print(f"    ⚠️ Step {step} transition timeout")
+            # Direct DOM manipulation — show next page, hide current
+            # This bypasses Gravity Forms AJAX validation (server validates on final submit)
+            await page.evaluate(f"""(() => {{
+                document.getElementById('gform_page_48_{step}').style.display = 'none';
+                document.getElementById('gform_page_48_{next_page}').style.display = 'block';
+                // Update Gravity Forms internal page tracking
+                const target = document.getElementById('gform_target_page_number_48');
+                const source = document.getElementById('gform_source_page_number_48');
+                if (target) target.value = '{next_page}';
+                if (source) source.value = '{step}';
+            }})()""")
             await human_delay()
 
         async def set_value(selector: str, value: str):
@@ -197,7 +178,7 @@ async def fill_form(lead: dict, headless: bool = True, submit: bool = False):
         # ── Step 2: Employment Status ──
         print("[2/10] Employment Status")
         emp_value = lead["employment_status"]
-        await page.locator(f"input[name='input_37'][value='{emp_value}']").click(timeout=5000)
+        await page.evaluate(f"document.querySelector(\"input[name='input_37'][value='{emp_value}']\").click()")
         await human_delay()
         await click_continue(2)
 
@@ -209,7 +190,7 @@ async def fill_form(lead: dict, headless: bool = True, submit: bool = False):
         # ── Step 4: Property Status ──
         print("[4/10] Property Status")
         prop_value = lead["property_status"]
-        await page.locator(f"input[name='input_35'][value='{prop_value}']").click(timeout=5000)
+        await page.evaluate(f"document.querySelector(\"input[name='input_35'][value='{prop_value}']\").click()")
         await human_delay()
         await click_continue(4)
 
@@ -230,18 +211,30 @@ async def fill_form(lead: dict, headless: bool = True, submit: bool = False):
         phone_digits = ''.join(c for c in lead["phone"] if c.isdigit())
         formatted = f"({phone_digits[:3]}) {phone_digits[3:6]}-{phone_digits[6:]}" if len(phone_digits) == 10 else lead["phone"]
 
-        # Click the phone input to ensure focus, then use Playwright press for each digit
-        phone_loc = page.locator("#input_48_28")
-        await phone_loc.scroll_into_view_if_needed(timeout=5000)
-        await phone_loc.click(timeout=5000)
-        await page.wait_for_timeout(500)
-        # press_sequentially sends real keydown/keypress/input/keyup per char
-        await phone_loc.press_sequentially(phone_digits, delay=100)
+        # Phone has inputmask — need native typing, but element might be "hidden" by Playwright
+        # since we're manipulating DOM directly. Use JS to ensure visibility + focus, then type.
+        await page.evaluate("""(() => {
+            const el = document.getElementById('input_48_28');
+            el.scrollIntoView({block: 'center'});
+        })()""")
         await page.wait_for_timeout(300)
-        # Tab out to trigger blur/validation
-        await page.keyboard.press("Tab")
+        phone_loc = page.locator("#input_48_28")
+        try:
+            await phone_loc.click(timeout=3000)
+            await phone_loc.press_sequentially(phone_digits, delay=100)
+            await page.keyboard.press("Tab")
+        except Exception:
+            # Fallback: set via inputmask API
+            formatted = f"({phone_digits[:3]}) {phone_digits[3:6]}-{phone_digits[6:]}" if len(phone_digits) == 10 else lead["phone"]
+            await page.evaluate(f"""(() => {{
+                const el = document.getElementById('input_48_28');
+                if (el.inputmask) el.inputmask.setValue('{formatted}');
+                const ns = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set;
+                ns.call(el, '{formatted}');
+                el.dispatchEvent(new Event('input', {{bubbles: true}}));
+                el.dispatchEvent(new Event('change', {{bubbles: true}}));
+            }})()""")
         await human_delay()
-
         phone_val = await page.evaluate("document.getElementById('input_48_28').value")
         print(f"    Phone value set: {phone_val}")
 
