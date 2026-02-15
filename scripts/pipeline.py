@@ -39,8 +39,9 @@ HEADERS = {
 }
 
 # Offer → filler mapping
-JGW_OFFERS = {4592, 4633, 4591, 4737}
-FDR_NDR_OFFERS = {4930, 4905, 4836, 4632, 4528, 4731}
+# Corrected offer IDs per Everflow account (verified Feb 15, 2026)
+JGW_OFFERS = {4906, 4633, 4718, 4737}       # JGW: 4906($25), 4633($24 NO CA), 4718($24 call), 4737($22 email)
+FDR_NDR_OFFERS = {4930, 4905, 4836, 4783, 4740, 4907}  # FDR: 4930($60), NDR: 4905($50)/4836($45)/4783($24)/4740($16), CLIQ: 4907($30)
 
 AGENT_NAME = "pipeline"
 
