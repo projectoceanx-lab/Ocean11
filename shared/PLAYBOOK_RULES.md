@@ -76,6 +76,45 @@ _These are non-negotiable. Not guidelines — RULES. Violate them and Captain es
 
 21. **Review shared/KNOWLEDGE_HUB.md** before making decisions that others have already learned about. Don't rediscover what Scout already documented.
 
+## 🔒 MANDATORY CHECKPOINTS — Every Agent, Every Session
+
+**These are not optional. If you skip a checkpoint, Captain catches it in review and escalates to AK.**
+
+### On Session Start (BEFORE doing anything)
+- [ ] Read `shared/CONTEXT.md` — know current phase + state
+- [ ] Read `shared/PLAYBOOK_RULES.md` — these rules
+- [ ] Read `docs/BUYERS_PLAYBOOK.md` — offer stack, cap rules, routing
+- [ ] Read `docs/OFFER_CAPS.md` — current caps and restrictions
+- [ ] Check `shared/KNOWLEDGE_HUB.md` — any new patterns since last session?
+- [ ] Check `memory/` for recent daily logs
+
+### After EVERY Significant Action — Update Files
+
+| Action Taken | MUST Update | What to Write |
+|---|---|---|
+| Form mapped or changed | `shared/KNOWLEDGE_HUB.md` | Field changes, new anti-bot, timing |
+| Form filled (submission) | `docs/OFFER_CAPS.md` + DB | Increment submission count |
+| Postback received | `docs/OFFER_CAPS.md` + DB | Increment conversion count |
+| New buyer/offer discovered | `docs/BUYERS_PLAYBOOK.md` + `docs/OFFER_CAPS.md` | Full offer details |
+| Cap update from AK | `docs/OFFER_CAPS.md` + DB + `shared/CONTEXT.md` | New numbers |
+| Compliance issue found | `shared/FAILURES.md` + `docs/COMPLIANCE_RULES.md` | What, why, fix |
+| Campaign launched/killed | `shared/CONTEXT.md` + `memory/YYYY-MM-DD.md` | Budget, targeting, reason |
+| Revenue milestone | `shared/CONTEXT.md` + `shared/METRICS.md` | Actual numbers |
+| Platform behavior changed | `shared/KNOWLEDGE_HUB.md` | What changed, workaround |
+| Something broke | `shared/FAILURES.md` | Root cause + lesson |
+| Decision made | `memory/YYYY-MM-DD.md` | Who decided, why, alternatives rejected |
+| AK said something important | `memory/YYYY-MM-DD.md` | Capture verbatim |
+| Agent status changed | `shared/CONTEXT.md` Agent Status Board | New status + current task |
+
+### On Session End (BEFORE closing)
+- [ ] Update `shared/CONTEXT.md` — your status, any handoffs, blockers
+- [ ] Update `memory/YYYY-MM-DD.md` — what you did, decisions, numbers
+- [ ] If you learned something reusable → `shared/KNOWLEDGE_HUB.md`
+- [ ] If something failed → `shared/FAILURES.md`
+
+### The Rule
+**If you changed something in the real world (DB, form fill, campaign, config) but didn't update the docs, it's as if it didn't happen.** The next agent won't know. The next session won't know. AK won't know. Documentation IS the operation.
+
 ## Communication Rules
 
 22. **Numbers, not narratives.** "CPL dropped 18% on angle B" > "the new angle is performing better."

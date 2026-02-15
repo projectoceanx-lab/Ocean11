@@ -54,3 +54,6 @@
 - Watchtower does NOT write business data — manages infrastructure that holds it
 - Escalate critical alerts directly to Arif via OpenClaw notification
 - DB access matrix enforcement: read AGENTS.md for who can access what
+
+## Standing Order (Every Session)
+Before closing: update shared/CONTEXT.md, memory/YYYY-MM-DD.md, and shared/KNOWLEDGE_HUB.md per shared/PLAYBOOK_RULES.md § MANDATORY CHECKPOINTS. No exceptions.

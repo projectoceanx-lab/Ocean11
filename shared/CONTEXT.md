@@ -1,56 +1,124 @@
 # Shared Context — All Agents Read This
 
-_This file is the shared brain. Every agent reads it at session start. Update it when decisions change._
+_This file is the shared brain. Every agent reads it at session start. Update it when state changes._
 
-## Current Phase: PHASE 0 ✅ COMPLETE → Moving to PHASE 1
-_Nothing else matters until this is done._
+## Current Phase: PHASE 1 — Scout + Shield Loop
+_Phase 0 ✅ COMPLETE (Feb 15, 2026). First form filled, first lead stored._
 
 ## Current State
-- **Phase:** Phase 0 (no database, no leads, no revenue)
-- **Active Agents:** None yet (configuring)
+- **Phase:** Phase 1 (acquire → comply → score → route to buyer)
+- **Active Agents:** Captain (running), others on standby
 - **Budget Spent:** $0 / $5,000
-- **Leads Generated:** 0
+- **Leads in DB:** 2 (1 dry run, 1 submitted to JGW)
 - **Revenue:** $0
 
-## Active Decisions
+## 📋 MANDATORY READING — All Agents
 
-### Captain's Brief — 2026-02-14 23:57 GST
-**State of play:** Three agents completed recon. We have solid intel on 3 form targets (Scout), a clear compliance threat map (Shield), and a verified repo baseline (Watchtower). No money spent. No infrastructure live. We're in the "know before you go" phase and it's going well.
+Every agent MUST read these before acting:
 
-**Key findings:**
-1. All 3 debt relief targets require headless browser (Playwright) — no shortcuts
-2. Pacific Debt is our easiest first target (button-based step 1, low complexity)
-3. Advance fee ban is the #1 compliance landmine — every buyer must be vetted on this before first delivery
-4. FTC "common enterprise" doctrine means bad buyers = our liability. Buyer vetting is not optional, it's existential.
-5. Infrastructure (Supabase, Ringba, FastDebt) is all pending — this is the actual bottleneck now
+| File | What | Why |
+|---|---|---|
+| `docs/BUYERS_PLAYBOOK.md` | Full buyer stack, routing logic, cap rules | Defines how leads flow to revenue |
+| `docs/OFFER_CAPS.md` | Per-offer caps, restrictions, state exclusions | Prevents overfilling, compliance |
+| `docs/COMPLIANCE_RULES.md` | FTC, TSR, TCPA, CAN-SPAM, state rules | Non-negotiable — Shield enforces |
+| `shared/PLAYBOOK_RULES.md` | Hard rules — violate = escalation | Everyone reads, no exceptions |
+| `shared/KNOWLEDGE_HUB.md` | Learned patterns, form filling playbook, platform intel | Don't repeat mistakes |
 
-**Recommended next steps for Arif:**
-1. **Supabase setup** — We need a database before Scout can store anything. Schema exists in `db/schema.sql`. Priority #1.
-2. **Scout: deep-map Pacific Debt full funnel** — Easiest target, get full field schema, validate against DB schema
-3. **Shield: map state licensing requirements** — Which states require licensing for debt relief lead gen?
-4. **Start buyer outreach list** — I need to know who we're selling to. Arif: any existing contacts from Zappian, or cold start?
-5. **Hawk + Signal stay offline** — No traffic to buy, no leads to deliver. They activate when infrastructure is ready.
+## ⚠️ CRITICAL BUSINESS LOGIC — Caps & Conversions
+
+**Read `docs/BUYERS_PLAYBOOK.md` for full details. Summary:**
+
+1. **Submission ≠ Revenue.** We fill a form (submission). Buyer checks quality/dedup. If accepted → Everflow pixel fires (conversion). CONVERSION = revenue.
+2. **Cap = max confirmed conversions**, not submissions. Postbacks can be delayed hours.
+3. **Safety buffer:** Stop submitting at 1.5x cap to prevent overfilling.
+4. **AK provides caps weekly** (Monday 9AM IST cron). Captain updates `offer_caps` table + OFFER_CAPS.md.
+5. **Before every fill:** Check `can_submit_to_offer()` — day allowed? State ok? Under cap? Dedup clear?
+
+## Live Platforms
+
+### Everflow (RevvMind) — Offer Tracking & Attribution
+- **URL:** revvmind.everflowclient.io
+- **Login:** arif@revvmind.com
+- **Role:** Partner/Affiliate
+- **10 debt relief offers** (FDR $60, NDR $16-50, JGW $22-25, Cliqsilver $30)
+- **5 loan offers** (Zappian legacy, CPS 100%)
+- **Jan 2026:** 310 clicks, 6 conversions, $24 revenue, 1.94% CVR
+- **Account Manager:** Zakir Khan (zakir@zappian.com)
+
+### RevPie — Native Ad Traffic Source
+- **URL:** revpie.com
+- **Login:** vishal@revvmind.com
+- **Role:** Advertiser
+- **Balance:** $481.57 | Lifetime spend: $15,518.43
+- **7 campaigns** (all paused, Zappian era)
+- **Key control:** Whitelist/Blacklist Source IDs + custom CPC bids
+- **RevPie → Everflow:** Tracking links in ad URLs pass clicks to Everflow for attribution
+
+### Supabase — Database
+- **URL:** https://xpbbdmosyrhkoczhcgpt.supabase.co
+- **Tables live:** leads, buyers, campaigns, deliveries, pnl_daily, compliance_log, agent_activity, offer_fields
+- **Tables pending:** offer_caps, offer_submissions (schema at `db/offer_caps_schema.sql`)
+
+## Offer Routing Priority (Highest CPA First)
+
+| Priority | Offer | Buyer | CPA | Channel | Key Restriction |
+|---|---|---|---|---|---|
+| 1 | 4930 | FDR | $60 | Email | M-F only, ask for cap |
+| 2 | 4905 | NDR | $50 | Web | TBD |
+| 3 | 4836 | NDR | $45 | Email | M-F, budgeted |
+| 4 | 4907 | Cliqsilver | $30 | Web | TBD |
+| 5 | 4906 | JGW | $25 | Web | TBD |
+| 6 | 4783 | NDR | $24 | Email | TBD |
+| 7 | 4718 | JGW | $24 | Email | Marketplace |
+| 8 | 4633 | JGW | $24 | Email | 7 days, NO CA |
+| 9 | 4737 | JGW | $22 | Email | M-F |
+| 10 | 4740 | NDR | $16 | Email | Budgeted, last resort |
+
+_Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
+
+## Phase 1 Milestones
+
+- [x] Database live (Supabase)
+- [x] First form mapped + filled (JGW)
+- [x] First lead stored in DB
+- [x] Everflow explored — all 15 offers mapped
+- [x] RevPie explored — 7 campaigns, Source ID optimization documented
+- [x] Cap management system designed (schema + cron)
+- [x] Buyers Playbook rewritten with live data
+- [ ] **Run offer_caps_schema.sql in Supabase**
+- [ ] **AK provides first round of caps**
+- [ ] Shield compliance check on stored leads
+- [ ] Map second form target (Pacific Debt or NDR)
+- [ ] Proxy setup for scaled form filling
+- [ ] Quality scoring logic implemented
+- [ ] Everflow postback endpoint configured (to receive pixel fires)
+- [ ] First CONFIRMED conversion (Everflow postback)
 
 ## Blockers
-<!-- Any agent can flag a blocker here — Captain triages -->
+- Caps unknown — waiting for AK's first cap update
+- Proxy provider not selected (~$20-50/mo)
+- FastDebt API not yet integrated (enrichment)
+- Brave API key not configured (web search limited)
 
-## Today's Priority
-_Set by Captain 🎖️ — 2026-02-14_
-1. **Arif decision needed:** Supabase setup + buyer contact list (existing or cold start?)
-2. Scout: deep-map Pacific Debt full funnel (all steps, all fields, hidden fields, honeypots)
-3. Shield: state licensing requirements for debt relief lead gen
-4. Watchtower: verify infrastructure endpoint reachability (Supabase, any configured APIs)
+## Cron Jobs Active
+
+| Job | Schedule | Purpose |
+|---|---|---|
+| Memory maintenance | 2:00 AM Dubai daily | Decay + promote memory observations |
+| Weekly cap check | 9:00 AM IST Monday | Captain asks AK for offer caps |
 
 ## Agent Status Board
 | Agent | Status | Last Active | Current Task |
 |---|---|---|---|
-| Captain | 🟡 Idle | 2026-02-14 23:57 GST | First review complete — scored Scout/Shield/Watchtower recon, set priorities |
-| Scout | 🟡 Idle | 2026-02-14 | Recon complete — 3 targets mapped in KNOWLEDGE_HUB.md |
-| Shield | 🟡 Idle | 2026-02-14 23:54 GST | Completed: FTC enforcement review. 3 pre-launch gates defined. |
-| Hawk | 🟡 Idle | 2026-02-15 00:00 GST | Complete: FB Ads debt relief CPL benchmarks → KNOWLEDGE_HUB.md |
-| Signal | 🟡 Idle | 2026-02-14 23:58 GST | Completed: Buyer landscape research. Intel in KNOWLEDGE_HUB.md. Needs live verification via Everflow/network logins. |
-| Watchtower | 🟡 Idle | 2026-02-14 | Health check complete — all systems nominal |
+| Captain 🎖️ | 🟢 Active | 2026-02-15 17:41 GST | Everflow/RevPie exploration complete, playbook updated |
+| Scout 🔍 | 🟡 Standby | — | Next: Map second form target, scale form filling |
+| Shield 🛡️ | 🟡 Standby | — | Next: Compliance check on stored leads |
+| Hawk 🦅 | 🟡 Standby | — | Next: RevPie campaign optimization (Phase 3) |
+| Forge 🔥 | 🟡 Standby | — | Next: Landing pages, offer wall (Phase 3) |
+| Watchtower 🗼 | 🟡 Standby | — | Next: Run offer_caps_schema.sql, monitoring setup |
 
 ## Handoff Queue
-<!-- When one agent needs another to pick up work -->
 <!-- Format: [FROM] → [TO]: description (priority: high/medium/low) -->
+- [CAPTAIN] → [WATCHTOWER]: Run `db/offer_caps_schema.sql` in Supabase (priority: high)
+- [CAPTAIN] → [SCOUT]: Map Pacific Debt or NDR form as second target (priority: medium)
+- [CAPTAIN] → [SHIELD]: Compliance check on 2 stored leads (priority: medium)

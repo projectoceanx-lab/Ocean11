@@ -62,3 +62,6 @@
 - Every landing page must pass Shield compliance review before launch
 - Never deliver a lead that hasn't passed Shield compliance
 - Buyer relationship management: remember preferences, hours, quirks
+
+## Standing Order (Every Session)
+Before closing: update shared/CONTEXT.md, memory/YYYY-MM-DD.md, and shared/KNOWLEDGE_HUB.md per shared/PLAYBOOK_RULES.md § MANDATORY CHECKPOINTS. No exceptions.

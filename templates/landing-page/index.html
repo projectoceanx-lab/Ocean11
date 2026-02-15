@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Debt Relief Savings Estimate</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="topbar"><span>&#128222; Speak with a debt specialist — Call now</span></div>
+
+<section class="hero">
+  <div class="container">
+    <h1>Struggling with Debt?<br>Get a Free Savings Estimate.</h1>
+    <p>See how much you could save with a personalized debt relief plan. No obligation, 100% free.</p>
+  </div>
+</section>
+
+<div class="trust-bar">
+  <div class="trust-item"><span class="trust-icon">&#9989;</span> 100% Free Consultation</div>
+  <div class="trust-item"><span class="trust-icon">&#128274;</span> No Obligation</div>
+  <div class="trust-item"><span class="trust-icon">&#11088;</span> BBB Accredited</div>
+</div>
+
+<div class="container">
+<div class="form-card">
+  <div class="step-indicators">
+    <span class="step-dot active" id="dot1"></span>
+    <span class="step-dot" id="dot2"></span>
+    <span class="step-dot" id="dot3"></span>
+  </div>
+
+  <form id="leadForm" action="/api/leads" method="POST">
+
+    <!-- STEP 1 -->
+    <div class="form-step active" id="step1">
+      <h2>How much debt do you have?</h2>
+      <div class="field-group">
+        <label for="debt_amount">Select your total unsecured debt</label>
+        <select id="debt_amount" name="debt_amount" required>
+          <option value="" disabled selected>Choose an amount…</option>
+          <option value="5000-10000">$5,000 – $10,000</option>
+          <option value="10000-15000">$10,000 – $15,000</option>
+          <option value="15000-20000">$15,000 – $20,000</option>
+          <option value="20000-30000">$20,000 – $30,000</option>
+          <option value="30000-50000">$30,000 – $50,000</option>
+          <option value="50000-75000">$50,000 – $75,000</option>
+          <option value="75000-100000">$75,000 – $100,000</option>
+          <option value="100000+">$100,000+</option>
+        </select>
+      </div>
+      <button type="button" class="btn btn-primary" onclick="goStep(2)">Continue</button>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="form-step" id="step2">
+      <h2>Tell us a bit more</h2>
+      <div class="field-group">
+        <label for="state">State</label>
+        <select id="state" name="state" required>
+          <option value="" disabled selected>Select state…</option>
+          <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>District of Columbia</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="debt_type">Type of debt</label>
+        <select id="debt_type" name="debt_type" required>
+          <option value="" disabled selected>Select type…</option>
+          <option>Credit Card</option>
+          <option>Personal Loan</option>
+          <option>Medical</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="btn-row">
+        <button type="button" class="btn btn-secondary" onclick="goStep(1)">Back</button>
+        <button type="button" class="btn btn-primary" onclick="goStep(3)">Continue</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="form-step" id="step3">
+      <h2>Where should we send your estimate?</h2>
+      <div class="row">
+        <div class="field-group">
+          <label for="first_name">First name</label>
+          <input type="text" id="first_name" name="first_name" required placeholder="Jane">
+        </div>
+        <div class="field-group">
+          <label for="last_name">Last name</label>
+          <input type="text" id="last_name" name="last_name" required placeholder="Smith">
+        </div>
+      </div>
+      <div class="field-group">
+        <label for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" required placeholder="(555) 123-4567">
+      </div>
+      <div class="field-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required placeholder="jane@example.com">
+      </div>
+
+      <p class="tcpa">By clicking "Get My Free Estimate," you consent to receive calls, text messages, and/or pre-recorded messages from us or our partners at the phone number you provided, including via automated technology. Consent is not a condition of purchase. Message & data rates may apply. You may opt out at any time by replying STOP. See our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms of Service</a>.</p>
+
+      <div class="btn-row">
+        <button type="button" class="btn btn-secondary" onclick="goStep(2)">Back</button>
+        <button type="submit" class="btn btn-primary">Get My Free Estimate</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+</div>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="container">
+    <h3>What Our Clients Say</h3>
+    <div class="testimonial">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p>"I was overwhelmed with credit card debt. The team helped me understand my options and put together a plan that worked for my budget."</p>
+      <div class="author">— Sarah M., Texas</div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p>"The free consultation was exactly that — free with no pressure. I finally feel like I have a path forward."</p>
+      <div class="author">— James R., Florida</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <p class="ad-disclosure">THIS IS AN ADVERTISEMENT</p>
+
+    <p class="disclaimer">This website is not affiliated with any government agency. We do not guarantee specific results. Individual savings vary based on your financial situation, creditor policies, and program terms. Debt relief services may negatively affect your credit score and may result in tax consequences. Not all debts are eligible for debt relief programs. Read and understand all program terms prior to enrollment.</p>
+
+    <p class="disclaimer">We are not a lender, law firm, or credit repair organization. We connect consumers with debt relief providers who may be able to help reduce unsecured debt obligations.</p>
+
+    <div class="footer-links">
+      <a href="/privacy">Privacy Policy</a>
+      <a href="/terms">Terms of Service</a>
+      <a href="/do-not-sell">Do Not Sell My Info</a>
+      <a href="/unsubscribe">Unsubscribe</a>
+    </div>
+
+    <p class="address">[Company Name] · [123 Street Address, City, ST 00000]</p>
+    <p>&copy; 2025 [Company Name]. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+function goStep(n){
+  var cur=document.querySelector('.form-step.active');
+  // validate current step fields before advancing
+  if(n>parseInt(cur.id.replace('step',''))){
+    var fields=cur.querySelectorAll('select[required],input[required]');
+    for(var i=0;i<fields.length;i++){if(!fields[i].value){fields[i].focus();return;}}
+  }
+  document.querySelectorAll('.form-step').forEach(function(s){s.classList.remove('active')});
+  document.getElementById('step'+n).classList.add('active');
+  document.querySelectorAll('.step-dot').forEach(function(d,i){
+    d.classList.remove('active','done');
+    if(i<n-1)d.classList.add('done');
+    if(i===n-1)d.classList.add('active');
+  });
+  window.scrollTo({top:document.querySelector('.form-card').offsetTop-20,behavior:'smooth'});
+}
+
+document.getElementById('leadForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var fd=new FormData(this);
+  fetch('/api/leads',{method:'POST',body:fd})
+    .then(function(){window.location.href='thankyou.html'})
+    .catch(function(){window.location.href='thankyou.html'});
+});
+</script>
+
+</body>
+</html>

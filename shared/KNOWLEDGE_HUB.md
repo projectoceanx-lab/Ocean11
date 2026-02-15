@@ -393,6 +393,110 @@ Don't chase the $60 CPA. Chase the **quality match**:
 5. [ ] Draft buyer outreach email template for direct Tier 1 contacts
 6. [ ] Confirm state licensing requirements per buyer — map which states we can serve
 
+## RevPie ↔ Everflow Traffic Optimization Loop (Captain, Feb 15 2026)
+
+**Source: AK direct + RevPie dashboard exploration**
+
+### How It Works
+- RevPie is a **native ad network** — publishers (source IDs) show our ads, we pay CPC
+- Each publisher has a **Source ID** in RevPie
+- Our ad URLs contain **Everflow tracking links** (e.g. `trackingcampaign.o18.link/c?o=...&aff_click_id={replace_it}`)
+- Everflow receives the click, tracks through to conversion (lead submitted, call connected, etc.)
+- **Everflow is the source of truth** for which Source IDs actually convert
+
+### The Optimization Loop
+```
+1. RevPie Source ID sends traffic → our Everflow tracking link
+2. Everflow tracks: click → landing page → form fill → lead → revenue
+3. Hawk checks Everflow: which Source IDs convert? At what CPA?
+4. Back to RevPie:
+   - WHITELIST high-converting Source IDs → raise custom bids
+   - BLACKLIST garbage Source IDs → stop wasting money
+   - Adjust default bid for the ad
+```
+
+### RevPie Controls
+- **Whitelist/Blacklist** page (`/advertiser/wl-bl`) — block/allow per campaign + ad
+- **Custom Bid per Source ID** — on Live Sources tab inside each ad
+- **Default bid range:** $0.10 - $7.00 CPC
+- **Ad Rotation Schedule** — 24h × 7-day grid, timezone-aware (set to America/New_York)
+
+### Existing Campaigns (Zappian era, all paused)
+| Campaign | Daily Budget | Ads |
+|---|---|---|
+| Debt_Campaign | $220 | NDR_Mobile_W ($0.50 CPC), Cliq_Mobile_W_NEW |
+| DRA_debt | $120 | 1 active |
+| Top_Debt_Options | $100 | 1 active |
+| Financify_RS | $100 | 1 active |
+| Iconic_debt | $50 | 1 active / 1 paused |
+| SpikeMyCC | $50 | 0 active / 1 paused |
+| SelfCreditbuilder | $50 | 1 active |
+
+- **Account balance:** $481.57 (usable)
+- **Total spent (lifetime):** $15,518.43
+- **Account type:** Advertiser
+- **Login:** vishal@revvmind.com
+
+### Key Insight from AK
+Source ID optimization is THE lever for RevPie profitability. Same ad, same creative — one source converts at 3%, another at 0.1%. The difference between profitable and bankrupt is knowing which is which, and that data lives in Everflow.
+
+## Everflow (RevvMind) — Full Platform Map (Captain, Feb 15 2026)
+
+**Source: Direct exploration of revvmind.everflowclient.io**
+
+### Account Details
+- **URL:** revvmind.everflowclient.io
+- **Login:** arif@revvmind.com
+- **View:** Partner/Affiliate (not Network Admin)
+- **Account Manager:** Zakir Khan (zakir@zappian.com)
+- **Last Month (Jan 2026):** 310 clicks, 6 conversions, $24 revenue, 1.94% CVR
+
+### Sidebar Navigation
+1. ☰ **Hamburger** — expand/collapse sidebar
+2. 🔍 **Search** — search offers, postbacks, transactions (shows Recently Viewed)
+3. 🖥️ **Dashboard** — My Stats: Clicks, Revenue, Conversions, CVR, Events, EVR + Performance chart
+4. 🔗 **Tracking & Asset Generator** — generate tracking links per offer (Single/Multiple/All), creative assets, coupon codes
+5. 📦 **Offers → Manage** — all 15 offers listed with ID, name, category, channels, payout, rules
+6. 🔔 **Notifications** — empty (no recent)
+7. 👤 **Profile** — My Account, Notification Preferences, Logout
+8. ▶️ **Unknown** — times out on click (possibly Reporting — couldn't load)
+
+### All 15 Offers (VERIFIED from Everflow)
+
+#### Debt Relief Offers (Our Focus — 10 offers)
+| ID | Name | Category | Channel | Payout | Notes |
+|---|---|---|---|---|---|
+| 4930 | Freedom Debt Relief - Email only - M-F Drops Only | Debt | - | CPA $60 | Ask for cap, highest payout |
+| 4907 | Cliqsilver Credit Card Debt Cpl-sq | Credit Card | - | CPA $30 | |
+| 4906 | JG Wentworth (nc-21805786) | Debt | - | CPA $25 | Web traffic |
+| 4905 | National Debt Relief - W (nc-21865725) | Debt | - | CPA $50 | Web traffic |
+| 4836 | NDR - (Mon-Fri) Private-CPL (Budgeted) | Debt Relief | Email | CPA $45 | |
+| 4783 | NDR -SQ(NC-21734336) | Debt | Email | CPA $24 | |
+| 4740 | NDR - Email Only - CPL (Budgeted) | Debt Relief | Email | CPA $16 | Lowest debt CPA |
+| 4737 | JGW Debt Settlement M-F {US} (NC-21734350) | Debt | Email | CPA $22 | |
+| 4718 | JGW Debt Settlement - [MKP] | Data | Email | CPA $24 | Marketplace |
+| 4633 | JGW Debt Settlement CPL - Email NOW weekends! (NO CA) | Debt Relief | Email | CPA $24 | Accepts weekends, no CA |
+
+#### Loan Offers (Zappian legacy — 5 offers)
+| ID | Name | Category | Channel | Payout |
+|---|---|---|---|---|
+| 3228 | Maxloanusa.com_ZM_025_PUB | Personal Loan | Email + SMS | CPS 100% |
+| 2884 | Rapidfundonline.com | Payday Loan | Email | CPS 100% |
+| 2256 | 1stlendingusa.com_ZM_025 | Personal Loan | Email | CPS 100% |
+| 1901 | eloantoday.com_ZM_025 | Personal Loan | Email + SMS | CPS 100% |
+| 176 | Brighterloan.com_ZM_025 | Personal Loan | Email | CPS 100% |
+
+### Key Observations
+1. **All 15 approved, all US, all active** — ready to use
+2. **Debt offers split by channel:** Web (-) vs Email — different offers for different traffic types
+3. **FDR $60 is highest CPA** but "Ask for Cap" = limited volume
+4. **NDR has 4 separate offers** at different CPAs ($16-$50) — likely different quality/channel requirements
+5. **JGW has 4 offers** ($22-$25) — one accepts weekends (no CA)
+6. **Loan offers are CPS 100%** — revenue share, not fixed CPA. These are Zappian's own loan sites
+7. **"Budgeted" in offer name** = buyer has a monthly cap — volume limited
+8. **Offer detail pages don't render** in partner view (shows blank "Network" page)
+9. **One confirmed transaction:** FDR offer 4930 on 01/28/2026 04:09:53 EST
+
 ## Market Intelligence
 <!-- Watchtower + Captain write here -->
 <!-- Competitor moves, regulatory changes, market trends, seasonal patterns -->

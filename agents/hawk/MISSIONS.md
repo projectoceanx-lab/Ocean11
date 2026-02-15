@@ -53,3 +53,6 @@
 - Start with $50/day FB budget ($1,500/mo of $5K total)
 - Shield must approve ALL ad copy and email templates before launch
 - When email volume justifies a dedicated agent, we'll split it out
+
+## Standing Order (Every Session)
+Before closing: update shared/CONTEXT.md, memory/YYYY-MM-DD.md, and shared/KNOWLEDGE_HUB.md per shared/PLAYBOOK_RULES.md § MANDATORY CHECKPOINTS. No exceptions.

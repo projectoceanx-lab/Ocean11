@@ -21,3 +21,6 @@
 - Always check DB before inserting — no duplicate leads
 - Rotate proxies every 5-10 requests minimum
 - Log every form submission attempt (success or fail)
+
+## Standing Order (Every Session)
+Before closing: update shared/CONTEXT.md, memory/YYYY-MM-DD.md, and shared/KNOWLEDGE_HUB.md per shared/PLAYBOOK_RULES.md § MANDATORY CHECKPOINTS. No exceptions.
