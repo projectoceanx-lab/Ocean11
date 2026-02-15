@@ -88,6 +88,8 @@ RevPie (buy aged leads) → Our Website (landing/offer wall)
 
 **Key insight:** We don't fill forms to GET leads. We fill forms to DELIVER leads. The form filler is the last mile — delivering pre-qualified, enriched leads to buyers.
 
+**Key insight #2: Dedup + routing is the brain.** Most leads across RevPie and FB will overlap. Before every fill, check the `deliveries` table: has this lead already been sent to this buyer? If yes, route to the next eligible buyer who hasn't seen it. Without dedup, we're burning acquisition dollars sending duplicates that get rejected. The routing intelligence — which lead goes to which buyer, based on debt profile + delivery history — is what makes the difference between profitable and bankrupt.
+
 ## The 7 Pillars (Zappian Playbook Digitized)
 
 1. **Websites** — OUR landing pages + offer wall. Leads land here first. Compliant disclaimers, trust signals.

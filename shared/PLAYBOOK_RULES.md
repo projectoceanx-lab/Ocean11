@@ -48,6 +48,10 @@ _These are non-negotiable. Not guidelines — RULES. Violate them and Captain es
 
 11b. **The pipeline is: BUY → ENRICH → FILTER → DELIVER.** We buy leads from RevPie (or drive traffic via FB). Leads land on OUR website. We enrich via FastDebt. We show our offer wall. Scout fills buyer forms ONLY with top-quality enriched leads. The form filler is the DELIVERY mechanism, not acquisition.
 
+11c. **Dedup is sacred.** Before filling ANY buyer form, check: has this lead (email/phone) already been sent to this buyer? If yes, SKIP — route to next eligible buyer. Sending duplicates = rejected leads + burned buyer relationships + wasted acquisition spend. Every fill is logged in `deliveries` table with buyer_id, lead_id, timestamp, status.
+
+11d. **Intelligent routing decides profitability.** Most leads will be duplicates across sources. The system must know: which lead goes where, which buyer hasn't seen it, which buyer's quality threshold it matches. This routing intelligence is what turns $5K in ad spend into revenue — without it, every dollar on RevPie and FB is wasted.
+
 ## Operational Rules
 
 12. **Shield approves before delivery.** No lead goes to a buyer without compliance check. No exceptions. Not even if Captain is in a rush.
