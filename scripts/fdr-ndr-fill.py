@@ -220,6 +220,13 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
             ),
         )
         page = await context.new_page()
+        # Stealth: patch navigator.webdriver, chrome.runtime, etc.
+        try:
+            from playwright_stealth import stealth_async
+            await stealth_async(page)
+            print("[*] Stealth mode: ON")
+        except ImportError:
+            print("[!] playwright-stealth not installed, running without stealth")
 
         try:
             # ── STEP 1: Debt Amount ──

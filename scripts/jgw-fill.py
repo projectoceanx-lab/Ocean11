@@ -114,6 +114,13 @@ async def fill_form(lead: dict, headless: bool = True, submit: bool = False):
             user_agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
         )
         page = await context.new_page()
+        # Stealth: patch navigator.webdriver, chrome.runtime, etc.
+        try:
+            from playwright_stealth import stealth_async
+            await stealth_async(page)
+            print("[*] Stealth mode: ON")
+        except ImportError:
+            print("[!] playwright-stealth not installed, running without stealth")
 
         print(f"[*] Navigating to {URL}")
         await page.goto(URL, wait_until="domcontentloaded", timeout=30000)
