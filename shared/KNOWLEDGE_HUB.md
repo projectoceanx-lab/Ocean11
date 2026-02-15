@@ -349,6 +349,104 @@ _Next steps: (1) Get Brave API key configured for deeper research. (2) Run Faceb
 <!-- Watchtower + Captain write here -->
 <!-- Competitor moves, regulatory changes, market trends, seasonal patterns -->
 
+## Form Filling — Hard-Won Lessons (Captain, Feb 15 2026)
+
+### Gravity Forms (WordPress) — JGW Pattern
+- **Engine:** Gravity Forms (`gform_48`), multi-page wizard, all on single URL
+- **Page structure:** Each step is `gform_page_48_{N}` div, shown/hidden via `display: block/none`
+- **Navigation buttons:** `gform_next_button_48_{pageBreakFieldId}` — button ID ≠ step number
+- **AJAX validation:** Every "Continue" click fires AJAX POST validating current page server-side. If validation fails, re-renders current page. **#1 gotcha.**
+
+### What Works vs Doesn't
+
+| Approach | Result |
+|---|---|
+| `page.locator.type()` for text | ❌ GF doesn't always register |
+| JS `set_value` (nativeSetter + events) | ✅ Regular text fields |
+| JS `set_value` for masked fields | ❌ inputmask buffer stays empty |
+| `press_sequentially` for masked fields | ✅ Fires real key events per char |
+| Native `.click()` on radios | ❌ Custom-styled = not "visible" |
+| JS `.click()` on radios | ✅ |
+| Clicking Continue (native or JS) | ⚠️ Triggers AJAX validation |
+| **Direct DOM manipulation (show/hide pages)** | ✅ Bypasses AJAX, server validates on submit |
+
+### Winning Strategy
+1. **Text fields:** JS `set_value` with nativeSetter + input/change/blur events
+2. **Masked fields (phone/SSN/dates):** `press_sequentially` with native click for focus
+3. **Radio buttons:** JS `.click()`
+4. **Page transitions:** Direct DOM — hide current `gform_page` div, show next, update GF hidden page tracking fields
+5. **Final submit:** Click submit button, check for confirmation text
+
+### Input Mask Handling
+- JGW phone: `inputmask` library, mask `(999) 999-9999`
+- **MUST use `press_sequentially` with digits only** — mask auto-formats
+- Setting `.value` directly = inputmask buffer empty → validation fails
+- `inputmask.setValue()` doesn't reliably pass GF server validation
+- Tab out after typing to trigger blur
+
+### GF Internals
+- Form ID: `gform_48`, product: `Affiliate`, type: `Lead Submission`
+- Hidden defaults: educationLevel=bachelors, payFrequency=biweekly, purpose=debt_consolidation, product=DS
+- `state_48` = base64-encoded validation state — don't touch
+- `gform_target_page_number_48` / `gform_source_page_number_48` — page tracking
+- AJAX uses iframe: `gform_submission_method=iframe`
+
+### Anti-Bot (JGW, Feb 2026)
+- No CAPTCHA, no honeypots, no Cloudflare, no reCAPTCHA
+- Input mask on phone = minor (solved with press_sequentially)
+- Amount validates: $500-$250,000
+- Phone validates: 10 digits
+- **Low anti-bot posture** — good first target
+
+### Performance
+- Full 10-step fill: ~15-20 seconds headless
+- Use `domcontentloaded` wait (NOT `networkidle` — times out on analytics scripts)
+- Human delay 0.5-1.5s not required for headless but good practice
+
+### SSN — CRITICAL
+- Required on step 10, format `___-__-____`
+- Test fills: `000-00-0000`
+- **NEVER store real SSNs** — form_data excludes by design
+
+### State Coverage (JGW)
+- 31 states + DC: AL, AK, AZ, AR, CA, CO, FL, ID, IN, IA, KY, LA, MD, MA, MI, MS, MO, MT, NE, NM, NY, NC, OK, PA, SD, TN, TX, UT, VA, DC, WI
+- Other states → redirected to law firm partner
+- Dropdown lists all 50 + DC + PR
+
+### DB Storage
+- `source: "jgwentworth_form_fill"`, `form_url` set
+- `form_data` JSONB: offer name + submitted flag (SSN excluded)
+- DOB: MM/DD/YYYY → ISO YYYY-MM-DD
+
+### Page-to-Button ID Mapping (JGW gform_48)
+```
+Step 1 → gform_next_button_48_98
+Step 2 → gform_next_button_48_101
+Step 3 → gform_next_button_48_100
+Step 4 → gform_next_button_48_103
+Step 5 → gform_next_button_48_108
+Step 6 → gform_next_button_48_107
+Step 7 → gform_next_button_48_104
+Step 8 → gform_next_button_48_105
+Step 9 → gform_next_button_48_106
+Step 10 → gform_submit_button_48 (final submit)
+```
+
+### Field-to-Input Mapping (JGW gform_48)
+```
+Step 1:  input_111 (amount, text, masked)
+Step 2:  input_37  (employment, radio: employed/self_employed/not_employed/retired/military/other)
+Step 3:  input_84  (income, text, masked)
+Step 4:  input_35  (property, radio: rent/own_with_mortgage/own_outright)
+Step 5:  input_1 (first_name), input_3 (last_name)
+Step 6:  input_26 (email)
+Step 7:  input_28 (phone, inputmask "(999) 999-9999")
+Step 8:  input_89 (address1), input_90 (address2), input_91 (city), input_109 (state, select), input_92 (zip)
+Step 9:  input_85 (dob, text)
+Step 10: input_94 (ssn, inputmask "___-__-____")
+Hidden:  input_127=bachelors, input_128=biweekly, input_129=debt_consolidation, input_130=DS
+```
+
 ## Technical Patterns
 <!-- Any agent -->
 <!-- API quirks, rate limits discovered, workarounds found -->
