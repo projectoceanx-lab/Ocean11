@@ -2,8 +2,11 @@
 
 _This file is the shared brain. Every agent reads it at session start. Update it when decisions change._
 
+## Current Phase: PHASE 0 — Database + First Lead
+_Nothing else matters until this is done._
+
 ## Current State
-- **Phase:** Pre-launch (setting up infrastructure)
+- **Phase:** Phase 0 (no database, no leads, no revenue)
 - **Active Agents:** None yet (configuring)
 - **Budget Spent:** $0 / $5,000
 - **Leads Generated:** 0
