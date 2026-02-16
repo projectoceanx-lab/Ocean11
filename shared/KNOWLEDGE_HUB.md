@@ -519,6 +519,16 @@ Scope scanned: CFPB, FTC, FCC, CAN-SPAM guidance and key state lenses (CA/NY/TX/
 
 **Operational decision:** No immediate edits to `docs/VOICE_GUIDE.md`, `config/copy_lexicon.yaml`, or V1 copy templates.
 
+### Login Reliability Architecture v1 — 2026-02-17 (Captain)
+Added `docs/LOGIN_RELIABILITY_PLAYBOOK.md` for stable auth operations on Everflow/RevPie/Facebook.
+
+Core model:
+- Layer 1: Chrome relay for login-sensitive tasks
+- Layer 2: openclaw profile for scripted fallback
+- Layer 3: API-first migration for repeatable operations
+
+Includes mandatory pre-flight, recovery matrix, platform SOPs, Vision monitoring cadence, and proof-bundle gate before marking completion.
+
 ### Copy Guardrails System v1 — 2026-02-16 (Captain)
 Implemented a controlled copy system so Hawkeye output stays consistent and compliant across debt relief + personal loan cross-monetization.
 
@@ -642,3 +652,9 @@ Hidden:  input_127=bachelors, input_128=biweekly, input_129=debt_consolidation, 
 - db: 3 files (schema.sql, seed.sql, migrations/001_initial.sql).
 - no missing structural files detected. repo is structurally complete for pre-launch phase.
 - note: `ls` aliased or missing on this system — use `find` instead for file listing.
+
+### OpenClaw Fury Model Source-of-Truth (2026-02-17, Peter)
+- Live Fury model routing is controlled by `~/.openclaw/openclaw.json` (`agents.list[]` entry with `id: "main"`), not by repo template files alone.
+- `config/openclaw.yaml` is still useful as team template/source control, but changing only that file does not switch already running local Fury sessions.
+- Service restart command to apply runtime config changes: `openclaw gateway restart`.
+- Existing session records can keep old model metadata (for example `agent:main:main` still showing `gpt-5.3-codex-spark` history); start/reset session key after model switch to avoid inherited context issues.

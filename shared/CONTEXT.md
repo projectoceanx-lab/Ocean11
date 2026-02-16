@@ -9,6 +9,8 @@ _Phase 0 ✅ COMPLETE (Feb 15, 2026). First form filled, first lead stored._
 - **Phase:** Phase 1 (acquire → comply → score → route to buyer)
 - **Active Agents:** Captain (running); Peter/Cap/Hawkeye completed copy-stack tasks; others on standby
 - **Infra update (2026-02-16 23:15 GMT+4):** Ocean postback endpoint deployed on Vercel at `https://ocean11-postback.vercel.app` (health OK). Vision = primary owner, Peter = backup owner.
+- **Vision navigation drill update (2026-02-16 23:55 GMT+4):** Completed deep Everflow postback/navigation drill and published evidence-based runbook at `docs/EVERFLOW_POSTBACK_SPECIALIST_PLAYBOOK.md` (menus, routes, role limitations, implementation checklist, troubleshooting, self-test).
+- **Model routing update (2026-02-17 00:36 GMT+4):** Fury switched from `openai-codex/gpt-5.3-codex-spark` to `openai-codex/gpt-5.3-codex` in live runtime config (`~/.openclaw/openclaw.json`) and template config (`config/openclaw.yaml`). Gateway restart executed via `openclaw gateway restart`.
 - **Budget Spent:** $0 / $5,000
 - **Leads in DB:** 2 (1 dry run, 1 submitted to JGW) — unchanged since last sync
 - **Revenue:** $0 — unchanged since last sync
@@ -102,8 +104,9 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 - FastDebt API not yet integrated (enrichment)
 - Vision/Kimi OpenRouter path still intermittently falling back to Codex (connector issue under investigation)
 - Memory maintenance cron failed on Feb 16 with model access error (`gpt-5.3-codex` unavailable in that run)
-- Everflow global postback still not configured to Ocean receiver endpoint
+- Everflow global postback still not configured to Ocean receiver endpoint (playbook completed; execution steps documented in `docs/EVERFLOW_POSTBACK_SPECIALIST_PLAYBOOK.md`)
 - No new pipeline movement this cycle (0 acquired / 0 delivered / $0 revenue / $0 spend)
+- Fury direct session key `agent:main:main` remains at historical `206,385` tokens on spark metadata; requires a fresh/reset session key to fully eliminate overflow behavior.
 
 ## Latest Regulatory Intelligence (Captain)
 - Run date: 2026-02-16 (manual trigger)
@@ -118,6 +121,7 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 | Weekly cap check | 9:00 AM IST Monday | Captain asks AK for offer caps |
 | Regulatory intelligence weekly | Monday 10:30 Dubai | CFPB/FTC/FCC/CAN-SPAM/state update + Captain Action Pack |
 | Regulatory follow-through | Monday 11:00 Dubai | Captain reviews, assigns owners, updates shared context |
+| Login reliability heartbeat | Every 4h | Vision checks browser/auth health for Everflow/RevPie/FB + alerts |
 
 ## Agent Status Board
 | Agent | Status | Last Active | Current Task |
@@ -128,16 +132,21 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 | Hawkeye 🦅 | 🟢 Active | 2026-02-16 15:48 GST | Copy Pack V1 ready; waiting for Phase 3 traffic go-live gate |
 | Widow 🔍 | 🟡 Standby | — | Next: Map Pacific Debt/NDR second form target with anti-bot notes |
 | Banner 🔥 | 🟡 Standby | — | Next: Landing + offer-wall execution plan only (Phase 3 gate) |
-| Vision 🗼 | 🟡 Standby (monitoring) | 2026-02-14 23:53 GST | Run `offer_caps` schema + stabilize Kimi/OpenRouter fallback path |
+| Vision 🗼 | 🟢 Active | 2026-02-16 23:55 GMT+4 | Everflow postback specialist drill complete; playbook published + ready for AK execution of global/specific S2S setup |
 
 ## Handoff Queue
 <!-- Format: [FROM] → [TO]: description (priority: high/medium/low) -->
 - [FURY] → [FURY]: Escalate cap request to AK and close cap dependency this cycle (priority: high)
 - [FURY] → [VISION]: Execute `db/offer_caps_schema.sql` in Supabase + post verification evidence in CONTEXT (priority: high)
 - [FURY] → [VISION]: Own postback infra as system owner. Verify Vercel endpoint + env, place global Everflow S2S URL, and publish evidence in CONTEXT (priority: high)
+- [VISION] → [AK/FURY]: Postback specialist playbook delivered at `docs/EVERFLOW_POSTBACK_SPECIALIST_PLAYBOOK.md`; next action = execute global conversion postback + E2E validation checklist (priority: high)
 - [FURY] → [PETER]: Backup owner for postback infra. Keep API route code + deployment reproducible; execute if Vision blocked (priority: high)
 - [FURY] → [PETER]: If Vision migration fails, execute fallback SQL path + provide verification query output (priority: high)
 - [FURY] → [CAP]: Run compliance audit on 2 stored leads; record pass/fail with evidence and remediation steps if needed (priority: high)
 - [FURY] → [WIDOW]: Deliver second form map (**NDR only**) incl. required fields + anti-bot interaction notes (priority: high)
 - [FURY] → [HAWKEYE]: Maintain launch-ready Copy Pack V1 and prep channel-specific variants; hold send until Phase 3 gate (priority: medium)
 - [FURY] → [BANNER]: Finalize implementation-ready landing/offer-wall build plan (scope, blocks, dependencies) without coding yet (priority: low)
+- [PETER] → [FURY]: Start a fresh `main` session (or reset `agent:main:main`) so runtime picks clean Codex 5.3 context with no inherited spark overflow (priority: high)
+
+
+- Security update (2026-02-16): POSTBACK_SECRET rotated. Fingerprint: 9Kn168...F6aE
