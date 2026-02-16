@@ -89,18 +89,19 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 - [ ] **Run offer_caps_schema.sql in Supabase**
 - [ ] **AK provides first round of caps**
 - [ ] Shield compliance check on stored leads
-- [ ] Map second form target (Pacific Debt or NDR)
+- [ ] Map second form target (**NDR priority set by AK on 2026-02-16**)
 - [ ] Proxy setup for scaled form filling
 - [ ] Quality scoring logic implemented
 - [ ] Everflow postback endpoint configured (to receive pixel fires)
 - [ ] First CONFIRMED conversion (Everflow postback)
 
 ## Blockers
-- Caps unknown — waiting for AK's first cap update
+- Caps now set by AK at **5 conversions per offer** (2026-02-16); pending DB schema apply + table sync
 - Proxy provider not selected (~$20-50/mo)
 - FastDebt API not yet integrated (enrichment)
 - Vision/Kimi OpenRouter path still intermittently falling back to Codex (connector issue under investigation)
 - Memory maintenance cron failed on Feb 16 with model access error (`gpt-5.3-codex` unavailable in that run)
+- Everflow global postback still not configured to Ocean receiver endpoint
 - No new pipeline movement this cycle (0 acquired / 0 delivered / $0 revenue / $0 spend)
 
 ## Latest Regulatory Intelligence (Captain)
@@ -132,8 +133,9 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 <!-- Format: [FROM] → [TO]: description (priority: high/medium/low) -->
 - [FURY] → [FURY]: Escalate cap request to AK and close cap dependency this cycle (priority: high)
 - [FURY] → [VISION]: Execute `db/offer_caps_schema.sql` in Supabase + post verification evidence in CONTEXT (priority: high)
+- [FURY] → [VISION]: Configure Everflow global postback URL to Ocean endpoint and run test hit with sample click_id (priority: high)
 - [FURY] → [PETER]: If Vision migration fails, execute fallback SQL path + provide verification query output (priority: high)
 - [FURY] → [CAP]: Run compliance audit on 2 stored leads; record pass/fail with evidence and remediation steps if needed (priority: high)
-- [FURY] → [WIDOW]: Deliver second form map (Pacific Debt or NDR) incl. required fields + anti-bot interaction notes (priority: medium)
+- [FURY] → [WIDOW]: Deliver second form map (**NDR only**) incl. required fields + anti-bot interaction notes (priority: high)
 - [FURY] → [HAWKEYE]: Maintain launch-ready Copy Pack V1 and prep channel-specific variants; hold send until Phase 3 gate (priority: medium)
 - [FURY] → [BANNER]: Finalize implementation-ready landing/offer-wall build plan (scope, blocks, dependencies) without coding yet (priority: low)

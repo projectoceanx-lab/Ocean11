@@ -330,6 +330,20 @@ When a submission doesn't get a postback (no pixel fire):
 - If any offer approaching cap → adjust routing priority
 - If postbacks delayed > 24h → flag for AK
 
+## Everflow Global Postback Template (AK-approved, 2026-02-16)
+
+Use Ocean receiver endpoint:
+
+`https://<OCEAN_POSTBACK_HOST>/postback?click_id={sub1}&offer_id={offer_id}&payout={amount}&txn_id={transaction_id}&secret=<POSTBACK_SECRET>`
+
+Notes:
+- `{sub1}` must carry our `aff_click_id` generated at submission time.
+- If `POSTBACK_SECRET` is not set server-side, remove `&secret=...` from the URL.
+- After setup, test with one known submitted `click_id` and confirm:
+  1) `postback_log` row created
+  2) `offer_submissions.status` updates to `converted`
+  3) `everflow_offers.daily_conversions` increments
+
 ### Friday
 - Week-end review: total submissions, conversions, revenue, conversion rate
 - Prepare Monday cap request with data

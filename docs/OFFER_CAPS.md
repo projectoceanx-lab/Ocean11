@@ -1,7 +1,7 @@
 # Offer Caps & Restrictions — Everflow (RevvMind)
 
 _Source: Everflow offers page + AK direct. Caps updated weekly (Monday 9AM IST cron)._
-_Last updated: Feb 15, 2026_
+_Last updated: Feb 16, 2026 (AK directive: weekly cap = 5 conversions per offer)_
 
 ## ⚠️ CRITICAL BUSINESS LOGIC — How Caps Work
 
@@ -26,16 +26,16 @@ Our Form Fill → Advertiser checks (dedup + quality) → Accept or Reject
 
 | ID | Buyer | Offer Name | CPA | Channel | Days | States Excluded | Weekly Cap | Notes |
 |---|---|---|---|---|---|---|---|---|
-| 4930 | FDR | Freedom Debt Relief - Email only - M-F Drops Only | $60 | Email | M-F | ❓ | ❓ "Ask for Cap" | Highest payout, volume limited |
-| 4907 | Cliqsilver | Credit Card Debt Cpl-sq | $30 | Web | ❓ | ❓ | ❓ | |
-| 4906 | JGW | JG Wentworth (nc-21805786) | $25 | Web | ❓ | ❓ | ❓ | |
-| 4905 | NDR | National Debt Relief - W | $50 | Web | ❓ | ❓ | ❓ | |
-| 4836 | NDR | NDR (Mon-Fri) Private-CPL (Budgeted) | $45 | Email | M-F | ❓ | ❓ "Budgeted" | |
-| 4783 | NDR | NDR -SQ | $24 | Email | ❓ | ❓ | ❓ | |
-| 4740 | NDR | NDR Email Only (Budgeted) | $16 | Email | ❓ | ❓ | ❓ "Budgeted" | Lowest debt CPA |
-| 4737 | JGW | JGW Debt Settlement M-F {US} | $22 | Email | M-F | ❓ | ❓ | |
-| 4718 | JGW | JGW Debt Settlement [MKP] | $24 | Email | ❓ | ❓ | ❓ | Marketplace |
-| 4633 | JGW | JGW CPL - Email weekends! (NO CA) | $24 | Email | 7 days | CA excluded | ❓ | Only offer accepting weekends |
+| 4930 | FDR | Freedom Debt Relief - Email only - M-F Drops Only | $60 | Email | M-F | ❓ | **5** | AK-set cap 2026-02-16 |
+| 4907 | Cliqsilver | Credit Card Debt Cpl-sq | $30 | Web | ❓ | ❓ | **5** | AK-set cap 2026-02-16 |
+| 4906 | JGW | JG Wentworth (nc-21805786) | $25 | Web | ❓ | ❓ | **5** | AK-set cap 2026-02-16 |
+| 4905 | NDR | National Debt Relief - W | $50 | Web | ❓ | ❓ | **5** | AK-set cap 2026-02-16 |
+| 4836 | NDR | NDR (Mon-Fri) Private-CPL (Budgeted) | $45 | Email | M-F | ❓ | **5** | AK-set cap 2026-02-16 |
+| 4783 | NDR | NDR -SQ | $24 | Email | ❓ | ❓ | **5** | AK-set cap 2026-02-16 |
+| 4740 | NDR | NDR Email Only (Budgeted) | $16 | Email | ❓ | ❓ | **5** | AK-set cap 2026-02-16 |
+| 4737 | JGW | JGW Debt Settlement M-F {US} | $22 | Email | M-F | ❓ | **5** | AK-set cap 2026-02-16 |
+| 4718 | JGW | JGW Debt Settlement [MKP] | $24 | Email | ❓ | ❓ | **5** | AK-set cap 2026-02-16 |
+| 4633 | JGW | JGW CPL - Email weekends! (NO CA) | $24 | Email | 7 days | CA excluded | **5** | AK-set cap 2026-02-16 |
 
 ## Loan Offers (Zappian Legacy)
 
