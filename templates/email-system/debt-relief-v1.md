@@ -8,7 +8,7 @@
 ## Body template
 Hi {{first_name}},
 
-Thanks for your request. Based on your profile, you can review debt relief options that may help lower your monthly payments.
+Based on information you previously provided, you can review debt relief options that may help lower your monthly payments.
 
 **Next step:** {{primary_cta_link_text}} → {{primary_cta_url}}
 
@@ -18,5 +18,6 @@ Best,
 {{brand_name}} Team
 
 ---
-This is an advertisement. {{physical_address}}  
+This is an advertisement. Results vary based on individual debt profile, enrollment, and program terms. We are not a lender.  
+{{brand_name}} | {{physical_address}}  
 Unsubscribe: {{unsubscribe_url}}
