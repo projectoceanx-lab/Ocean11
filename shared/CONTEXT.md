@@ -7,10 +7,10 @@ _Phase 0 ✅ COMPLETE (Feb 15, 2026). First form filled, first lead stored._
 
 ## Current State
 - **Phase:** Phase 1 (acquire → comply → score → route to buyer)
-- **Active Agents:** Captain (running), others on standby
+- **Active Agents:** Captain (running); Peter/Cap/Hawkeye completed copy-stack tasks; others on standby
 - **Budget Spent:** $0 / $5,000
-- **Leads in DB:** 2 (1 dry run, 1 submitted to JGW)
-- **Revenue:** $0
+- **Leads in DB:** 2 (1 dry run, 1 submitted to JGW) — unchanged since last sync
+- **Revenue:** $0 — unchanged since last sync
 
 ## 📋 MANDATORY READING — All Agents
 
@@ -99,6 +99,7 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 - Proxy provider not selected (~$20-50/mo)
 - FastDebt API not yet integrated (enrichment)
 - Watchtower/Kimi OpenRouter path still intermittently falling back to Codex (connector issue under investigation)
+- Memory maintenance cron failed on Feb 16 with model access error (`gpt-5.3-codex` unavailable in that run)
 
 ## Latest Regulatory Intelligence (Captain)
 - Run date: 2026-02-16 (manual trigger)
@@ -117,17 +118,19 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 ## Agent Status Board
 | Agent | Status | Last Active | Current Task |
 |---|---|---|---|
-| Fury 🎖️ | 🟢 Active | 2026-02-15 17:41 GST | Everflow/RevPie exploration complete, playbook updated |
-| Widow 🔍 | 🟡 Standby | — | Next: Map second form target, scale form filling |
-| Cap 🛡️ | 🟡 Standby | — | Next: Compliance check on stored leads |
-| Hawkeye 🦅 | 🟡 Standby | — | Next: RevPie campaign optimization (Phase 3) |
-| Banner 🔥 | 🟡 Standby | — | Next: Landing pages, offer wall (Phase 3) |
-| Vision 🗼 | 🟡 Standby | — | Next: Run offer_caps_schema.sql, monitoring setup |
+| Fury 🎖️ | 🟢 Active | 2026-02-16 16:08 GST | Daily all-agent sync, blockers + handoffs refreshed |
+| Peter 🛠️ | 🟢 Active | 2026-02-16 15:47 GST | `docs/COPY_PREFLIGHT_CHECKLIST.md` shipped; pending offer_caps schema execution support |
+| Cap 🛡️ | 🟢 Active | 2026-02-16 15:48 GST | Copy Pack V1 compliance review complete; next compliance check on stored leads |
+| Hawkeye 🦅 | 🟢 Active | 2026-02-16 15:48 GST | Copy Pack V1 generated; waiting for Phase 3 traffic activation |
+| Widow 🔍 | 🟡 Standby | — | Next: Map Pacific Debt/NDR second form target |
+| Banner 🔥 | 🟡 Standby | — | Next: Landing pages + offer wall build (Phase 3 gate) |
+| Vision 🗼 | 🟡 Standby (monitoring) | 2026-02-14 23:53 GST | Run offer_caps schema + stabilize Kimi/OpenRouter fallback path |
 
 ## Handoff Queue
 <!-- Format: [FROM] → [TO]: description (priority: high/medium/low) -->
-- [FURY] → [VISION]: Run `db/offer_caps_schema.sql` in Supabase (priority: high)
-- [FURY] → [WIDOW]: Map Pacific Debt or NDR form as second target (priority: medium)
-- [FURY] → [CAP]: Compliance check on 2 stored leads (priority: medium)
-- [FURY] → [HAWKEYE]: Use `docs/VOICE_GUIDE.md` + `config/copy_lexicon.yaml` + `templates/cta-library.md` for all new ad/email drafts (priority: high)
-- [FURY] → [CAP]: Enforce copy preflight gate for every draft before send/publish (priority: high)
+- [FURY] → [VISION]: Run `db/offer_caps_schema.sql` in Supabase + confirm table availability in CONTEXT (priority: high)
+- [FURY] → [PETER]: Pair with Vision if migration fails; provide SQL execution fallback and verification query (priority: high)
+- [FURY] → [CAP]: Compliance check on 2 stored leads and log pass/fail evidence in shared files (priority: high)
+- [FURY] → [WIDOW]: Map Pacific Debt or NDR form as second target, including required fields + anti-bot notes (priority: medium)
+- [FURY] → [HAWKEYE]: Keep Copy Pack V1 ready; no launch until Phase 3 gate opens (priority: medium)
+- [FURY] → [BANNER]: Prepare landing/offer-wall build scope only (no implementation before Phase 3) (priority: low)
