@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/postback", "destination": "/api/postback" },
+    { "source": "/health", "destination": "/api/postback?health=1" }
+  ]
+}

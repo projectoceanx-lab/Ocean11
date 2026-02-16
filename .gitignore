@@ -48,3 +48,4 @@ build/
 # Camoufox / Browser
 browser-profiles/
 screenshots/
+.vercel
