@@ -11,6 +11,7 @@ _Phase 0 ✅ COMPLETE (Feb 15, 2026). First form filled, first lead stored._
 - **Budget Spent:** $0 / $5,000
 - **Leads in DB:** 2 (1 dry run, 1 submitted to JGW) — unchanged since last sync
 - **Revenue:** $0 — unchanged since last sync
+- **Latest sync note (2026-02-16 16:09 GST):** No numeric data changes detected in this cycle.
 
 ## 📋 MANDATORY READING — All Agents
 
@@ -98,8 +99,9 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 - Caps unknown — waiting for AK's first cap update
 - Proxy provider not selected (~$20-50/mo)
 - FastDebt API not yet integrated (enrichment)
-- Watchtower/Kimi OpenRouter path still intermittently falling back to Codex (connector issue under investigation)
+- Vision/Kimi OpenRouter path still intermittently falling back to Codex (connector issue under investigation)
 - Memory maintenance cron failed on Feb 16 with model access error (`gpt-5.3-codex` unavailable in that run)
+- No new pipeline movement this cycle (0 acquired / 0 delivered / $0 revenue / $0 spend)
 
 ## Latest Regulatory Intelligence (Captain)
 - Run date: 2026-02-16 (manual trigger)
@@ -118,19 +120,20 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 ## Agent Status Board
 | Agent | Status | Last Active | Current Task |
 |---|---|---|---|
-| Fury 🎖️ | 🟢 Active | 2026-02-16 16:08 GST | Daily all-agent sync, blockers + handoffs refreshed |
-| Peter 🛠️ | 🟢 Active | 2026-02-16 15:47 GST | `docs/COPY_PREFLIGHT_CHECKLIST.md` shipped; pending offer_caps schema execution support |
-| Cap 🛡️ | 🟢 Active | 2026-02-16 15:48 GST | Copy Pack V1 compliance review complete; next compliance check on stored leads |
-| Hawkeye 🦅 | 🟢 Active | 2026-02-16 15:48 GST | Copy Pack V1 generated; waiting for Phase 3 traffic activation |
-| Widow 🔍 | 🟡 Standby | — | Next: Map Pacific Debt/NDR second form target |
-| Banner 🔥 | 🟡 Standby | — | Next: Landing pages + offer wall build (Phase 3 gate) |
-| Vision 🗼 | 🟡 Standby (monitoring) | 2026-02-14 23:53 GST | Run offer_caps schema + stabilize Kimi/OpenRouter fallback path |
+| Fury 🎖️ | 🟢 Active | 2026-02-16 16:09 GST | Daily all-agent data sync execution + owner action refresh |
+| Peter 🛠️ | 🟢 Active | 2026-02-16 15:47 GST | `docs/COPY_PREFLIGHT_CHECKLIST.md` shipped; on standby for schema fallback support |
+| Cap 🛡️ | 🟢 Active | 2026-02-16 15:48 GST | Copy Pack V1 review complete; pending compliance check on stored leads |
+| Hawkeye 🦅 | 🟢 Active | 2026-02-16 15:48 GST | Copy Pack V1 ready; waiting for Phase 3 traffic go-live gate |
+| Widow 🔍 | 🟡 Standby | — | Next: Map Pacific Debt/NDR second form target with anti-bot notes |
+| Banner 🔥 | 🟡 Standby | — | Next: Landing + offer-wall execution plan only (Phase 3 gate) |
+| Vision 🗼 | 🟡 Standby (monitoring) | 2026-02-14 23:53 GST | Run `offer_caps` schema + stabilize Kimi/OpenRouter fallback path |
 
 ## Handoff Queue
 <!-- Format: [FROM] → [TO]: description (priority: high/medium/low) -->
-- [FURY] → [VISION]: Run `db/offer_caps_schema.sql` in Supabase + confirm table availability in CONTEXT (priority: high)
-- [FURY] → [PETER]: Pair with Vision if migration fails; provide SQL execution fallback and verification query (priority: high)
-- [FURY] → [CAP]: Compliance check on 2 stored leads and log pass/fail evidence in shared files (priority: high)
-- [FURY] → [WIDOW]: Map Pacific Debt or NDR form as second target, including required fields + anti-bot notes (priority: medium)
-- [FURY] → [HAWKEYE]: Keep Copy Pack V1 ready; no launch until Phase 3 gate opens (priority: medium)
-- [FURY] → [BANNER]: Prepare landing/offer-wall build scope only (no implementation before Phase 3) (priority: low)
+- [FURY] → [FURY]: Escalate cap request to AK and close cap dependency this cycle (priority: high)
+- [FURY] → [VISION]: Execute `db/offer_caps_schema.sql` in Supabase + post verification evidence in CONTEXT (priority: high)
+- [FURY] → [PETER]: If Vision migration fails, execute fallback SQL path + provide verification query output (priority: high)
+- [FURY] → [CAP]: Run compliance audit on 2 stored leads; record pass/fail with evidence and remediation steps if needed (priority: high)
+- [FURY] → [WIDOW]: Deliver second form map (Pacific Debt or NDR) incl. required fields + anti-bot interaction notes (priority: medium)
+- [FURY] → [HAWKEYE]: Maintain launch-ready Copy Pack V1 and prep channel-specific variants; hold send until Phase 3 gate (priority: medium)
+- [FURY] → [BANNER]: Finalize implementation-ready landing/offer-wall build plan (scope, blocks, dependencies) without coding yet (priority: low)
