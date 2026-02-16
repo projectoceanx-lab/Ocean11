@@ -110,12 +110,12 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 ## Agent Status Board
 | Agent | Status | Last Active | Current Task |
 |---|---|---|---|
-| Captain 🎖️ | 🟢 Active | 2026-02-15 17:41 GST | Everflow/RevPie exploration complete, playbook updated |
-| Scout 🔍 | 🟡 Standby | — | Next: Map second form target, scale form filling |
-| Shield 🛡️ | 🟡 Standby | — | Next: Compliance check on stored leads |
-| Hawk 🦅 | 🟡 Standby | — | Next: RevPie campaign optimization (Phase 3) |
-| Forge 🔥 | 🟡 Standby | — | Next: Landing pages, offer wall (Phase 3) |
-| Watchtower 🗼 | 🟡 Standby | — | Next: Run offer_caps_schema.sql, monitoring setup |
+| Fury 🎖️ | 🟢 Active | 2026-02-15 17:41 GST | Everflow/RevPie exploration complete, playbook updated |
+| Widow 🔍 | 🟡 Standby | — | Next: Map second form target, scale form filling |
+| Cap 🛡️ | 🟡 Standby | — | Next: Compliance check on stored leads |
+| Hawkeye 🦅 | 🟡 Standby | — | Next: RevPie campaign optimization (Phase 3) |
+| Banner 🔥 | 🟡 Standby | — | Next: Landing pages, offer wall (Phase 3) |
+| Vision 🗼 | 🟡 Standby | — | Next: Run offer_caps_schema.sql, monitoring setup |
 
 ## Handoff Queue
 <!-- Format: [FROM] → [TO]: description (priority: high/medium/low) -->
