@@ -98,7 +98,12 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 - Caps unknown — waiting for AK's first cap update
 - Proxy provider not selected (~$20-50/mo)
 - FastDebt API not yet integrated (enrichment)
-- Brave API key not configured (web search limited)
+- Watchtower/Kimi OpenRouter path still intermittently falling back to Codex (connector issue under investigation)
+
+## Latest Regulatory Intelligence (Captain)
+- Run date: 2026-02-16 (manual trigger)
+- Result: **No material regulatory change this week** for debt relief + personal loan cross-monetization scope (CFPB/FTC/FCC/CAN-SPAM + CA/NY/TX/FL scan)
+- Action: Keep Copy Guardrails V1 active; no template or lexicon changes required today.
 
 ## Cron Jobs Active
 

@@ -501,6 +501,13 @@ Source ID optimization is THE lever for RevPie profitability. Same ad, same crea
 <!-- Watchtower + Captain write here -->
 <!-- Competitor moves, regulatory changes, market trends, seasonal patterns -->
 
+### Weekly Regulatory Intelligence Check — 2026-02-16 (Captain)
+Scope scanned: CFPB, FTC, FCC, CAN-SPAM guidance and key state lenses (CA/NY/TX/FL) for debt relief + personal loan cross-monetization.
+
+**Outcome:** No material regulatory change this week.
+
+**Operational decision:** No immediate edits to `docs/VOICE_GUIDE.md`, `config/copy_lexicon.yaml`, or V1 copy templates.
+
 ### Copy Guardrails System v1 — 2026-02-16 (Captain)
 Implemented a controlled copy system so Hawkeye output stays consistent and compliant across debt relief + personal loan cross-monetization.
 
