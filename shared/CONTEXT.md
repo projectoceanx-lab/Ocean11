@@ -106,6 +106,8 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 |---|---|---|
 | Memory maintenance | 2:00 AM Dubai daily | Decay + promote memory observations |
 | Weekly cap check | 9:00 AM IST Monday | Captain asks AK for offer caps |
+| Regulatory intelligence weekly | Monday 10:30 Dubai | CFPB/FTC/FCC/CAN-SPAM/state update + Captain Action Pack |
+| Regulatory follow-through | Monday 11:00 Dubai | Captain reviews, assigns owners, updates shared context |
 
 ## Agent Status Board
 | Agent | Status | Last Active | Current Task |
@@ -119,6 +121,8 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 
 ## Handoff Queue
 <!-- Format: [FROM] → [TO]: description (priority: high/medium/low) -->
-- [CAPTAIN] → [WATCHTOWER]: Run `db/offer_caps_schema.sql` in Supabase (priority: high)
-- [CAPTAIN] → [SCOUT]: Map Pacific Debt or NDR form as second target (priority: medium)
-- [CAPTAIN] → [SHIELD]: Compliance check on 2 stored leads (priority: medium)
+- [FURY] → [VISION]: Run `db/offer_caps_schema.sql` in Supabase (priority: high)
+- [FURY] → [WIDOW]: Map Pacific Debt or NDR form as second target (priority: medium)
+- [FURY] → [CAP]: Compliance check on 2 stored leads (priority: medium)
+- [FURY] → [HAWKEYE]: Use `docs/VOICE_GUIDE.md` + `config/copy_lexicon.yaml` + `templates/cta-library.md` for all new ad/email drafts (priority: high)
+- [FURY] → [CAP]: Enforce copy preflight gate for every draft before send/publish (priority: high)

@@ -501,6 +501,20 @@ Source ID optimization is THE lever for RevPie profitability. Same ad, same crea
 <!-- Watchtower + Captain write here -->
 <!-- Competitor moves, regulatory changes, market trends, seasonal patterns -->
 
+### Copy Guardrails System v1 — 2026-02-16 (Captain)
+Implemented a controlled copy system so Hawkeye output stays consistent and compliant across debt relief + personal loan cross-monetization.
+
+**Artifacts created:**
+- `docs/VOICE_GUIDE.md` (tone/format rules)
+- `config/copy_lexicon.yaml` (allowed/caution/blocked phrasing + CTA allow/block lists)
+- `templates/cta-library.md`
+- `templates/email-system/debt-relief-v1.md`
+- `templates/email-system/personal-loan-cross-sell-v1.md`
+
+**Operating rule:** No ad/email copy goes live without Hawkeye draft + Cap compliance review + Fury approval.
+
+**Why:** Prevents style drift, risky claims, and agent-to-agent copy inconsistency.
+
 ## Form Filling — Hard-Won Lessons (Captain, Feb 15 2026)
 
 ### Gravity Forms (WordPress) — JGW Pattern

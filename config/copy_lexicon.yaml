@@ -1,0 +1,48 @@
+version: 1
+owner: Fury
+updated: 2026-02-16
+
+allowed_phrases:
+  - "see if you qualify"
+  - "explore your options"
+  - "may help"
+  - "could reduce"
+  - "no obligation"
+  - "results vary"
+  - "not a lender"
+
+caution_phrases:
+  - phrase: "reduce debt"
+    note: "Require qualifying language and no guaranteed percentage unless substantiated"
+  - phrase: "lower payments"
+    note: "Use may/could framing"
+  - phrase: "program"
+    note: "Do not imply government affiliation"
+
+blocked_phrases:
+  - "guaranteed approval"
+  - "erase all debt"
+  - "debt-free in"
+  - "government debt relief program"
+  - "instant approval"
+  - "zero risk"
+  - "act now or lose"
+  - "final warning"
+
+required_email_footer:
+  - "This is an advertisement"
+  - "valid physical mailing address"
+  - "unsubscribe link"
+  - "results vary"
+
+cta_allowlist:
+  - "Check Your Options"
+  - "See If You Qualify"
+  - "View Matched Options"
+  - "Get Free Eligibility Check"
+
+cta_blocklist:
+  - "Erase Debt Now"
+  - "Guaranteed Approval"
+  - "Get Debt-Free in 30 Days"
+  - "Claim Government Bailout"
