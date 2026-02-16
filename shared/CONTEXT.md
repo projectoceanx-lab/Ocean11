@@ -7,9 +7,11 @@ _Phase 0 ✅ COMPLETE (Feb 15, 2026). First form filled, first lead stored._
 
 ## Current State
 - **Phase:** Phase 1 (acquire → comply → score → route to buyer)
-- **Active Agents:** Captain (running); Peter/Cap/Hawkeye completed copy-stack tasks; others on standby
+- **Primary Goal (AK directive):** Website conversion acceleration as top priority — optimize EBC immediately while building a new high-converting site in parallel.
+- **Active Agents:** All agents gearing up under parallel-track execution (no passive standby posture on critical tracks)
 - **Infra update (2026-02-16 23:15 GMT+4):** Ocean postback endpoint deployed on Vercel at `https://ocean11-postback.vercel.app` (health OK). Vision = primary owner, Peter = backup owner.
 - **Vision navigation drill update (2026-02-16 23:55 GMT+4):** Completed deep Everflow postback/navigation drill and published evidence-based runbook at `docs/EVERFLOW_POSTBACK_SPECIALIST_PLAYBOOK.md` (menus, routes, role limitations, implementation checklist, troubleshooting, self-test).
+- **NDR Form Map complete (2026-02-17 01:30 GMT+4):** Full form mapping published at `docs/NDR_FORM_MAP.md`. 2-step form: (1) debt amount dropdown on `/apply`, (2) contact info (first name, last name, email, phone) on `/details`. **No CAPTCHA.** Primary anti-bot: TrustedForm (records mouse/keystrokes for TCPA cert). Also has Datadog RUM, Hotjar session recording, 118 tracking scripts. Hidden fields: TrustedForm cert URL + token + ping URL. Gravity Forms-style field naming. Key blocker: need to test post-submission behavior + phone mask without creating real leads.
 - **Model routing update (2026-02-17 00:36 GMT+4):** Fury switched from `openai-codex/gpt-5.3-codex-spark` to `openai-codex/gpt-5.3-codex` in live runtime config (`~/.openclaw/openclaw.json`) and template config (`config/openclaw.yaml`). Gateway restart executed via `openclaw gateway restart`.
 - **Budget Spent:** $0 / $5,000
 - **Leads in DB:** 2 (1 dry run, 1 submitted to JGW) — unchanged since last sync
@@ -61,7 +63,9 @@ Every agent MUST read these before acting:
 ### Supabase — Database
 - **URL:** https://xpbbdmosyrhkoczhcgpt.supabase.co
 - **Tables live:** leads, buyers, campaigns, deliveries, pnl_daily, compliance_log, agent_activity, offer_fields
-- **Tables pending:** offer_caps, offer_submissions (schema at `db/offer_caps_schema.sql`)
+- **Tables live (offer caps):** everflow_offers (10 rows, seeded), offer_submissions (0 rows), postback_log (2 rows) — schema applied & verified 2026-02-17 01:30 GMT+4
+- **Functions live:** check_offer_cap(), increment_submission(), record_conversion(), reset_daily_caps(), reset_weekly_caps() — all verified via RPC
+- **RLS enabled** on all 3 new tables (service_role policy)
 
 ## Offer Routing Priority (Highest CPA First)
 
@@ -89,7 +93,7 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 - [x] RevPie explored — 7 campaigns, Source ID optimization documented
 - [x] Cap management system designed (schema + cron)
 - [x] Buyers Playbook rewritten with live data
-- [ ] **Run offer_caps_schema.sql in Supabase**
+- [x] **Run offer_caps_schema.sql in Supabase** ✅ (2026-02-17 01:30 GMT+4, Vision)
 - [ ] **AK provides first round of caps**
 - [ ] Shield compliance check on stored leads
 - [ ] Map second form target (**NDR priority set by AK on 2026-02-16**)
@@ -99,7 +103,7 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 - [ ] First CONFIRMED conversion (Everflow postback)
 
 ## Blockers
-- Caps now set by AK at **5 conversions per offer** (2026-02-16); pending DB schema apply + table sync
+- ~~Caps now set by AK at **5 conversions per offer** (2026-02-16); pending DB schema apply + table sync~~ **RESOLVED** — weekly caps synced in DB to 5 across all 10 offers (2026-02-17 01:38 GST)
 - Proxy provider not selected (~$20-50/mo)
 - FastDebt API not yet integrated (enrichment)
 - Vision/Kimi OpenRouter path still intermittently falling back to Codex (connector issue under investigation)
