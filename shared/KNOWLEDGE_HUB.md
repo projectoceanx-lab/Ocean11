@@ -393,6 +393,17 @@ Don't chase the $60 CPA. Chase the **quality match**:
 5. [ ] Draft buyer outreach email template for direct Tier 1 contacts
 6. [ ] Confirm state licensing requirements per buyer — map which states we can serve
 
+## Postback Infra Ownership & Endpoint (Captain, Feb 16 2026)
+
+- Shared endpoint: `https://ocean11-postback.vercel.app`
+- Health: `/health`
+- Everflow global S2S template:
+  `https://ocean11-postback.vercel.app/postback?click_id={sub1}&offer_id={offer_id}&payout={amount}&txn_id={transaction_id}&secret=<POSTBACK_SECRET>`
+- Ownership rule:
+  - **Vision** owns infrastructure state (env vars, uptime, production placement in Everflow)
+  - **Peter** owns code fallback + deployment reproducibility
+  - Captain delegates; does not remain single point of execution
+
 ## RevPie ↔ Everflow Traffic Optimization Loop (Captain, Feb 15 2026)
 
 **Source: AK direct + RevPie dashboard exploration**

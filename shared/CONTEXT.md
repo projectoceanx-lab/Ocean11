@@ -8,6 +8,7 @@ _Phase 0 ✅ COMPLETE (Feb 15, 2026). First form filled, first lead stored._
 ## Current State
 - **Phase:** Phase 1 (acquire → comply → score → route to buyer)
 - **Active Agents:** Captain (running); Peter/Cap/Hawkeye completed copy-stack tasks; others on standby
+- **Infra update (2026-02-16 23:15 GMT+4):** Ocean postback endpoint deployed on Vercel at `https://ocean11-postback.vercel.app` (health OK). Vision = primary owner, Peter = backup owner.
 - **Budget Spent:** $0 / $5,000
 - **Leads in DB:** 2 (1 dry run, 1 submitted to JGW) — unchanged since last sync
 - **Revenue:** $0 — unchanged since last sync
@@ -133,7 +134,8 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 <!-- Format: [FROM] → [TO]: description (priority: high/medium/low) -->
 - [FURY] → [FURY]: Escalate cap request to AK and close cap dependency this cycle (priority: high)
 - [FURY] → [VISION]: Execute `db/offer_caps_schema.sql` in Supabase + post verification evidence in CONTEXT (priority: high)
-- [FURY] → [VISION]: Configure Everflow global postback URL to Ocean endpoint and run test hit with sample click_id (priority: high)
+- [FURY] → [VISION]: Own postback infra as system owner. Verify Vercel endpoint + env, place global Everflow S2S URL, and publish evidence in CONTEXT (priority: high)
+- [FURY] → [PETER]: Backup owner for postback infra. Keep API route code + deployment reproducible; execute if Vision blocked (priority: high)
 - [FURY] → [PETER]: If Vision migration fails, execute fallback SQL path + provide verification query output (priority: high)
 - [FURY] → [CAP]: Run compliance audit on 2 stored leads; record pass/fail with evidence and remediation steps if needed (priority: high)
 - [FURY] → [WIDOW]: Deliver second form map (**NDR only**) incl. required fields + anti-bot interaction notes (priority: high)
