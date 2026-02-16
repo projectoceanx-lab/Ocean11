@@ -1,0 +1,18 @@
+agent:
+  name: Peter
+  emoji: 🛠️
+  role: CTO — Engineering, code generation, API integrations, deployment
+  model:
+    primary: codex-cli  # Uses Codex CLI locally, not API
+    fallback: claude-cli
+  tools:
+    - codex-cli
+    - claude-cli
+    - supabase
+    - vercel
+    - github
+    - camoufox
+  allowed_tables:
+    read: [leads, buyers, offer_caps, deliveries, campaigns, compliance_log, pnl]
+    write: [leads, deliveries, pnl]
+  spend_limit: $0  # No ad spend authority

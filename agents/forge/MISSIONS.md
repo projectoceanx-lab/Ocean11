@@ -2,66 +2,53 @@
 
 ## 🎯 Phase 1 Objectives
 
-### Website / Funnel (Next.js + Vercel)
-- [ ] Build multi-step debt relief landing page (Next.js)
-- [ ] Debt amount selector → personal info → consent → thank you
-- [ ] Implement TCPA-compliant consent checkbox with proper legal language
-- [ ] Shield reviews ALL copy/disclaimers before launch
-- [ ] State license number display (FL required March 2026)
-- [ ] Trust signals: BBB-style badges, testimonials, security seals
-- [ ] Mobile-first responsive design (60%+ traffic is mobile)
-- [ ] UTM parameter capture for attribution tracking
+### CRO & Funnel Strategy (Core Mandate)
+- [ ] Audit all landing pages for conversion optimization
+- [ ] Design optimized form flows (steps, order, copy, trust signals)
+- [ ] Write landing page copy — headlines, CTAs, value props
+- [ ] Design offer wall layout and matching logic
+- [ ] A/B test recommendations: what to test, success criteria, kill criteria
+- [ ] Mobile-first design specs for all pages
 
-### Offer Wall
-- [ ] Personalized offers based on lead profile (debt amount, type, state)
-- [ ] Dynamic offer matching: $30K credit card debt ≠ $10K medical debt
-- [ ] A/B test offer layouts (grid vs list, order, copy)
+### Trust & Social Proof
+- [ ] Define trust badge strategy (BBB, security seals, testimonials)
+- [ ] Write testimonial copy (compliant — no false claims)
+- [ ] Progress bar design for multi-step forms
+- [ ] "X people helped" social proof elements
 
-### Redirect Management
-- [ ] Traffic routing: which source → which landing page variant
-- [ ] RevPie traffic → specific landing page
-- [ ] Facebook traffic → specific landing page
-- [ ] Organic → default landing page
-- [ ] Tracking pixel integration (FB CAPI, Everflow postback)
+### Landing Page Strategy
+- [ ] Define page variants for different traffic sources (FB vs RevPie vs organic)
+- [ ] Creative angles: urgency, relief, savings, fresh start
+- [ ] Spec pages for Peter to build — wireframes, copy, form flow
+- [ ] Review Peter's implementations before deploy
 
-### FastDebt Integration
-- [ ] API integration for lead enrichment (income verification, employment, debt validation)
-- [ ] Real-time enrichment on form submission (before scoring)
-- [ ] Verify enriched data stores correctly in Supabase `leads.enrichment_data`
+### Compliance Copy (with Shield)
+- [ ] FTC-required disclosures — draft language
+- [ ] TCPA consent checkbox copy
+- [ ] State-specific disclosure language
+- [ ] Shield reviews ALL copy before launch
 
-### Buyer Delivery
-- [ ] Format leads per buyer spec (JSON API, CSV email, live transfer)
-- [ ] Implement buyer matching logic (vertical, state, cap, hours, payout)
-- [ ] Track acceptance/rejection per buyer per day
-- [ ] Handle returns: trace cause, feed back to Scout/Hawk
+### Redirect & Traffic Routing Strategy
+- [ ] Which source → which page variant
+- [ ] RevPie traffic → specific angle
+- [ ] Facebook traffic → specific angle
+- [ ] Organic → default page
 
-### Call Routing (Ringba)
-- [ ] Set up Ringba campaigns for debt relief inbound
-- [ ] Configure IVR qualification flow
-- [ ] Route to highest-paying available buyer
-- [ ] Minimum call duration tracking (90-120 sec for payout)
-
-### CRO
-- [ ] A/B test form layouts, step order, CTAs
-- [ ] Track funnel drop-off per step
-- [ ] Optimize for form completion rate (target: 15-25%)
-
-## 📋 Key Metrics
-- **Form completion rate** — target 15-25%
-- **Buyer acceptance rate** — target >70%
-- **Time to delivery** — target <5 min from form submission
-- **Offer wall CTR** — track which offers convert
+## What Forge Does NOT Own (Moved to Peter 🛠️)
+- ❌ Code generation / website building
+- ❌ API integrations (FastDebt, Everflow, Supabase)
+- ❌ Deployment (Vercel)
+- ❌ Browser automation
+- ❌ Buyer delivery infrastructure
+- ❌ Call routing (Ringba) — removed for now
 
 ## 🚧 Blockers
-- Supabase not set up yet (need DB for form submissions)
-- No buyers confirmed yet (need buyer specs for delivery format)
+- None — CRO analysis for EBC complete (docs/CRO_ANALYSIS_EBC.md)
 
 ## 📝 Notes
-- Forge does NOT fill external forms (that's Scout)
-- Forge BUILDS the funnel that captures our own leads
-- Every landing page must pass Shield compliance review before launch
-- Never deliver a lead that hasn't passed Shield compliance
-- Buyer relationship management: remember preferences, hours, quirks
+- Forge specs it, Peter builds it, Shield reviews it
+- Every page needs: trust signals, progress bar, mobile-first, FTC disclosures
+- Kill criteria defined BEFORE any A/B test launches
 
 ## Standing Order (Every Session)
 Before closing: update shared/CONTEXT.md, memory/YYYY-MM-DD.md, and shared/KNOWLEDGE_HUB.md per shared/PLAYBOOK_RULES.md § MANDATORY CHECKPOINTS. No exceptions.

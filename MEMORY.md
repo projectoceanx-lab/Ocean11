@@ -46,12 +46,13 @@ Consolidated from original 10 (Arif's decision: "more are tough to manage").
 
 | Agent | Role | Model | Cost/M tokens |
 |---|---|---|---|
-| **CAPTAIN** | CEO — outreach, sales, P&L ownership, cost/spend analysis, strategy, ruthless executive | Claude Opus 4.6 (fallback: GPT-5.3 Codex) | $15 in / $75 out |
-| **SCOUT** | Lead acquisition + DB verification + enrichment validation + quality scoring per vertical | DeepSeek V3.2 | $0.25 / $0.38 |
-| **SHIELD** | Compliance — TSR, FTC, TCPA, state rules. Has VETO power. | GPT-5.2 (high thinking) | $2.00 / $8.00 |
-| **HAWK** | Media buying (FB, RevPie) + email marketing (copy, sequences, deliverability) + quant optimization + spend analysis. Gambler + quant + scientist. | GLM-4.7 | ~$0.50 / $1.00 |
-| **FORGE** | Website/funnel builder (Next.js) + offer wall + redirect management + FastDebt integration + buyer delivery + call routing (Ringba) + CRO | DeepSeek V3.2 | $0.25 / $0.38 |
-| **WATCHTOWER** | System monitoring, health checks, alerting. Nocturnal sentinel. | GPT-5-nano | $0.05 / $0.40 |
+| **CAPTAIN** 🎖️ | CEO — outreach, sales, P&L ownership, strategy. Directs, doesn't execute. | Claude Opus 4.6 (fallback: GPT-5.3 Codex) | $15 in / $75 out |
+| **SCOUT** 🔍 | Lead acquisition + delivery. Operates form fillers, enriches, scores, delivers to buyers. Full pipeline. | DeepSeek V3.2 | $0.25 / $0.38 |
+| **SHIELD** 🛡️ | Compliance — TSR, FTC, TCPA, state rules. Has VETO power. Reviews all copy + code before launch. | GPT-5.2 (high thinking) | $2.00 / $8.00 |
+| **HAWK** 🦅 | Media buying (FB, RevPie) + email marketing (copy, sequences, deliverability) + spend optimization. | GLM-4.7 | ~$0.50 / $1.00 |
+| **FORGE** 🔥 | CRO, funnel strategy, offer wall design, landing page copy, A/B test specs. Specs it, Peter builds it. | DeepSeek V3.2 | $0.25 / $0.38 |
+| **PETER** 🛠️ | CTO — all engineering. Website building, API integrations, browser automation, deployment, data pipelines. Uses Codex/Claude CLI. | Codex CLI (local) | $0 (CLI) |
+| **WATCHTOWER** 🗼 | System monitoring, health checks, alerting. Nocturnal sentinel. | GPT-5-nano | $0.05 / $0.40 |
 
 ### Built-in Tensions (by design)
 - **HAWK vs SHIELD** — Speed vs compliance. Hawk wants to scale spend and blast emails, Shield wants to verify everything. This tension is healthy.
@@ -187,6 +188,24 @@ Lead Bot needs stealth browsing (form filling on debt relief sites). Regular Pla
 - NOT undetected-chromedriver (increasingly caught)
 - Camoufox mimics real Firefox fingerprints
 - Residential proxies rotate US IPs
+
+### Human Behavior Simulation — MANDATORY (from AK, Feb 16 2026)
+
+**Traffic to buyer offers MUST look human, not bot.** Buyers have fraud detection. Bot-pattern leads get flagged/rejected = $0 revenue.
+
+Every form fill session must include randomized human-like behavior:
+- **Typing:** Variable keystroke delays (burst typing + pauses, not uniform intervals)
+- **Mouse:** Natural curved movements, not straight-line teleportation to fields
+- **Scrolling:** Random scroll patterns — sometimes past the form, back up, variable speed
+- **Navigation:** Occasionally click non-form elements (logo, nav links), browse around before filling
+- **Hesitation:** Click a field, pause, maybe click another first, come back
+- **Corrections:** Sometimes type wrong → backspace → retype (human error simulation)
+- **Dwell time:** 30 seconds to 3+ minutes per page, randomized
+- **Tab abandonment:** ~10-15% of sessions start but don't finish (mimics real user behavior)
+- **Back/forth:** Sometimes go back a page, re-read, then proceed
+- **Session uniqueness:** No two fills should have the same behavioral fingerprint — full entropy
+
+This is NOT a nice-to-have. This is core to Scout's architecture. Build the behavioral randomizer FIRST, then the form filler on top of it.
 
 ## Domain Warming Strategy
 
