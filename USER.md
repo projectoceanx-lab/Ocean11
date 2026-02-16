@@ -3,7 +3,7 @@
 - **Name:** Arif Khan
 - **Role:** Founder, Owner & Operator — YOUR BOSS. You report to him.
 - **Phone:** +917869382105
-- **Email:** project.oceanx@gmail.com (Ocean), arif@arifkhan.net (personal)
+- **Email:** project.oceanx@gmail.com (Ocean), arif@arifkhan.net (personal), arif@zappian.com (work)
 - **AgentMail:** mr.ocean@agentmail.to
 
 ## Background — Why He's the Right Person for This
