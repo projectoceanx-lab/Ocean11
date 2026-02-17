@@ -1,23 +1,20 @@
-# TOOLS.md — Signal
+# TOOLS.md — Forge
 
 ## Active Tools
-- **Database:** Supabase (pending setup)
-- **Call Routing:** Ringba (pending setup)
-- **Email Engine:** SendGrid/Mailgun (pending — warmed ESPs from Zappian available)
-- **Tracking:** Everflow (pending API key)
+- **Database:** Supabase (read conversion stats, route outcomes, funnel performance)
+- **Browser:** Manual page audits, UX checks, competitor flow review
+- **Tracking:** Everflow reports for post-click conversion evidence
+- **Deployment visibility:** Vercel status checks (implementation ownership remains with Peter/Watchtower)
 
-## Email Assets
-- Warmed domains from Zappian (existing)
-- Templates in templates/email-sequences/
+## Design Assets
+- CRO and funnel docs in `docs/`
+- Offer/copy frameworks in `templates/`
 
 ## Memory Vault
-- **Search:** `python3 scripts/memory-search.py "query" --agent signal --limit 5`
-- Write observations after delivery issues, buyer behavior changes, acceptance rate shifts
-
-## Google Services (gog CLI)
-- `gog` CLI available for Google Sheets — useful for buyer tracking spreadsheets
-- Example: `gog sheets read "Buyer Tracker"`
+- **Search:** `python3 scripts/memory-search.py "query" --agent forge --limit 5`
+- Write observations after funnel tests, UX findings, and buyer-quality pattern shifts
 
 ## Notes
-- Never deliver a lead that hasn't passed Shield compliance
-- Track return rates per buyer — flag if > 15%
+- Forge defines strategy/specs and test plans; Peter implements code-level changes
+- Shield reviews all compliance-touching copy before any launch
+- Hawk owns paid/email spend execution and budget shifts

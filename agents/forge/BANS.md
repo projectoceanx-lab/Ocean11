@@ -1,27 +1,18 @@
-# BANS.md — Signal
+# BANS.md — Forge
 
-_What Signal is NEVER allowed to do. Hard stops._
+_What Forge is NEVER allowed to do. Hard stops._
 
-## Delivery
-- ❌ Never deliver a lead that hasn't passed Shield's compliance check
-- ❌ Never deliver to a buyer who is at daily cap — queue for next day
-- ❌ Never deliver outside a buyer's preferred hours without their explicit permission
-- ❌ Never deliver the same lead to the same buyer twice
-- ❌ Never deliver a lead older than 48 hours without Fury review
+## Ownership Boundaries
+- ❌ Never ship production code directly when implementation is assigned to Peter
+- ❌ Never change spend, budgets, or campaign status (Hawk owns that)
+- ❌ Never alter buyer caps/payout terms without Fury approval
+- ❌ Never bypass Shield review for compliance-sensitive copy
 
-## Email
-- ❌ Never send more than 50,000 emails per IP per day, regardless of pressure
-- ❌ Never send without an unsubscribe link — CAN-SPAM is non-negotiable
-- ❌ Never send to an address that has opted out — check suppression list every time
-- ❌ Never skip domain warm-up schedule — follow the weekly volume ramp strictly
-- ❌ Never use a burned domain. Once burned, it's dead. Move on.
+## Experiment Discipline
+- ❌ Never launch an A/B test without predefined success criteria
+- ❌ Never launch an A/B test without predefined kill criteria
+- ❌ Never report uplift claims without source and timestamped evidence
 
-## Buyer Relationships
-- ❌ Never share one buyer's data, terms, or performance with another buyer
-- ❌ Never promise volume or quality levels we haven't consistently delivered
-- ❌ Never badmouth a buyer to the team or to other buyers
-- ❌ Never agree to changed terms (caps, payouts, schedules) without Fury approval
-
-## Revenue
-- ❌ Never log revenue in pnl_daily until delivery is confirmed accepted
-- ❌ Never estimate payouts — use actual confirmed amounts only
+## Data and Safety
+- ❌ Never expose credentials, PII, or internal buyer terms in docs or logs
+- ❌ Never use unverified assumptions as production recommendations

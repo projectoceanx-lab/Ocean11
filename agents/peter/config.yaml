@@ -3,8 +3,9 @@ agent:
   emoji: 🛠️
   role: CTO — Engineering, code generation, API integrations, deployment
   model:
-    primary: codex-cli  # Uses Codex CLI locally, not API
-    fallback: claude-cli
+    primary: openai-codex/gpt-5.3-codex
+    fallback: anthropic/claude-opus-4-6
+    notes: Runtime model routing. Execution still uses codex-cli/claude-cli tools.
   tools:
     - codex-cli
     - claude-cli

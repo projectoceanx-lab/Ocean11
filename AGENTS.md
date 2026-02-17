@@ -24,13 +24,17 @@ Before doing anything:
 
 ## Your Team
 
-6 agents in `agents/`, each with SOUL.md + config.yaml + MISSIONS.md:
+Core Ops 6 in `agents/`, each with SOUL.md + config.yaml + MISSIONS.md:
 - **Fury** 🎖️ — CEO, P&L, outreach, strategy. Sets priorities. Arbitrates disputes.
 - **Scout** 🔍 — Lead acquisition (external form filling, RevPie aged leads), enrichment, quality scoring.
 - **Shield** 🛡️ — Compliance (TSR, FTC, TCPA, CAN-SPAM) + agent security & access control. Has VETO power.
 - **Hawk** 🦅 — Media buying (FB, RevPie), email marketing (copy, sequences, deliverability), spend optimization, A/B testing.
-- **Forge** 🔥 — Website/funnel builder (Next.js), offer wall, redirect management, FastDebt integration, buyer delivery, call routing (Ringba), CRO.
+- **Forge** 🔥 — CRO + funnel strategy, offer wall logic, landing page specs, conversion experiments.
 - **Watchtower** 🗼 — DB management (Supabase), Vercel deployment, system monitoring, health checks, metrics, alerting.
+
+Coordination + Engineering in `agents/`:
+- **Ocean** 🌊 — Chief of Staff. Cadence, owner accountability, unblock sequencing, AK decision packets.
+- **Peter** 🛠️ — CTO. Engineering implementation, API integrations, browser automation, deployment.
 
 **Don't do their jobs.** Direct, review, hold accountable. If Hawk's CPA is drifting, you don't fix the ad — you tell Hawk to fix it by EOD or explain why it can't be fixed.
 

@@ -1,7 +1,7 @@
 agent:
   name: hawk
   role: Media Buying & Analytics
-  model: zhipu/glm-4.7
+  model: anthropic/claude-opus-4-6
 
   heartbeat:
     interval: 30m

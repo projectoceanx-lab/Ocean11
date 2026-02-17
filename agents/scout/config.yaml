@@ -1,7 +1,7 @@
 agent:
   name: scout
   role: Lead Acquisition & Enrichment
-  model: deepseek/deepseek-v3-0324
+  model: anthropic/claude-opus-4-6
 
   heartbeat:
     interval: 15m

@@ -1,83 +1,111 @@
 # ============================================================
-# Project Ocean — OpenClaw Configuration
-# This is a TEMPLATE. Copy to ~/.openclaw/config.yaml on the
-# machine running Ocean and fill in real values.
+# Project Ocean — OpenClaw Configuration (Repo Template)
+# Aligned to live runtime baseline in ~/.openclaw/openclaw.json
+# Canonical IDs are stable. Display aliases live in runtime identity.
 # ============================================================
 
 # Gateway settings
 gateway:
-  port: 3007  # Different from default 3006 to avoid conflicts
+  port: 18789
 
-# Model routing via OpenRouter (cheap models)
+# Model routing aligned to current runtime
 models:
-  default: openrouter/deepseek/deepseek-v3-0324
+  default: openai-codex/gpt-5.3-codex
   aliases:
-    captain: openrouter/kimi/kimi-k2.5-thinking
-    shield: openrouter/kimi/kimi-k2.5-thinking
-    hawk: openrouter/zhipu/glm-4.7
-    scout: openrouter/deepseek/deepseek-v3-0324
-    signal: openrouter/deepseek/deepseek-v3-0324
-    watchtower: openrouter/openai/gpt-5-nano
+    fury: openai-codex/gpt-5.3-codex
+    peter: openai-codex/gpt-5.3-codex
+    shield: openai-codex/gpt-5.3-codex-spark
+    scout: anthropic/claude-opus-4-6
+    hawk: anthropic/claude-opus-4-6
+    forge: anthropic/claude-opus-4-6
+    watchtower: openai-codex/gpt-5.3-codex-spark
+    ocean: anthropic/claude-opus-4-6
 
 # Agent sessions
 agents:
-  captain:
-    model: captain
-    soul: ./agents/captain/SOUL.md
-    heartbeat: 30m  # CEO checks in every 30 min
+  fury:
+    model: fury
+    soul: ./agents/fury/SOUL.md
+    heartbeat: 30m
     tools:
-      - web_search
-      - web_fetch
       - supabase
+      - email-engine
+      - ringba
       - everflow
-    description: "CEO — outreach, sales, P&L, strategy"
+    description: "CEO - outreach, strategy, P&L ownership, arbitration"
 
-  scout:
-    model: scout
-    soul: ./agents/scout/SOUL.md
-    heartbeat: 10m  # Lead acquisition runs frequently
+  peter:
+    model: peter
+    soul: ./agents/peter/SOUL.md
+    heartbeat: 30m
     tools:
-      - stealth-browser
+      - codex-cli
+      - claude-cli
       - supabase
-      - fast-debt-api
-    description: "Lead acquisition, DB verification, enrichment, quality scoring"
+      - vercel
+      - github
+      - camoufox
+    description: "CTO - engineering execution, APIs, browser automation, deployment"
 
   shield:
     model: shield
     soul: ./agents/shield/SOUL.md
-    heartbeat: 5m   # Compliance checks every new lead
+    heartbeat: 20m
     tools:
       - supabase
-    description: "Compliance — TSR, FTC, TCPA, state rules"
+    description: "Compliance and access control. Has VETO power."
+
+  scout:
+    model: scout
+    soul: ./agents/scout/SOUL.md
+    heartbeat: 15m
+    tools:
+      - stealth-browser
+      - supabase
+      - fast-debt-api
+      - revpie
+    description: "Lead acquisition, enrichment, scoring, and buyer form submission"
 
   hawk:
     model: hawk
     soul: ./agents/hawk/SOUL.md
-    heartbeat: 15m  # Campaign optimization cycles
+    heartbeat: 30m
     tools:
       - facebook-ads
       - everflow
       - revpie
       - supabase
-    description: "Media buying, quant optimization, spend analysis"
+    description: "Media buying, email performance, spend optimization"
 
-  signal:
-    model: signal
-    soul: ./agents/signal/SOUL.md
-    heartbeat: 5m   # Delivery pipeline needs fast response
+  forge:
+    model: forge
+    soul: ./agents/forge/SOUL.md
+    heartbeat: 15m
     tools:
       - supabase
-      - email-engine
-      - ringba
-    description: "CRO, offer wall, email delivery, call routing, buyer handoff"
+      - browser
+      - vercel
+      - everflow
+    description: "CRO, funnel strategy, offer-wall and landing-page specs"
 
   watchtower:
     model: watchtower
     soul: ./agents/watchtower/SOUL.md
-    heartbeat: 10m  # System health monitoring
+    heartbeat: 10m
     tools:
       - supabase
-    description: "System monitoring, health checks, alerting"
+      - vercel
+    description: "Monitoring, reliability, metrics, infra alerting"
+
+  ocean:
+    model: ocean
+    soul: ./agents/ocean/SOUL.md
+    heartbeat: 30m
+    tools:
+      - supabase
+      - slack
+      - web_search
+    description: "Chief of Staff - execution cadence, accountability, unblock sequencing"
 
 # Environment variables (loaded from .env)
 env:
@@ -90,3 +118,5 @@ env:
   - FASTDEBT_API_KEY
   - LANGSMITH_API_KEY
   - XAI_API_KEY
+  - GEMINI_API_KEY
+  - BRAVE_API_KEY

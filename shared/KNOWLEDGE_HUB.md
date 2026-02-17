@@ -658,3 +658,12 @@ Hidden:  input_127=bachelors, input_128=biweekly, input_129=debt_consolidation, 
 - `config/openclaw.yaml` is still useful as team template/source control, but changing only that file does not switch already running local Fury sessions.
 - Service restart command to apply runtime config changes: `openclaw gateway restart`.
 - Existing session records can keep old model metadata (for example `agent:main:main` still showing `gpt-5.3-codex-spark` history); start/reset session key after model switch to avoid inherited context issues.
+
+### OpenClaw Agent Drift Guard (2026-02-17, Peter)
+- Added `scripts/validate_agent_alignment.sh` to prevent stale template drift.
+- Guard checks:
+  - No deprecated IDs (`captain`, `signal`) in `config/openclaw.yaml`.
+  - Required files exist for canonical agents (`fury/scout/shield/hawk/forge/watchtower/peter/ocean`).
+  - Every `soul:` path in template config resolves to a real file.
+  - Runtime ID comparison against `~/.openclaw/openclaw.json` with `main` normalized to `fury`.
+- Use this before commits that touch agent identity/config/missions.

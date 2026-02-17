@@ -1,8 +1,7 @@
 agent:
   name: shield
   role: Compliance Officer
-  model: openai/gpt-5.2
-  thinking: high
+  model: openai-codex/gpt-5.3-codex-spark
 
   heartbeat:
     interval: 20m

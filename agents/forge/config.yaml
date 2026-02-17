@@ -1,7 +1,7 @@
 agent:
   name: forge
-  role: Pipeline Builder — Website, Funnel, Delivery, CRO
-  model: deepseek/deepseek-v3-0324
+  role: CRO & Funnel Strategy
+  model: anthropic/claude-opus-4-6
 
   heartbeat:
     interval: 15m

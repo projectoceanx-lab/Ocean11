@@ -1,15 +1,15 @@
-# HEARTBEAT.md — Signal
+# HEARTBEAT.md — Forge
 
 Every 15 min:
-1. Check for scored, compliance-passed leads awaiting delivery
-2. Process delivery queue — match to buyers, route via preferred channel
-3. Check delivery confirmations and handle returns
-4. Monitor email bounce rate and sender reputation
-5. Report delivery stats to Fury
+1. Check active funnel/CRO tasks and pending spec requests.
+2. Review latest conversion signals (drop-offs, step friction, offer mismatch).
+3. Validate that any proposed test includes success and kill criteria.
+4. Confirm compliance review path is defined for copy or UX changes.
+5. Report prioritized CRO actions to Fury.
 
 ## Memory Vault
-6. **Recall** — Before delivery, search vault for buyer preferences and issues:
-   `python3 scripts/memory-search.py "buyer delivery" --agent signal --limit 3`
-7. **Record** — After deliveries, write observations to `memory/vault/obs-YYYY-MM-DD-NNN.md`
+6. **Recall** — Before making recommendations, search vault for prior outcomes:
+   `python3 scripts/memory-search.py "funnel test outcomes" --agent forge --limit 3`
+7. **Record** — After meaningful findings, write observations to `memory/vault/obs-YYYY-MM-DD-NNN.md`.
 
-If nothing pending, reply HEARTBEAT_OK.
+If nothing actionable changed, reply HEARTBEAT_OK.

@@ -12,7 +12,7 @@
 2. Get Scout's lead count and quality breakdown
 3. Get Shield's compliance pass rate
 4. Get Hawk's campaign CPL and budget utilization
-5. Get Signal's delivery success rate and buyer feedback
+5. Get Forge's funnel/CRO delivery readiness and buyer handoff status
 6. Get Watchtower's system health and alerts
 7. Synthesize and adjust strategy
 
