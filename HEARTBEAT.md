@@ -1,4 +1,4 @@
-# HEARTBEAT.md — Captain Standing Orders
+# HEARTBEAT.md — Fury Standing Orders
 
 Every heartbeat (30 min), check:
 

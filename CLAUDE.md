@@ -28,7 +28,7 @@ docker compose down     # Stop everything
 
 | Agent | Role | Model | Heartbeat | Key Tools |
 |-------|------|-------|-----------|-----------|
-| **Captain** | CEO — P&L, outreach, strategy | kimi-k2.5-thinking | 30m | web_search, supabase, everflow |
+| **Fury** | CEO — P&L, outreach, strategy | kimi-k2.5-thinking | 30m | web_search, supabase, everflow |
 | **Scout** | Lead acquisition & enrichment | deepseek-v3 | 10m | stealth-browser, supabase, fast-debt-api |
 | **Shield** | Compliance (TSR/FTC/TCPA) | kimi-k2.5-thinking | 5m | supabase |
 | **Hawk** | Media buying & spend optimization | glm-4.7 | 15m | facebook-ads, everflow, revpie, supabase |
@@ -37,9 +37,9 @@ docker compose down     # Stop everything
 
 ### Hierarchy
 
-- **Captain orchestrates** all agents and owns P&L decisions
+- **Fury orchestrates** all agents and owns P&L decisions
 - **Shield has compliance veto power** — no lead ships without Shield approval
-- Don't scale spend without Captain's approval
+- Don't scale spend without Fury's approval
 - When in doubt, stop and ask Arif
 
 ### Model Routing
@@ -52,7 +52,7 @@ All models via **OpenRouter** (cost-optimized). Config in `config/openclaw.yaml`
 SOUL.md                     # Top-level system persona (Mr. Ocean)
 USER.md                     # Owner context (Arif Khan)
 AGENTS.md                   # Team rules & safety protocols
-HEARTBEAT.md                # Captain's standing orders per heartbeat
+HEARTBEAT.md                # Fury's standing orders per heartbeat
 config/openclaw.yaml        # Agent config, models, tools, heartbeats
 agents/<name>/SOUL.md       # Per-agent charter (personality + mission)
 agents/<name>/IDENTITY.md   # Agent identity card

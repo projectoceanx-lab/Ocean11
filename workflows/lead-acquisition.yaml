@@ -1,5 +1,5 @@
 # Lead Acquisition Pipeline — Scout
-# Triggered: On heartbeat (every 15 min) or on-demand by Captain
+# Triggered: On heartbeat (every 15 min) or on-demand by Fury
 
 name: lead-acquisition
 agent: scout

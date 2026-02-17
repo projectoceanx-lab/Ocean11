@@ -5,7 +5,7 @@ Every 30 min:
 2. Identify winners and losers
 3. Recommend budget shifts if data supports it
 4. Check A/B test status for statistical significance
-5. Report daily optimization summary to Captain
+5. Report daily optimization summary to Fury
 
 ## Memory Vault
 6. **Recall** — Before optimizing, search vault for past campaign patterns:

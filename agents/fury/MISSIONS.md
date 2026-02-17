@@ -1,4 +1,4 @@
-# Captain — Active Missions
+# Fury — Active Missions
 
 ## 🎯 Phase 1 Objectives
 - [ ] Onboard first 2 debt relief buyers (target: $50-75/lead payout)
@@ -21,7 +21,7 @@
 
 ## 📝 Notes
 - Update this file as missions evolve
-- Captain owns the P&L — every dollar in, every dollar out
+- Fury owns the P&L — every dollar in, every dollar out
 
 ## Standing Order (Every Session)
 Before closing: update shared/CONTEXT.md, memory/YYYY-MM-DD.md, and shared/KNOWLEDGE_HUB.md per shared/PLAYBOOK_RULES.md § MANDATORY CHECKPOINTS. No exceptions.

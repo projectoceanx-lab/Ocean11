@@ -20,7 +20,7 @@ Our Form Fill → Advertiser checks (dedup + quality) → Accept or Reject
 - **We track both:** submissions (to avoid flooding) and conversions (real cap count).
 - **Safety buffer:** Stop submitting at 1.5x the cap to account for pending postbacks.
 - **Schema:** `db/offer_caps_schema.sql` — tables + helper functions
-- **Weekly cron:** Monday 9AM IST — Captain asks AK for updated caps
+- **Weekly cron:** Monday 9AM IST — Fury asks AK for updated caps
 
 ## Debt Relief Offers
 
@@ -56,7 +56,7 @@ Our Form Fill → Advertiser checks (dedup + quality) → Accept or Reject
 - **Web** = web/display traffic leads
 
 ## What We NEED from AK (Arif provides caps directly)
-AK manages buyer relationships and communicates caps to Captain. Captain routes leads accordingly.
+AK manages buyer relationships and communicates caps to Fury. Fury routes leads accordingly.
 
 - [ ] Daily/weekly/monthly cap per offer
 - [ ] Full state exclusion list per offer

@@ -10,19 +10,19 @@ Structured YAML workflows define the core business processes. Each workflow is a
 - `compliance-check.yaml` — Shield's regulatory validation
 - `buyer-delivery.yaml` — Signal's matching and routing
 - `campaign-optimization.yaml` — Hawk's analytics and budget optimization
-- `daily-standup.yaml` — Captain's daily orchestration
+- `daily-standup.yaml` — Fury's daily orchestration
 
 ### Layer 2: Autonomy (Agent Intelligence)
 Each agent has a SOUL.md defining its personality, expertise, and decision-making authority. Agents can:
 - Make tactical decisions within their domain
-- Escalate uncertain situations to Captain
+- Escalate uncertain situations to Fury
 - Adapt workflows based on real-time conditions
 - Learn from outcomes (quality scores, delivery rates, buyer feedback)
 
 **Decision Authority:**
 | Agent | Can Decide | Must Escalate |
 |-------|-----------|---------------|
-| Captain | Strategy changes, buyer relationships | Budget > $500/day, new verticals |
+| Fury | Strategy changes, buyer relationships | Budget > $500/day, new verticals |
 | Scout | Form selection, enrichment priority | New data sources, quality threshold changes |
 | Shield | Block/flag leads | Regulatory ambiguity, new state rules |
 | Hawk | Budget shifts < 20%, pause campaigns | Budget shifts > 20%, new channels |

@@ -5,7 +5,7 @@ _What Scout is NEVER allowed to do. Hard stops._
 ## Form Filling
 - ❌ Never submit a form without proxy rotation active
 - ❌ Never reuse the same browser fingerprint on the same domain within 24 hours
-- ❌ Never submit more than 100 forms to a single site in 24 hours without Captain approval
+- ❌ Never submit more than 100 forms to a single site in 24 hours without Fury approval
 - ❌ Never fill forms with fabricated/fake consumer data
 - ❌ Never bypass CAPTCHA detection — pause and flag, don't force through
 

@@ -5,7 +5,7 @@ Every 15 min:
 2. Process delivery queue — match to buyers, route via preferred channel
 3. Check delivery confirmations and handle returns
 4. Monitor email bounce rate and sender reputation
-5. Report delivery stats to Captain
+5. Report delivery stats to Fury
 
 ## Memory Vault
 6. **Recall** — Before delivery, search vault for buyer preferences and issues:

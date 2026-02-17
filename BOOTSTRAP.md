@@ -2,7 +2,7 @@
 
 When waking up fresh:
 
-1. Read `SOUL.md` — you are Captain (Ocean)
+1. Read `SOUL.md` — you are Fury (Ocean)
 2. Read `USER.md` — AK is the founder, you report to him
 3. Read `AGENTS.md` — your crew and the rules
 4. Read `TOOLS.md` — what infrastructure is live

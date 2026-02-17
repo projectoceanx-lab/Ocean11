@@ -10,7 +10,7 @@ Each agent has a unique job requiring specific capabilities. The best model is t
 
 ## Model Assignments
 
-### Captain → Kimi K2.5 Thinking
+### Fury → Kimi K2.5 Thinking
 **Cost:** $0.45 / $2.25 per 1M tokens | **Context:** 262K
 
 | Capability Needed | Kimi K2.5 Fit |
@@ -21,7 +21,7 @@ Each agent has a unique job requiring specific capabilities. The best model is t
 | Multi-agent coordination | ✅ Complex planning |
 | Decision-making under uncertainty | ✅ Explicit thinking chains |
 
-**Why not upgrade?** Captain doesn't need vision, code, or massive context. Kimi K2.5's reasoning is top-tier at 10x less than Opus. The right model.
+**Why not upgrade?** Fury doesn't need vision, code, or massive context. Kimi K2.5's reasoning is top-tier at 10x less than Opus. The right model.
 
 ---
 
@@ -57,7 +57,7 @@ Each agent has a unique job requiring specific capabilities. The best model is t
 
 **Why Kimi over Sonnet/Opus?** Compliance is pure reasoning — no vision, no code, no tool use beyond database reads. Kimi K2.5 is #4 on reasoning benchmarks. Paying $3-25/M for capabilities Shield doesn't need is waste. Kimi at $0.45/$2.25 gives Shield everything it needs.
 
-**Fallback:** For genuine legal edge cases Shield can't resolve, escalate to Captain (also Kimi K2.5) for a second opinion. If both are uncertain, escalate to AK.
+**Fallback:** For genuine legal edge cases Shield can't resolve, escalate to Fury (also Kimi K2.5) for a second opinion. If both are uncertain, escalate to AK.
 
 ---
 
@@ -106,7 +106,7 @@ Each agent has a unique job requiring specific capabilities. The best model is t
 | Trend detection | ✅ Can identify simple patterns |
 | Alert generation | ✅ Concise output |
 | Fast checks (every 10 min) | ✅ Cheapest, fastest |
-| Signal correlation | ⚠️ Limited — Captain handles complex correlation |
+| Signal correlation | ⚠️ Limited — Fury handles complex correlation |
 
 **Why nano?** Watchtower's job is simple: read numbers, compare to thresholds, report anomalies. It doesn't interpret, negotiate, write, or reason deeply. Nano is the right tool for the job. Spending $1+ per 1M on monitoring is waste.
 
@@ -116,7 +116,7 @@ Each agent has a unique job requiring specific capabilities. The best model is t
 
 | Agent | Model | Provider | Cost in/out | Key Strength |
 |-------|-------|----------|-------------|--------------|
-| **Captain** | Kimi K2.5 Thinking | Moonshot | $0.45/$2.25 | Reasoning |
+| **Fury** | Kimi K2.5 Thinking | Moonshot | $0.45/$2.25 | Reasoning |
 | **Scout** | Claude Sonnet 4.5 | Anthropic | $3.00/$15.00 | Vision + Tool Use + Code |
 | **Shield** | Kimi K2.5 Thinking | Moonshot | $0.45/$2.25 | Legal Reasoning |
 | **Hawk** | GLM-4.7 | Zhipu | $0.40/$1.50 | Math + Analytics |
@@ -125,12 +125,12 @@ Each agent has a unique job requiring specific capabilities. The best model is t
 
 ## Model Diversity: 4 Providers
 
-- **Moonshot** → Captain, Shield
+- **Moonshot** → Fury, Shield
 - **Anthropic** → Scout
 - **Zhipu** → Hawk
 - **OpenAI** → Signal, Watchtower
 
-Single provider outage: max 2 agents affected (Moonshot down = Captain + Shield). Scout, Hawk, Signal, Watchtower continue independently.
+Single provider outage: max 2 agents affected (Moonshot down = Fury + Shield). Scout, Hawk, Signal, Watchtower continue independently.
 
 ## Estimated Costs
 
@@ -144,7 +144,7 @@ Single provider outage: max 2 agents affected (Moonshot down = Captain + Shield)
 
 | Agent | Cap | Notes |
 |-------|-----|-------|
-| Captain | $5.00 | Strategy, standups, buyer outreach |
+| Fury | $5.00 | Strategy, standups, buyer outreach |
 | Scout | $12.00 | Highest volume — Sonnet is expensive but worth it |
 | Shield | $5.00 | Focused compliance reviews |
 | Hawk | $3.00 | Periodic analytics, not continuous |

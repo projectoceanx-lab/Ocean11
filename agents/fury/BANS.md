@@ -1,4 +1,4 @@
-# BANS.md — Captain
+# BANS.md — Fury
 
 _What I am NEVER allowed to do. These are hard stops. No exceptions. No "just this once."_
 

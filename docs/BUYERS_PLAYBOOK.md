@@ -129,7 +129,7 @@ ALL must pass. If any fail → route to next eligible offer.
 - **Day check:** Don't submit to M-F offers on weekends.
 - **Dedup:** Check `offer_submissions` — has this lead (by email+phone) been sent to this buyer in the last 90 days?
 - **Cascade:** If top offer is capped/restricted, try next. If ALL offers exhausted → queue for next day.
-- **Queue aging:** Lead undelivered > 48h → flag for Captain review.
+- **Queue aging:** Lead undelivered > 48h → flag for Fury review.
 
 ### Quality Matching (Post-FastDebt Enrichment)
 
@@ -251,9 +251,9 @@ RevPie Source ID → sends traffic → our landing page → Everflow tracks
 
 ### Step 1: AK initiates relationship
 - AK handles all external buyer communication
-- Captain receives terms: cap, payout, states, restrictions
+- Fury receives terms: cap, payout, states, restrictions
 
-### Step 2: Captain configures
+### Step 2: Fury configures
 - Add to `offer_caps` table
 - Set routing priority based on CPA
 - Configure in OFFER_CAPS.md
@@ -270,7 +270,7 @@ RevPie Source ID → sends traffic → our landing page → Everflow tracks
 
 ---
 
-## Payout Negotiation (AK handles, Captain advises)
+## Payout Negotiation (AK handles, Fury advises)
 
 ### What Affects Payout
 | Factor | Higher Payout | Lower Payout |
@@ -311,7 +311,7 @@ When a submission doesn't get a postback (no pixel fire):
 
 ### Process
 1. Track submission → postback ratio per offer per week
-2. If ratio drops below 40%, Captain investigates
+2. If ratio drops below 40%, Fury investigates
 3. Check: Is it a source quality issue? Enrichment gap? State mismatch?
 4. Adjust routing or pause problematic source
 
@@ -320,10 +320,10 @@ When a submission doesn't get a postback (no pixel fire):
 ## Weekly Operating Rhythm
 
 ### Monday (Cap Day)
-- **9:00 AM IST:** Cron fires → Captain asks AK for this week's caps
+- **9:00 AM IST:** Cron fires → Fury asks AK for this week's caps
 - AK provides: daily caps, weekly caps, state changes, new offers
-- Captain updates `offer_caps` table + OFFER_CAPS.md
-- Captain reviews last week's conversion rates per offer
+- Fury updates `offer_caps` table + OFFER_CAPS.md
+- Fury reviews last week's conversion rates per offer
 
 ### Daily
 - Check daily submission vs conversion counts per offer

@@ -261,7 +261,7 @@ _Next steps: (1) Get Brave API key configured for deeper research. (2) Run Faceb
 <!-- Buyer preferences, best delivery times, email deliverability insights, call connect rates -->
 
 ## Buyer Intelligence
-<!-- Captain + Signal write here -->
+<!-- Fury + Signal write here -->
 <!-- Buyer profiles, payout history, reliability scores, negotiation notes -->
 
 ### CPA vs Quality — The Real Economics (from AK, Feb 15 2026)
@@ -393,7 +393,7 @@ Don't chase the $60 CPA. Chase the **quality match**:
 5. [ ] Draft buyer outreach email template for direct Tier 1 contacts
 6. [ ] Confirm state licensing requirements per buyer — map which states we can serve
 
-## Postback Infra Ownership & Endpoint (Captain, Feb 16 2026)
+## Postback Infra Ownership & Endpoint (Fury, Feb 16 2026)
 
 - Shared endpoint: `https://ocean11-postback.vercel.app`
 - Health: `/health`
@@ -402,9 +402,9 @@ Don't chase the $60 CPA. Chase the **quality match**:
 - Ownership rule:
   - **Vision** owns infrastructure state (env vars, uptime, production placement in Everflow)
   - **Peter** owns code fallback + deployment reproducibility
-  - Captain delegates; does not remain single point of execution
+  - Fury delegates; does not remain single point of execution
 
-## RevPie ↔ Everflow Traffic Optimization Loop (Captain, Feb 15 2026)
+## RevPie ↔ Everflow Traffic Optimization Loop (Fury, Feb 15 2026)
 
 **Source: AK direct + RevPie dashboard exploration**
 
@@ -451,7 +451,7 @@ Don't chase the $60 CPA. Chase the **quality match**:
 ### Key Insight from AK
 Source ID optimization is THE lever for RevPie profitability. Same ad, same creative — one source converts at 3%, another at 0.1%. The difference between profitable and bankrupt is knowing which is which, and that data lives in Everflow.
 
-## Everflow (RevvMind) — Full Platform Map (Captain, Feb 15 2026)
+## Everflow (RevvMind) — Full Platform Map (Fury, Feb 15 2026)
 
 **Source: Direct exploration of revvmind.everflowclient.io**
 
@@ -509,17 +509,17 @@ Source ID optimization is THE lever for RevPie profitability. Same ad, same crea
 9. **One confirmed transaction:** FDR offer 4930 on 01/28/2026 04:09:53 EST
 
 ## Market Intelligence
-<!-- Watchtower + Captain write here -->
+<!-- Watchtower + Fury write here -->
 <!-- Competitor moves, regulatory changes, market trends, seasonal patterns -->
 
-### Weekly Regulatory Intelligence Check — 2026-02-16 (Captain)
+### Weekly Regulatory Intelligence Check — 2026-02-16 (Fury)
 Scope scanned: CFPB, FTC, FCC, CAN-SPAM guidance and key state lenses (CA/NY/TX/FL) for debt relief + personal loan cross-monetization.
 
 **Outcome:** No material regulatory change this week.
 
 **Operational decision:** No immediate edits to `docs/VOICE_GUIDE.md`, `config/copy_lexicon.yaml`, or V1 copy templates.
 
-### Login Reliability Architecture v1 — 2026-02-17 (Captain)
+### Login Reliability Architecture v1 — 2026-02-17 (Fury)
 Added `docs/LOGIN_RELIABILITY_PLAYBOOK.md` for stable auth operations on Everflow/RevPie/Facebook.
 
 Core model:
@@ -529,7 +529,7 @@ Core model:
 
 Includes mandatory pre-flight, recovery matrix, platform SOPs, Vision monitoring cadence, and proof-bundle gate before marking completion.
 
-### Copy Guardrails System v1 — 2026-02-16 (Captain)
+### Copy Guardrails System v1 — 2026-02-16 (Fury)
 Implemented a controlled copy system so Hawkeye output stays consistent and compliant across debt relief + personal loan cross-monetization.
 
 **Artifacts created:**
@@ -543,7 +543,7 @@ Implemented a controlled copy system so Hawkeye output stays consistent and comp
 
 **Why:** Prevents style drift, risky claims, and agent-to-agent copy inconsistency.
 
-## Form Filling — Hard-Won Lessons (Captain, Feb 15 2026)
+## Form Filling — Hard-Won Lessons (Fury, Feb 15 2026)
 
 ### Gravity Forms (WordPress) — JGW Pattern
 - **Engine:** Gravity Forms (`gform_48`), multi-page wizard, all on single URL

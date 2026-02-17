@@ -9,7 +9,7 @@
 - [ ] Establish baseline CPL across all channels
 - [ ] Implement daily budget optimization (shift spend to best-performing)
 - [ ] Build A/B testing framework for ad creatives
-- [ ] Report CPL/ROI to Captain daily
+- [ ] Report CPL/ROI to Fury daily
 - [ ] Configure Everflow for conversion tracking (postback integration)
 
 ### Email Marketing (Channel Owner)

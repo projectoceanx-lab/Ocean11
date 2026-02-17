@@ -34,13 +34,13 @@ After executing, update the same entry:
 **Self-score:** 1-5 (1=failed, 3=acceptable, 5=exceeded)
 ```
 
-### 4. Captain Reviews: Supervised Score
-Captain reviews outcomes and assigns:
+### 4. Fury Reviews: Supervised Score
+Fury reviews outcomes and assigns:
 ```
-**Captain score:** 1-5
+**Fury score:** 1-5
 **Feedback:** What to do differently
 **Promote?:** YES → moves to KNOWLEDGE_HUB | NO → stays in log
-**New rule?:** YES → Captain adds to PLAYBOOK_RULES | NO
+**New rule?:** YES → Fury adds to PLAYBOOK_RULES | NO
 ```
 
 ### 5. Behavior Update
@@ -49,7 +49,7 @@ Based on scores:
 - **Score 4 (Good):** Logged, agent continues approach
 - **Score 3 (Acceptable):** Logged with improvement notes
 - **Score 2 (Poor):** Logged in FAILURES.md, agent must adjust approach
-- **Score 1 (Failed):** Logged in FAILURES.md, Captain may add PLAYBOOK_RULE to prevent recurrence
+- **Score 1 (Failed):** Logged in FAILURES.md, Fury may add PLAYBOOK_RULE to prevent recurrence
 
 ## Reward Signals
 
@@ -63,7 +63,7 @@ Based on scores:
 
 ## Cumulative Agent Scores
 
-_Updated weekly by Captain. Trend matters more than absolute number._
+_Updated weekly by Fury. Trend matters more than absolute number._
 
 | Agent | This Week | Last Week | Trend | Trust Tier |
 |-------|-----------|-----------|-------|------------|
@@ -74,9 +74,9 @@ _Updated weekly by Captain. Trend matters more than absolute number._
 | Watchtower | — | — | — | Probation (new) |
 
 ### Trust Tiers (earned, not assigned)
-- **Probation** — New agent. Every action reviewed by Captain. No autonomy.
-- **Supervised** — 1 week clean. Captain reviews daily summary, not every action.
-- **Trusted** — 2 weeks clean, score avg >3.5. Captain reviews weekly. Agent can act autonomously within guardrails.
+- **Probation** — New agent. Every action reviewed by Fury. No autonomy.
+- **Supervised** — 1 week clean. Fury reviews daily summary, not every action.
+- **Trusted** — 2 weeks clean, score avg >3.5. Fury reviews weekly. Agent can act autonomously within guardrails.
 - **Autonomous** — 4 weeks clean, score avg >4.0. Minimal oversight. Can suggest PLAYBOOK_RULE changes.
 
 ### Demotion Triggers
@@ -87,7 +87,7 @@ _Updated weekly by Captain. Trend matters more than absolute number._
 
 ## Weekly Review Protocol
 
-Every Sunday, Captain runs:
+Every Sunday, Fury runs:
 1. Tally scores per agent from ACTION_LOG + FEEDBACK_LOG
 2. Update cumulative scores above
 3. Promote/demote trust tiers
@@ -99,8 +99,8 @@ Every Sunday, Captain runs:
 ## Anti-Patterns (auto-flag)
 
 These behaviors trigger automatic review:
-- **Repeat failure** — Same mistake twice → Captain reviews immediately
-- **Score inflation** — Agent self-scores 5 but Captain scores 2 → recalibrate
+- **Repeat failure** — Same mistake twice → Fury reviews immediately
+- **Score inflation** — Agent self-scores 5 but Fury scores 2 → recalibrate
 - **Knowledge ignorance** — Agent makes mistake that KNOWLEDGE_HUB already covered → -2 penalty
 - **Silent failure** — Agent doesn't log an outcome → immediate Probation
-- **Rule dodge** — Agent finds loophole in PLAYBOOK_RULES → Captain patches rule + feedback
+- **Rule dodge** — Agent finds loophole in PLAYBOOK_RULES → Fury patches rule + feedback

@@ -17,8 +17,11 @@ Arif's other ventures (Home Away STR, HostAI SaaS) are 6+ months out — needs v
 ## Budget
 
 - **$5K testing budget** — tight, every dollar tracked
-- **Subscriptions:** Claude Max (Opus 4.6 for Captain) + ChatGPT Max (GPT-5.2 for Shield) — both unlimited, $0 marginal cost
-- **Phase 1:** Local (laptop/Mac mini), ~$20-50/mo in API costs (only worker agents: Scout, Signal, Hawk, Watchtower)
+- **Subscriptions:** Claude Max (Opus 4.6) + ChatGPT Max (GPT-5.3 Codex) — both unlimited, $0 marginal cost
+- **CRITICAL: We use Max subscriptions ONLY, not API keys.** No ANTHROPIC_API_KEY needed. Claude CLI uses OAuth (Max plan). Codex CLI uses ChatGPT Max. OpenClaw uses Claude Max for Fury.
+- **Claude CLI:** Must run WITHOUT ANTHROPIC_API_KEY env var (unset it) — otherwise it overrides OAuth and tries API which fails
+- **Codex CLI:** Authenticated via ChatGPT Max, gpt-5.3-codex model, $0
+- **Phase 1:** Local (laptop/Mac mini), ~$20-50/mo in API costs (only worker agents on cheaper models: Scout, Hawk, Watchtower via OpenRouter/Gemini)
 - **Phase 2:** Cloud (Railway/Vercel) when unit economics proven, ~$200-500/mo
 - Zero cloud spend until we PROVE the system works locally
 
@@ -58,10 +61,10 @@ Consolidated from original 10 (Arif's decision: "more are tough to manage").
 - **HAWK vs SHIELD** — Speed vs compliance. Hawk wants to scale spend and blast emails, Shield wants to verify everything. This tension is healthy.
 - **FORGE vs HAWK** — Forge protects buyer relationships and sender reputation. Hawk wants leads delivered NOW before they go cold.
 - **HAWK (email) vs SHIELD** — Hawk pushes email volume, Shield enforces CAN-SPAM and complaint rate limits.
-- **CAPTAIN arbitrates** — When agents disagree, Captain decides based on P&L impact.
+- **CAPTAIN arbitrates** — When agents disagree, Fury decides based on P&L impact.
 
 ### Why These Models?
-- **Claude Opus 4.6** — for Captain because CEO decisions need the best strategic reasoning; GPT-5.3 Codex as fallback
+- **Claude Opus 4.6** — for Fury because CEO decisions need the best strategic reasoning; GPT-5.3 Codex as fallback
 - **GPT-5.2 (high thinking)** — for Shield because compliance decisions are the most consequential in the operation; high thinking budget gives depth for regulatory edge cases and state-specific rules
 - **DeepSeek V3.2** (#40 Arena) — for Scout & Signal because they need reliable execution at low cost
 - **GLM-4.7** (#22 Arena, #21 math) — for Hawk because media buying is math-heavy
@@ -158,7 +161,7 @@ See `docs/COMPLIANCE_RULES.md` for full details.
 2. Shield compliance-checks the lead
 3. If that loop works clean, add Signal for delivery
 4. Then Hawk for traffic optimization
-5. Captain oversees everything
+5. Fury oversees everything
 6. Watchtower monitors health
 
 **Don't build all 6 agents at once.** Prove unit economics with the first 2, then scale.

@@ -1,6 +1,6 @@
 # DRIFT_WATCH.md — Agent Drift Detection
 
-_Captain's responsibility. Checked weekly during standup review._
+_Fury's responsibility. Checked weekly during standup review._
 
 ---
 
@@ -32,7 +32,7 @@ Drift is dangerous because it doesn't break anything. It just makes everything s
 |---------|---------|
 | Block rate 5-15% | Block rate creeping above 20% (over-cautious) |
 | Block rate 5-15% | Block rate dropping below 3% (rubber-stamping) |
-| Edge cases escalated to Captain | Edge cases auto-decided without escalation |
+| Edge cases escalated to Fury | Edge cases auto-decided without escalation |
 | Compliance reasons are specific | Reasons become generic ("compliance concern") |
 | Reviews individual leads | Starts batch-approving similar leads |
 
@@ -79,7 +79,7 @@ Drift is dangerous because it doesn't break anything. It just makes everything s
 
 ---
 
-## Captain Self-Check
+## Fury Self-Check
 
 I drift too. AK should check me on:
 
@@ -110,4 +110,4 @@ If drift persists after correction: escalate to AK for a potential model change 
 
 ---
 
-_Reviewed weekly by Captain during standup. Updated as we learn what drift looks like in practice._
+_Reviewed weekly by Fury during standup. Updated as we learn what drift looks like in practice._

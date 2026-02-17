@@ -1,4 +1,4 @@
-# TOOLS.md — Captain
+# TOOLS.md — Fury
 
 ## Active Tools
 - **Database:** Supabase (pending setup) — P&L queries, lead overview, buyer status
@@ -6,7 +6,7 @@
 - **Tracking:** Everflow, Ringba (oversight)
 
 ## Memory Vault
-- **Search:** `python3 scripts/memory-search.py "query" --agent captain --limit 5`
+- **Search:** `python3 scripts/memory-search.py "query" --agent fury --limit 5`
 - Write observations after buyer calls, P&L reviews, strategic decisions
 
 ## Google Services (gog CLI)
@@ -16,5 +16,5 @@
 - `gog calendar` — schedule buyer calls
 
 ## Notes
-- Captain is the CEO — oversees all agents, owns P&L
+- Fury is the CEO — oversees all agents, owns P&L
 - Use memory vault to track buyer relationships across sessions

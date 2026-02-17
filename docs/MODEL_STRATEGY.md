@@ -11,13 +11,13 @@ Why each model was chosen, cost analysis, and upgrade paths.
 
 ## Subscription Strategy
 
-- **Claude Max subscription** — Covers Captain (Opus 4.6). Unlimited usage, $0 marginal cost.
+- **Claude Max subscription** — Covers Fury (Opus 4.6). Unlimited usage, $0 marginal cost.
 - **ChatGPT Max subscription** — Covers Shield (GPT-5.2). Unlimited usage via CLI, $0 marginal cost.
 - Only Scout, Signal, Hawk, and Watchtower incur per-token API costs (~$20-50/mo total).
 
 ## Model Assignments
 
-### Captain → anthropic/claude-opus-4-6 (fallback: openai/gpt-5.3-codex)
+### Fury → anthropic/claude-opus-4-6 (fallback: openai/gpt-5.3-codex)
 - **Why:** CEO decisions — P&L, buyer negotiations, agent arbitration — need the strongest strategic reasoning available. Opus 4.6 is top-tier. GPT-5.3 Codex as fallback for resilience.
 - **Cost:** $15 input / $75 output per 1M tokens (fallback: $2/$8)
 - **Daily budget cap:** $10.00
@@ -67,7 +67,7 @@ Why each model was chosen, cost analysis, and upgrade paths.
 | Medium (15 leads/day) | $1.50 | $45 |
 | High (30 leads/day) | $3.00 | $90 |
 
-*Captain and Shield excluded — covered by Max subscriptions at $0 marginal cost.*
+*Fury and Shield excluded — covered by Max subscriptions at $0 marginal cost.*
 
 ## When to Upgrade Models
 
@@ -85,4 +85,4 @@ Why each model was chosen, cost analysis, and upgrade paths.
 - Watchtower monitors total AI spend
 - Alert at $15/day, critical at $25/day
 - If an agent hits its cap, it pauses until the next day
-- Captain can override caps in emergencies
+- Fury can override caps in emergencies

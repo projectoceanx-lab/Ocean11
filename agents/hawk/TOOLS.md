@@ -7,7 +7,7 @@
 - **Database:** Supabase (pending setup)
 
 ## Budget Guardrails
-- Max 20% budget shift without Captain approval
+- Max 20% budget shift without Fury approval
 - Kill campaigns with CPL > $30 after 100 clicks
 - Daily budget cap per campaign: start $50-100
 

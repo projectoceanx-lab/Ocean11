@@ -30,5 +30,5 @@ Track what's been provided and what's still pending.
 
 ## Notes
 - Each credential goes in `.env` (never committed to git)
-- Captain tracks spend credentials, Shield audits access
+- Fury tracks spend credentials, Shield audits access
 - Watchtower monitors API health/rate limits

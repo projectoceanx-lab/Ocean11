@@ -1,6 +1,6 @@
 # VOICE_GUIDE.md — Ocean Copy System (Debt Relief + Personal Loan Cross-Monetization)
 
-Owner: Fury (Captain)  
+Owner: Fury  
 Enforcement: Cap (Compliance) + Hawkeye (Copy Ops)  
 Status: ACTIVE
 

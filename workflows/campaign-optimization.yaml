@@ -1,5 +1,5 @@
 # Campaign Optimization Pipeline — Hawk
-# Triggered: Daily at 10 AM EST, or on-demand by Captain
+# Triggered: Daily at 10 AM EST, or on-demand by Fury
 
 name: campaign-optimization
 agent: hawk
@@ -108,7 +108,7 @@ steps:
 
   - id: compile_report
     action: generate_report
-    description: Create daily optimization report for Captain
+    description: Create daily optimization report for Fury
     template: |
       ## 📊 Campaign Optimization Report — ${date}
       
@@ -146,7 +146,7 @@ steps:
 
   - id: send_to_captain
     action: notify_agent
-    description: Send report to Captain for review
+    description: Send report to Fury for review
     target_agent: captain
     message: ${compiled_report}
     priority: normal

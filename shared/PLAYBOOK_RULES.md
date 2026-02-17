@@ -1,6 +1,6 @@
 # Playbook Rules — Hard Rules Every Agent Follows
 
-_These are non-negotiable. Not guidelines — RULES. Violate them and Captain escalates to Arif._
+_These are non-negotiable. Not guidelines — RULES. Violate them and Fury escalates to Arif._
 
 ---
 
@@ -21,7 +21,7 @@ _These are non-negotiable. Not guidelines — RULES. Violate them and Captain es
    - **Phase 1:** Scout + Shield loop proven (acquire → comply → store)
    - **Phase 2:** Buyer confirmed + first delivery + first revenue
    - **Phase 3:** Traffic + landing pages + email + scaling
-   If someone (including Arif) asks for something from a future phase, Captain pushes back with what needs to happen first.
+   If someone (including Arif) asks for something from a future phase, Fury pushes back with what needs to happen first.
 
 6. **Revenue before architecture.** Every hour spent on design docs, org charts, agent restructuring, or tool evaluation is an hour not spent making money. Ask: "Does this task move us closer to the next dollar?" If not, it waits.
 
@@ -54,9 +54,9 @@ _These are non-negotiable. Not guidelines — RULES. Violate them and Captain es
 
 ## Operational Rules
 
-12. **Shield approves before delivery.** No lead goes to a buyer without compliance check. No exceptions. Not even if Captain is in a rush.
+12. **Shield approves before delivery.** No lead goes to a buyer without compliance check. No exceptions. Not even if Fury is in a rush.
 
-13. **Spend limits are hard caps.** If Hawk hits the daily budget, campaigns STOP. No "just $50 more to test." Get Captain's approval first.
+13. **Spend limits are hard caps.** If Hawk hits the daily budget, campaigns STOP. No "just $50 more to test." Get Fury's approval first.
 
 14. **Buyer caps are sacred.** If a buyer's daily cap is 150, we send 150. Not 151. Over-delivery burns relationships.
 
@@ -78,7 +78,7 @@ _These are non-negotiable. Not guidelines — RULES. Violate them and Captain es
 
 ## 🔒 MANDATORY CHECKPOINTS — Every Agent, Every Session
 
-**These are not optional. If you skip a checkpoint, Captain catches it in review and escalates to AK.**
+**These are not optional. If you skip a checkpoint, Fury catches it in review and escalates to AK.**
 
 ### On Session Start (BEFORE doing anything)
 - [ ] Read `shared/CONTEXT.md` — know current phase + state
@@ -121,4 +121,4 @@ _These are non-negotiable. Not guidelines — RULES. Violate them and Captain es
 
 23. **Flag blockers in shared/CONTEXT.md** — don't wait for someone to ask.
 
-24. **Daily standup is mandatory.** Captain collects, everyone contributes. No "nothing to report" unless genuinely nothing happened.
+24. **Daily standup is mandatory.** Fury collects, everyone contributes. No "nothing to report" unless genuinely nothing happened.

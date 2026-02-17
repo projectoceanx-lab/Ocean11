@@ -11,7 +11,7 @@ openclaw gateway start
 openclaw gateway status
 ```
 
-All 6 agents should show as active. Captain initializes first and confirms the others.
+All 6 agents should show as active. Fury initializes first and confirms the others.
 
 ### Start a Single Agent
 If an agent crashed or needs restart:
@@ -37,7 +37,7 @@ openclaw gateway stop
 
 ## Daily Operations
 
-### Morning Checklist (Captain handles this, but verify manually if needed)
+### Morning Checklist (Fury handles this, but verify manually if needed)
 1. Check P&L from yesterday: `SELECT * FROM pnl_daily ORDER BY date DESC LIMIT 1;`
 2. Check lead pipeline: `SELECT status, COUNT(*) FROM leads GROUP BY status;`
 3. Check buyer caps reset: `SELECT name, current_daily_count, daily_cap FROM buyers;`
@@ -95,8 +95,8 @@ openclaw gateway stop
 | Severity | Who Handles | Action |
 |----------|------------|--------|
 | Low | Watchtower auto-resolves | Log and monitor |
-| Medium | Captain adjusts strategy | Alert Arif if persists > 24h |
-| High | Captain + Arif | Immediate notification |
+| Medium | Fury adjusts strategy | Alert Arif if persists > 24h |
+| High | Fury + Arif | Immediate notification |
 | Critical | System pause | Stop gateway, notify Arif, investigate |
 
 ## Useful SQL Queries

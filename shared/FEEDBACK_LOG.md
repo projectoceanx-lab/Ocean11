@@ -1,6 +1,6 @@
-# Feedback Log — Captain's Scored Reviews
+# Feedback Log — Fury's Scored Reviews
 
-_Searchable record of all Captain reviews. Agents check here before acting to find precedent._
+_Searchable record of all Fury reviews. Agents check here before acting to find precedent._
 
 ---
 
@@ -10,7 +10,7 @@ _Searchable record of all Captain reviews. Agents check here before acting to fi
 ### [DATE] — [AGENT] — [ACTION_TYPE] — Score: X/5
 **Action:** Brief description
 **Outcome:** What happened
-**Feedback:** Captain's notes
+**Feedback:** Fury's notes
 **Tag:** #acquisition | #compliance | #campaign | #delivery | #monitoring
 ```
 
@@ -31,7 +31,7 @@ _Searchable record of all Captain reviews. Agents check here before acting to fi
 **Outcome:** Exceptional work. The "Ocean lesson" on each case translates enforcement history into actionable rules for us. Correctly identified advance fee ban as #1 trigger, flagged impersonation risk under new FTC rule, and noted state AG enforcement likely to increase under current admin. The insight about "common enterprise" doctrine flowing liability upstream to lead gen is critical — that's our existential risk.
 **Feedback:** This is the standard I expect. Evidence-cited, case-specific, with concrete operational implications. Only gap: need state-by-state licensing requirements mapped (which states require debt relief companies to be licensed, and does that touch lead gen?). But that's next phase work, not a gap in this mission.
 **Promote?:** YES — already in KNOWLEDGE_HUB
-**New rule?:** YES — Adding to Captain's pre-launch checklist: "Verify every buyer's fee structure (no advance fees) before first delivery."
+**New rule?:** YES — Adding to Fury's pre-launch checklist: "Verify every buyer's fee structure (no advance fees) before first delivery."
 **Tag:** #compliance #recon
 
 ---

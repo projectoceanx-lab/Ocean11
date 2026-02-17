@@ -1,6 +1,6 @@
 # Action Log — Every Action, Every Outcome
 
-_Agents log intent before acting and outcome after. Captain reviews and scores._
+_Agents log intent before acting and outcome after. Fury reviews and scores._
 
 ---
 
@@ -17,7 +17,7 @@ _Agents log intent before acting and outcome after. Captain reviews and scores._
 **Delta:** Difference between expected and actual
 **Self-score:** X/5
 ---
-**Captain score:** X/5
+**Fury score:** X/5
 **Feedback:** ...
 **Promote to Knowledge Hub?:** YES/NO
 **New Playbook Rule?:** YES/NO
@@ -26,7 +26,17 @@ _Agents log intent before acting and outcome after. Captain reviews and scores._
 ## Log
 
 <!-- Agents write entries below. Newest first. -->
-<!-- Archived weekly by Captain. -->
+<!-- Archived weekly by Fury. -->
+
+### 2026-02-17 00:36 GST — Peter 🛠️ — PET-OCFG-001
+**Intent:** Switch Fury to Codex 5.3 as primary model in both repo template and live OpenClaw runtime so future turns stop defaulting to spark.
+**Expected outcome:** Fury config points to `gpt-5.3-codex` in runtime + repo, gateway restarted, and model mapping verified from live state files.
+**Risk:** Runtime config file is outside workspace (`~/.openclaw/openclaw.json`), requiring elevated permissions; existing active session metadata may still show prior spark model until a fresh session starts.
+**Precedent:** `memory/2026-02-16.md` notes context overflow risk from long Fury sessions on spark (`206k/128k`).
+---
+**Actual outcome:** Updated `config/openclaw.yaml` alias `captain` from `openrouter/kimi/kimi-k2.5-thinking` to `openai-codex/gpt-5.3-codex`. Updated live runtime config `~/.openclaw/openclaw.json` (`agents.list[id=main].model`) from `openai-codex/gpt-5.3-codex-spark` to `openai-codex/gpt-5.3-codex` with timestamped backup. Restarted LaunchAgent via `openclaw gateway restart` and re-checked via `openclaw gateway status` + `openclaw sessions list --json`.
+**Delta:** Config switch succeeded and gateway restart succeeded; `agent:main:main` still reports historical spark model, which is expected for an existing session record and requires a new/reset session to fully clear old context.
+**Self-score:** 5/5
 
 ### 2026-02-14 23:57 GST — Signal 📡 — SIG-001
 **Intent:** Research current US debt relief lead buyer landscape — top buyers, payout rates per lead type, lead specs/requirements, delivery methods. Sources: OfferVault, affiliate network listings, industry sources.

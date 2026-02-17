@@ -53,7 +53,7 @@ For detailed step-by-step instructions, see [SETUP.md](SETUP.md).
 
 | Agent | Role | Model | Cost (in/out per 1M tokens) |
 |-------|------|-------|-----------------------------|
-| **Captain** | CEO, strategy, P&L, outreach | kimi-k2.5-thinking | $0.45 / $2.25 |
+| **Fury** | CEO, strategy, P&L, outreach | kimi-k2.5-thinking | $0.45 / $2.25 |
 | **Scout** | Lead acquisition, enrichment, scoring | deepseek-v3-0324 | $0.25 / $0.38 |
 | **Shield** | Compliance (TSR, FTC, TCPA, state) | kimi-k2.5-thinking | $0.45 / $2.25 |
 | **Hawk** | Media buying, CRO, analytics | glm-4.7 | ~$0.10 / $0.10 |

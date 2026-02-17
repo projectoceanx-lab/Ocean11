@@ -157,7 +157,7 @@ For every lead, Shield runs this sequence before approving delivery:
 |--------|---------|--------|
 | **pass** | All checks passed | Approve for delivery |
 | **flag** | Minor issues found | Deliver with caution, log concern |
-| **block** | Compliance violation | Do NOT deliver, log reason, notify Captain |
+| **block** | Compliance violation | Do NOT deliver, log reason, notify Fury |
 
 ---
 

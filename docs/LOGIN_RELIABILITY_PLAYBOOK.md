@@ -1,6 +1,6 @@
 # LOGIN_RELIABILITY_PLAYBOOK.md — Everflow / RevPie / Facebook
 
-Owner: Fury (Captain)  
+Owner: Fury  
 Ops Monitoring Owner: Vision  
 Execution Owner: Peter (fallback)  
 Status: ACTIVE

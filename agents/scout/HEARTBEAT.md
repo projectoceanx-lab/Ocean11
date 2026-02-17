@@ -3,7 +3,7 @@
 Every 15 min:
 1. Check for pending lead opportunities in active campaigns
 2. Process any queued forms
-3. Report lead counts and quality breakdown to Captain
+3. Report lead counts and quality breakdown to Fury
 4. Log any form changes or site issues detected
 
 ## Memory Vault

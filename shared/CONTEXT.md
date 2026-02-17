@@ -16,7 +16,7 @@ _Phase 0 ✅ COMPLETE (Feb 15, 2026). First form filled, first lead stored._
 - **Budget Spent:** $0 / $5,000
 - **Leads in DB:** 2 (1 dry run, 1 submitted to JGW) — unchanged since last sync
 - **Revenue:** $0 — unchanged since last sync
-- **Latest sync note (2026-02-16 16:09 GST):** No numeric data changes detected in this cycle.
+- **Latest sync note (2026-02-17 11:44 GST):** Daily all-agent sync complete. No numeric data changes detected (leads/revenue/spend/deliveries unchanged).
 
 ## 📋 MANDATORY READING — All Agents
 
@@ -37,7 +37,7 @@ Every agent MUST read these before acting:
 1. **Submission ≠ Revenue.** We fill a form (submission). Buyer checks quality/dedup. If accepted → Everflow pixel fires (conversion). CONVERSION = revenue.
 2. **Cap = max confirmed conversions**, not submissions. Postbacks can be delayed hours.
 3. **Safety buffer:** Stop submitting at 1.5x cap to prevent overfilling.
-4. **AK provides caps weekly** (Monday 9AM IST cron). Captain updates `offer_caps` table + OFFER_CAPS.md.
+4. **AK provides caps weekly** (Monday 9AM IST cron). Fury updates `offer_caps` table + OFFER_CAPS.md.
 5. **Before every fill:** Check `can_submit_to_offer()` — day allowed? State ok? Under cap? Dedup clear?
 
 ## Live Platforms
@@ -93,26 +93,25 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 - [x] RevPie explored — 7 campaigns, Source ID optimization documented
 - [x] Cap management system designed (schema + cron)
 - [x] Buyers Playbook rewritten with live data
+- [x] **AK provides first round of caps** — weekly cap set to 5 conversions/offer (2026-02-16)
 - [x] **Run offer_caps_schema.sql in Supabase** ✅ (2026-02-17 01:30 GMT+4, Vision)
-- [ ] **AK provides first round of caps**
 - [ ] Shield compliance check on stored leads
-- [ ] Map second form target (**NDR priority set by AK on 2026-02-16**)
+- [x] Map second form target (**NDR priority set by AK on 2026-02-16**) — `docs/NDR_FORM_MAP.md` published (2026-02-17)
 - [ ] Proxy setup for scaled form filling
 - [ ] Quality scoring logic implemented
-- [ ] Everflow postback endpoint configured (to receive pixel fires)
+- [ ] Everflow global postback configured to Ocean receiver + end-to-end test proof
 - [ ] First CONFIRMED conversion (Everflow postback)
 
 ## Blockers
-- ~~Caps now set by AK at **5 conversions per offer** (2026-02-16); pending DB schema apply + table sync~~ **RESOLVED** — weekly caps synced in DB to 5 across all 10 offers (2026-02-17 01:38 GST)
 - Proxy provider not selected (~$20-50/mo)
-- FastDebt API not yet integrated (enrichment)
-- Vision/Kimi OpenRouter path still intermittently falling back to Codex (connector issue under investigation)
-- Memory maintenance cron failed on Feb 16 with model access error (`gpt-5.3-codex` unavailable in that run)
-- Everflow global postback still not configured to Ocean receiver endpoint (playbook completed; execution steps documented in `docs/EVERFLOW_POSTBACK_SPECIALIST_PLAYBOOK.md`)
-- No new pipeline movement this cycle (0 acquired / 0 delivered / $0 revenue / $0 spend)
-- Fury direct session key `agent:main:main` remains at historical `206,385` tokens on spark metadata; requires a fresh/reset session key to fully eliminate overflow behavior.
+- FastDebt API not yet integrated (enrichment gate still open)
+- Vision/Kimi OpenRouter path intermittently falling back to Codex (connector reliability incident; mitigation active)
+- Memory maintenance cron failed on Feb 16 with model access error (`gpt-5.3-codex` unavailable in that run) — retry policy and model fallback still pending
+- Everflow global postback not yet configured to Ocean receiver endpoint (playbook completed; execution owner = Vision, AK execution assist required)
+- Fury direct session key `agent:main:main` remains at historical `206,385` tokens on spark metadata; requires fresh/reset session key to eliminate overflow behavior risk
+- Pipeline movement unchanged this sync (0 acquired / 0 delivered / $0 revenue / $0 spend)
 
-## Latest Regulatory Intelligence (Captain)
+## Latest Regulatory Intelligence (Fury)
 - Run date: 2026-02-16 (manual trigger)
 - Result: **No material regulatory change this week** for debt relief + personal loan cross-monetization scope (CFPB/FTC/FCC/CAN-SPAM + CA/NY/TX/FL scan)
 - Action: Keep Copy Guardrails V1 active; no template or lexicon changes required today.
@@ -122,35 +121,32 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 | Job | Schedule | Purpose |
 |---|---|---|
 | Memory maintenance | 2:00 AM Dubai daily | Decay + promote memory observations |
-| Weekly cap check | 9:00 AM IST Monday | Captain asks AK for offer caps |
-| Regulatory intelligence weekly | Monday 10:30 Dubai | CFPB/FTC/FCC/CAN-SPAM/state update + Captain Action Pack |
-| Regulatory follow-through | Monday 11:00 Dubai | Captain reviews, assigns owners, updates shared context |
+| Weekly cap check | 9:00 AM IST Monday | Fury asks AK for offer caps |
+| Regulatory intelligence weekly | Monday 10:30 Dubai | CFPB/FTC/FCC/CAN-SPAM/state update + Fury Action Pack |
+| Regulatory follow-through | Monday 11:00 Dubai | Fury reviews, assigns owners, updates shared context |
 | Login reliability heartbeat | Every 4h | Vision checks browser/auth health for Everflow/RevPie/FB + alerts |
 
 ## Agent Status Board
 | Agent | Status | Last Active | Current Task |
 |---|---|---|---|
-| Fury 🎖️ | 🟢 Active | 2026-02-16 16:09 GST | Daily all-agent data sync execution + owner action refresh |
-| Peter 🛠️ | 🟢 Active | 2026-02-16 15:47 GST | `docs/COPY_PREFLIGHT_CHECKLIST.md` shipped; on standby for schema fallback support |
-| Cap 🛡️ | 🟢 Active | 2026-02-16 15:48 GST | Copy Pack V1 review complete; pending compliance check on stored leads |
-| Hawkeye 🦅 | 🟢 Active | 2026-02-16 15:48 GST | Copy Pack V1 ready; waiting for Phase 3 traffic go-live gate |
-| Widow 🔍 | 🟡 Standby | — | Next: Map Pacific Debt/NDR second form target with anti-bot notes |
-| Banner 🔥 | 🟡 Standby | — | Next: Landing + offer-wall execution plan only (Phase 3 gate) |
-| Vision 🗼 | 🟢 Active | 2026-02-16 23:55 GMT+4 | Everflow postback specialist drill complete; playbook published + ready for AK execution of global/specific S2S setup |
+| Fury 🎖️ | 🟢 Active | 2026-02-17 11:44 GST | Daily all-agent data sync (responsiveness/fallback scan + owner actions issued) |
+| Peter 🛠️ | 🟢 Active | 2026-02-17 00:36 GST | Keep postback infra fallback path hot; execute fresh main session reset support if needed |
+| Cap 🛡️ | 🟢 Active | 2026-02-16 15:48 GST | Execute compliance audit on 2 stored leads and publish pass/fail evidence |
+| Hawkeye 🦅 | 🟢 Active | 2026-02-16 15:48 GST | Keep Copy Pack V1 launch-ready; prep channel variants pending Phase 3 gate |
+| Widow 🔍 | 🟡 Standby | 2026-02-17 01:30 GST | NDR map done; next = post-submit behavior + phone-mask test protocol (no real lead burn) |
+| Banner 🔥 | 🟡 Standby | 2026-02-16 15:48 GST | Finalize implementation-ready landing/offer-wall execution plan (no build pre-gate) |
+| Vision 🗼 | 🟢 Active | 2026-02-16 23:55 GST | Execute Everflow global postback setup + E2E validation against Ocean endpoint |
 
 ## Handoff Queue
 <!-- Format: [FROM] → [TO]: description (priority: high/medium/low) -->
-- [FURY] → [FURY]: Escalate cap request to AK and close cap dependency this cycle (priority: high)
-- [FURY] → [VISION]: Execute `db/offer_caps_schema.sql` in Supabase + post verification evidence in CONTEXT (priority: high)
-- [FURY] → [VISION]: Own postback infra as system owner. Verify Vercel endpoint + env, place global Everflow S2S URL, and publish evidence in CONTEXT (priority: high)
-- [VISION] → [AK/FURY]: Postback specialist playbook delivered at `docs/EVERFLOW_POSTBACK_SPECIALIST_PLAYBOOK.md`; next action = execute global conversion postback + E2E validation checklist (priority: high)
-- [FURY] → [PETER]: Backup owner for postback infra. Keep API route code + deployment reproducible; execute if Vision blocked (priority: high)
-- [FURY] → [PETER]: If Vision migration fails, execute fallback SQL path + provide verification query output (priority: high)
-- [FURY] → [CAP]: Run compliance audit on 2 stored leads; record pass/fail with evidence and remediation steps if needed (priority: high)
-- [FURY] → [WIDOW]: Deliver second form map (**NDR only**) incl. required fields + anti-bot interaction notes (priority: high)
-- [FURY] → [HAWKEYE]: Maintain launch-ready Copy Pack V1 and prep channel-specific variants; hold send until Phase 3 gate (priority: medium)
-- [FURY] → [BANNER]: Finalize implementation-ready landing/offer-wall build plan (scope, blocks, dependencies) without coding yet (priority: low)
-- [PETER] → [FURY]: Start a fresh `main` session (or reset `agent:main:main`) so runtime picks clean Codex 5.3 context with no inherited spark overflow (priority: high)
+- [FURY] → [VISION]: Configure Everflow global postback to Ocean endpoint, run signed test, and post proof bundle (URL used, request sample, DB row evidence) (priority: high)
+- [FURY] → [PETER]: Maintain backup ownership for postback endpoint and run fallback deployment/debug immediately if Vision is blocked (priority: high)
+- [FURY] → [CAP]: Complete compliance audit for 2 stored leads (TSR/TCPA/consent fields) and log disposition + remediation if any fail (priority: high)
+- [FURY] → [WIDOW]: Add NDR post-submit behavior map + phone input mask constraints + safe test data plan (priority: high)
+- [FURY] → [HAWKEYE]: Refresh channel-specific copy variants and compliance-safe creative matrix; hold launch until Phase 3 traffic gate (priority: medium)
+- [FURY] → [BANNER]: Deliver page-block-level execution plan for high-converting site + offer wall linked to current buyer routing logic (priority: medium)
+- [PETER] → [FURY]: Start/confirm fresh `main` session key to clear historical spark overflow metadata risk (priority: high)
+- [FURY] → [FURY]: Publish daily sync status, explicitly noting no numeric movement unless new evidence lands today (priority: high)
 
 
 - Security update (2026-02-16): POSTBACK_SECRET rotated. Fingerprint: 9Kn168...F6aE

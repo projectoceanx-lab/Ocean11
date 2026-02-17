@@ -61,7 +61,7 @@ openclaw gateway start
 ```
 
 The 6 agents will initialize:
-- **Captain** — starts first, orchestrates everything
+- **Fury** — starts first, orchestrates everything
 - **Scout** — begins monitoring for lead opportunities
 - **Shield** — stands by for compliance checks
 - **Hawk** — connects to ad platforms
@@ -82,7 +82,7 @@ You should see all 6 agents listed as active.
 Run the seed file to populate test leads and buyers:
 - Go to Supabase SQL Editor
 - Paste and run `db/seed.sql`
-- Captain should pick up the test data in the next standup cycle
+- Fury should pick up the test data in the next standup cycle
 
 ---
 

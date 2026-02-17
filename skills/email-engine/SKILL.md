@@ -43,4 +43,4 @@ health = email.check_domain_health("ocean-leads.com")
 
 ## Used By
 - **Signal** — Email-based lead delivery
-- **Captain** — Buyer outreach communications
+- **Fury** — Buyer outreach communications
