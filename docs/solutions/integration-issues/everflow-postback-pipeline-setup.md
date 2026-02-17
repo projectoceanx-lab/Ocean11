@@ -115,6 +115,18 @@ All URLs route through Everflow's redirect domain (`zkds923.com`) with our affil
 
 Weekly caps set to 5 (testing phase). Safety margin at 80% means we stop at 4 submissions per offer per week. The `check_offer_cap()` RPC is called before every form fill in `scripts/fdr-ndr-fill.py`.
 
+## Known Limitations
+
+Sourced from [E2E validation report](../../POSTBACK_E2E_REPORT.md) (2026-02-17):
+
+1. **Not idempotent:** The endpoint looks up submissions with `status=submitted`. After the first postback converts a submission, a second postback for the same `click_id` returns 404 ("No matching submission") because the status is now `converted`. No retry-safe handling exists — if Everflow retries a postback due to a network timeout, we miss it. Consider returning 200 with an "already converted" response for idempotent retries.
+
+2. **Secret-only authentication:** Auth is a single static `POSTBACK_SECRET` query parameter (`api/postback.js:44`). There's no HMAC signature over the payload, no timestamp validation, and no nonce — making the endpoint vulnerable to replay attacks if the secret leaks. Acceptable for testing phase, but should be hardened before scaling.
+
+3. **Missing env vars → 500:** If `SUPABASE_URL` or `SUPABASE_SERVICE_ROLE_KEY` is unset, the endpoint returns a raw 500 with `"Missing Supabase env vars"` (`api/postback.js:10-12`). No graceful degradation or alerting — Everflow would see repeated 500s and potentially disable the postback URL. Ensure env parity across all Vercel environments.
+
+4. **Validation ordering (security-first):** Secret is checked (`403`) before `click_id` presence (`400`). This means a malformed request without a secret never learns that `click_id` is also missing — security-first is correct, but can confuse integration debugging. Documented here since it came up during E2E testing.
+
 ## Prevention
 
 - All new offers get added to both `everflow_offers` table AND `config/everflow_urls.json`

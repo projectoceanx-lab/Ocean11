@@ -158,8 +158,8 @@ def check_offer_cap(offer_id: int) -> bool:
 
 def log_submission(offer_id: int, lead: dict, aff_click_id: str, success: bool, dry_run: bool, lead_id: str | None = None):
     """Log to offer_submissions table (matches offer_caps_schema.sql).
-    
-    NOTE: offer_submissions.lead_id is NOT NULL in the DB schema.
+
+    NOTE: offer_submissions.lead_id is nullable (see db/migrations/).
     If no lead_id is provided (CLI-only / test runs), we skip the DB insert
     and just log locally. Production runs via the queue always have a lead_id.
     """

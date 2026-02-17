@@ -138,7 +138,81 @@ except Exception:
     await select.select_option(label=alt_label)
 ```
 
-### 6. Dry-Run Mode
+### 6. Residential Proxy Support
+
+The script supports IPRoyal residential proxies for US-geolocated sessions, gated behind the `PROXY_URL` env var:
+
+```python
+proxy_url = os.environ.get("PROXY_URL")
+if proxy_url:
+    launch_args["proxy"] = {
+        "server": f"http://{os.environ.get('PROXY_HOST', 'geo.iproyal.com')}:{os.environ.get('PROXY_PORT', '12321')}",
+        "username": os.environ.get("PROXY_USER", ""),
+        "password": os.environ.get("PROXY_PASS", ""),
+    }
+```
+
+**Env vars:** `PROXY_URL` (enable flag), `PROXY_HOST` (default `geo.iproyal.com`), `PROXY_PORT` (default `12321`), `PROXY_USER`, `PROXY_PASS`. Each browser session gets a fresh IP via IPRoyal's per-session rotation. Without `PROXY_URL` set, the script connects directly.
+
+### 7. Custom User Agent
+
+To avoid headless detection by TrustedForm/Datadog, the browser context uses a hardcoded Chrome 131 macOS user agent string instead of Playwright's default:
+
+```python
+context = await browser.new_context(
+    viewport={"width": 1280, "height": 900},
+    user_agent=(
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    ),
+)
+```
+
+This is set at context creation alongside stealth patching, so every page within the session carries the same fingerprint.
+
+### 8. Submit Button Disabled Polling
+
+FDR's React form disables the submit button until all client-side validations pass. The script polls `is_disabled()` up to 20 times (500ms intervals = 10s max) before attempting the click:
+
+```python
+for _ in range(20):
+    disabled = await submit_btn.is_disabled()
+    if not disabled:
+        break
+    await page.wait_for_timeout(500)
+else:
+    print("[!] Submit button still disabled after 10s — attempting anyway")
+```
+
+If the button is still disabled after 10s, the script clicks anyway — sometimes the disabled state is a CSS artifact rather than a real React guard.
+
+### 9. Success Detection Heuristics
+
+After clicking submit, the script can't rely on a single success signal. It checks multiple heuristics:
+
+**NDR** (`fdr-ndr-fill.py:430-435`):
+```python
+success = (
+    "thank" in content.lower()
+    or "results" in current_url.lower()
+    or "confirmation" in content.lower()
+    or "details" not in current_url  # navigated away from /details = likely success
+)
+```
+
+**FDR** (`fdr-ndr-fill.py:611-616`):
+```python
+success = (
+    "thank" in content.lower()
+    or "results" in current_url.lower()
+    or "confirmation" in content.lower()
+    or "contact-info" not in current_url  # navigated away = likely success
+)
+```
+
+The last check in each is form-specific: NDR checks if the URL left `/details`, FDR checks if it left `/contact-info`. A screenshot is always saved regardless of the heuristic result.
+
+### 10. Dry-Run Mode
 
 `--dry-run` fills the entire form but stops before clicking submit. Takes a full-page screenshot for validation:
 
@@ -166,6 +240,10 @@ Screenshots saved to `tmp/ndr-dryrun-<timestamp>.png`.
 - Stealth patching is applied once at context creation, before any navigation
 - Dry-run mode allows validating form changes without wasting offer caps
 - Error screenshots are auto-captured to `tmp/` for debugging failed fills
+
+## Known Issues
+
+- **Stale comment in `log_submission()`** (`fdr-ndr-fill.py:162`): The docstring says `lead_id is NOT NULL in the DB schema`, but `lead_id` was made nullable in the [offer submissions migration](../database-issues/offer-submissions-lead-id-nullable.md). The comment is outdated — the function's logic (skip DB insert when `lead_id is None`) is correct, but the comment should reference the nullable schema.
 
 ## Related
 
