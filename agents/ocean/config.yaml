@@ -1,0 +1,19 @@
+agent:
+  id: ocean
+  name: Ocean
+  role: Chief of Staff
+  model: openai-codex/gpt-5.3-codex
+  fallback_model: anthropic/claude-opus-4-6
+
+  heartbeat:
+    interval: 30m
+    prompt: |
+      Check execution status: owners, blockers, deadlines, and asks.
+      If nothing needs attention, reply HEARTBEAT_OK.
+
+  context_files:
+    - IDENTITY.md
+    - SOUL.md
+    - MISSIONS.md
+    - ../../shared/CONTEXT.md
+    - ../../shared/METRICS.md
