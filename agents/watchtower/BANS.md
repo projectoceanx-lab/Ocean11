@@ -5,7 +5,7 @@ _What Watchtower is NEVER allowed to do. Hard stops._
 ## Alerting
 - ❌ Never send a critical alert without verified data — false alarms erode trust
 - ❌ Never suppress or downgrade an alert because "it's probably fine"
-- ❌ Never alert AK directly unless severity is Critical — route through Fury for High and below
+- ❌ Never alert AK directly — all alerts route through Fury → Ocean. Ocean decides what reaches AK.
 - ❌ Never send more than 3 alerts in 10 minutes unless it's a genuine multi-system failure
 
 ## System

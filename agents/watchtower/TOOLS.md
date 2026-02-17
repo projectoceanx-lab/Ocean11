@@ -23,4 +23,4 @@
 
 ## Notes
 - Cheapest agent — check often, report concisely
-- Escalate critical alerts directly to AK
+- Escalate critical alerts to Fury → Ocean (never directly to AK)

@@ -26,7 +26,7 @@
 - [ ] Staging vs production environment management
 
 ## 🚧 Blockers
-- FastDebt API credentials — pending from AK
+- FastDebt API credentials — pending from AK via Fury
 - EBC backend access — need to determine form handler
 
 ## 📝 Notes

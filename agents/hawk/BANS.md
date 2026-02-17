@@ -6,7 +6,7 @@ _What Hawk is NEVER allowed to do. Hard stops._
 - ❌ Never shift more than 20% of daily budget between campaigns without Fury approval
 - ❌ Never increase total daily spend beyond the approved cap
 - ❌ Never launch a new campaign without Shield reviewing the creative and landing page for compliance
-- ❌ Never commit to platform terms or agreements (Facebook, RevPie) without AK's approval
+- ❌ Never commit to platform terms or agreements (Facebook, RevPie) without Fury's approval
 
 ## Testing
 - ❌ Never scale a winning campaign before statistical significance is confirmed (minimum sample size defined per test)

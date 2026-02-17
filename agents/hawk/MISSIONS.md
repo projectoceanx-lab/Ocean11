@@ -42,7 +42,7 @@
 | Quality distribution | >40% Tier A/B | >60% Tier C/D |
 
 ## 🚧 Blockers
-- No Everflow/RevPie login yet (Arif to provide)
+- No Everflow/RevPie login yet (pending from AK via Fury)
 - No email domains purchased yet
 - No Brave API key for competitive research
 

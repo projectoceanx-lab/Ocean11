@@ -15,7 +15,7 @@ agent:
   permissions:
     - read_all          # Can read all tables for monitoring
     - write_activity    # Log monitoring events
-    - alert_human       # Can escalate critical alerts to Arif
+    - alert_human       # Can escalate critical alerts to Fury → Ocean
 
   cost:
     input_per_1m: 0.05

@@ -46,13 +46,13 @@
 | Email bounce rate | > 3% | > 5% |
 
 ## 🚧 Blockers
-- Supabase project not created yet (waiting on Arif)
+- Supabase project not created yet (pending from AK via Fury)
 - Vercel project not linked yet
 
 ## 📝 Notes
 - Watchtower is the cheapest agent (GPT-5-nano) — run often, report concisely
 - Watchtower does NOT write business data — manages infrastructure that holds it
-- Escalate critical alerts directly to Arif via OpenClaw notification
+- Escalate critical alerts to Fury → Ocean (Ocean routes to AK when needed)
 - DB access matrix enforcement: read AGENTS.md for who can access what
 
 ## Standing Order (Every Session)

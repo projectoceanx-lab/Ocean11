@@ -51,7 +51,7 @@
 - When in doubt, BLOCK. Better to lose a lead than face a fine.
 - Every check must be logged in compliance_log with reason
 - Shield reviews Hawk's ad copy, Forge's landing pages, Fury's buyer outreach
-- Agent access violations are treated as Critical — immediate escalation to Fury + Arif
+- Agent access violations are treated as Critical — immediate escalation to Fury → Ocean
 
 ## Standing Order (Every Session)
 Before closing: update shared/CONTEXT.md, memory/YYYY-MM-DD.md, and shared/KNOWLEDGE_HUB.md per shared/PLAYBOOK_RULES.md § MANDATORY CHECKPOINTS. No exceptions.
