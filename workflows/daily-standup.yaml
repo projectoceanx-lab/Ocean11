@@ -77,6 +77,34 @@ steps:
       WHERE created_at > NOW() - INTERVAL '24h'
       GROUP BY agent_name
 
+  - id: collect_content_loop
+    action: query_database
+    description: Get content loop performance snapshot
+    tool: supabase
+    queries:
+      content_volume: |
+        SELECT channel, status, COUNT(*) as count
+        FROM content_assets
+        WHERE created_at > NOW() - INTERVAL '24h'
+        GROUP BY channel, status
+      content_reviews: |
+        SELECT result, COUNT(*) as count
+        FROM content_reviews
+        WHERE checked_at > NOW() - INTERVAL '24h'
+        GROUP BY result
+      content_checkpoints: |
+        SELECT
+          ca.channel,
+          cp.checkpoint,
+          SUM(cp.impressions) as impressions,
+          SUM(cp.clicks) as clicks,
+          SUM(cp.qualified_clicks) as qualified_clicks,
+          SUM(cp.lead_starts) as lead_starts
+        FROM content_performance cp
+        JOIN content_assets ca ON ca.id = cp.asset_id
+        WHERE cp.captured_at > NOW() - INTERVAL '24h'
+        GROUP BY ca.channel, cp.checkpoint
+
   - id: check_hawk_report
     action: check_for_report
     description: See if Hawk's campaign optimization report is ready
@@ -118,6 +146,14 @@ steps:
       
       ## 🤖 Agent Health
       ${agent_health_summary}
+
+      ## 🧪 Content Loop
+      - Assets drafted: ${content.assets_drafted}
+      - Approved: ${content.approved}
+      - Blocked: ${content.blocked}
+      - Qualified clicks (24h): ${content.qualified_clicks}
+      - Lead starts (24h): ${content.lead_starts}
+      - Content decisions: ${content.decision_summary}
       
       ## 🎯 Strategy Adjustments
       ${ai_generated_strategy_notes}
@@ -135,6 +171,9 @@ steps:
       - name: high_block_rate
         condition: compliance.block / total > 0.20
         severity: medium
+      - name: content_block_spike
+        condition: content.blocked / NULLIF(content.reviewed_total, 0) > 0.30
+        severity: medium
       - name: buyer_at_cap
         condition: all buyers at daily cap
         severity: high
@@ -150,6 +189,8 @@ steps:
       - pause_underperforming_campaigns  # If CPL too high
       - onboard_new_buyer  # If at buyer capacity
       - adjust_quality_thresholds  # If too many blocks or too few A-tier
+      - tighten_content_guardrails  # If content block/flag ratio spikes
+      - scale_winning_content_variants  # If qualified intent metrics improve
       - escalate_to_arif  # If critical blocker
 
   - id: log_standup

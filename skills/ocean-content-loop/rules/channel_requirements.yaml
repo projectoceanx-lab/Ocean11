@@ -1,0 +1,29 @@
+version: 1
+owner: shield
+updated: 2026-02-17
+
+channels:
+  email:
+    single_primary_cta: true
+    require_unsubscribe: true
+    require_footer_tokens:
+      - "This is an advertisement"
+      - "results vary"
+      - "not a lender"
+      - "Unsubscribe"
+    objective_priority:
+      - qualified_clicks
+      - lead_starts
+      - trust_build
+
+  social:
+    single_primary_cta: true
+    require_unsubscribe: false
+    require_footer_tokens: []
+    prohibited_implications:
+      - "government affiliation"
+      - "guaranteed outcomes"
+    objective_priority:
+      - qualified_clicks
+      - lead_starts
+      - trust_build

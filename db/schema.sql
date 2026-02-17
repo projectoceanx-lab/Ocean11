@@ -185,6 +185,90 @@ CREATE INDEX idx_agent_activity_action ON agent_activity(action);
 CREATE INDEX idx_agent_activity_created_at ON agent_activity(created_at DESC);
 
 -- ============================================================
+-- CONTENT_ASSETS — Generated copy variants across channels
+-- ============================================================
+CREATE TABLE content_assets (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    batch_key       TEXT NOT NULL,
+    channel         TEXT NOT NULL CHECK (channel IN ('email', 'social')),
+    asset_type      TEXT NOT NULL,                                   -- email_body, social_post, subject_line, etc.
+    objective       TEXT NOT NULL DEFAULT 'qualified_clicks',
+    audience_segment TEXT,
+    offer_context   TEXT NOT NULL DEFAULT 'debt_relief',
+    variant_id      TEXT NOT NULL,
+    copy_text       TEXT NOT NULL,
+    cta             TEXT,
+    status          TEXT NOT NULL DEFAULT 'draft'
+                    CHECK (status IN ('draft', 'approved', 'blocked', 'published')),
+    created_by      TEXT NOT NULL DEFAULT 'hawk',
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE(channel, batch_key, variant_id)
+);
+
+CREATE INDEX idx_content_assets_channel_status ON content_assets(channel, status);
+CREATE INDEX idx_content_assets_objective ON content_assets(objective);
+CREATE INDEX idx_content_assets_created_at ON content_assets(created_at DESC);
+
+CREATE TRIGGER content_assets_updated_at
+    BEFORE UPDATE ON content_assets
+    FOR EACH ROW EXECUTE FUNCTION update_updated_at();
+
+-- ============================================================
+-- CONTENT_REVIEWS — Shield review outcomes per content asset
+-- ============================================================
+CREATE TABLE content_reviews (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    asset_id        UUID NOT NULL REFERENCES content_assets(id) ON DELETE CASCADE,
+    reviewer        TEXT NOT NULL DEFAULT 'shield',
+    result          TEXT NOT NULL CHECK (result IN ('pass', 'flag', 'block')),
+    reason          TEXT,
+    reason_codes    TEXT[] DEFAULT ARRAY[]::TEXT[],
+    required_fixes  JSONB DEFAULT '[]'::jsonb,
+    checked_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_content_reviews_asset ON content_reviews(asset_id);
+CREATE INDEX idx_content_reviews_result ON content_reviews(result);
+CREATE INDEX idx_content_reviews_checked_at ON content_reviews(checked_at DESC);
+
+-- ============================================================
+-- CONTENT_PERFORMANCE — Checkpoint metrics for each asset
+-- ============================================================
+CREATE TABLE content_performance (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    asset_id        UUID NOT NULL REFERENCES content_assets(id) ON DELETE CASCADE,
+    checkpoint      TEXT NOT NULL CHECK (checkpoint IN ('24h', '72h', '7d')),
+    impressions     INTEGER NOT NULL DEFAULT 0 CHECK (impressions >= 0),
+    clicks          INTEGER NOT NULL DEFAULT 0 CHECK (clicks >= 0),
+    qualified_clicks INTEGER NOT NULL DEFAULT 0 CHECK (qualified_clicks >= 0),
+    lead_starts     INTEGER NOT NULL DEFAULT 0 CHECK (lead_starts >= 0),
+    cpl_proxy       NUMERIC(10, 2),
+    notes           TEXT,
+    captured_at     TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    UNIQUE(asset_id, checkpoint)
+);
+
+CREATE INDEX idx_content_performance_asset ON content_performance(asset_id);
+CREATE INDEX idx_content_performance_checkpoint ON content_performance(checkpoint);
+CREATE INDEX idx_content_performance_captured_at ON content_performance(captured_at DESC);
+
+-- ============================================================
+-- CONTENT_LEARNING_EVENTS — Rule and pattern updates by outcome
+-- ============================================================
+CREATE TABLE content_learning_events (
+    id              UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    asset_id        UUID REFERENCES content_assets(id) ON DELETE SET NULL,
+    event_type      TEXT NOT NULL CHECK (event_type IN ('promote_rule', 'add_block', 'rewrite_pattern')),
+    rule_delta      JSONB NOT NULL DEFAULT '{}'::jsonb,
+    confidence      NUMERIC(4, 3) CHECK (confidence >= 0 AND confidence <= 1),
+    created_at      TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX idx_content_learning_events_type ON content_learning_events(event_type);
+CREATE INDEX idx_content_learning_events_created_at ON content_learning_events(created_at DESC);
+
+-- ============================================================
 -- ROW LEVEL SECURITY (Supabase)
 -- ============================================================
 ALTER TABLE leads ENABLE ROW LEVEL SECURITY;
@@ -194,6 +278,10 @@ ALTER TABLE deliveries ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pnl_daily ENABLE ROW LEVEL SECURITY;
 ALTER TABLE compliance_log ENABLE ROW LEVEL SECURITY;
 ALTER TABLE agent_activity ENABLE ROW LEVEL SECURITY;
+ALTER TABLE content_assets ENABLE ROW LEVEL SECURITY;
+ALTER TABLE content_reviews ENABLE ROW LEVEL SECURITY;
+ALTER TABLE content_performance ENABLE ROW LEVEL SECURITY;
+ALTER TABLE content_learning_events ENABLE ROW LEVEL SECURITY;
 
 -- Service role has full access (agents use service role key)
 CREATE POLICY "Service role full access" ON leads FOR ALL USING (auth.role() = 'service_role');
@@ -203,3 +291,7 @@ CREATE POLICY "Service role full access" ON deliveries FOR ALL USING (auth.role(
 CREATE POLICY "Service role full access" ON pnl_daily FOR ALL USING (auth.role() = 'service_role');
 CREATE POLICY "Service role full access" ON compliance_log FOR ALL USING (auth.role() = 'service_role');
 CREATE POLICY "Service role full access" ON agent_activity FOR ALL USING (auth.role() = 'service_role');
+CREATE POLICY "Service role full access" ON content_assets FOR ALL USING (auth.role() = 'service_role');
+CREATE POLICY "Service role full access" ON content_reviews FOR ALL USING (auth.role() = 'service_role');
+CREATE POLICY "Service role full access" ON content_performance FOR ALL USING (auth.role() = 'service_role');
+CREATE POLICY "Service role full access" ON content_learning_events FOR ALL USING (auth.role() = 'service_role');

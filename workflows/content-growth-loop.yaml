@@ -1,0 +1,162 @@
+# Content Growth Loop — Hawk + Shield
+# Triggered: Daily at 11 AM EST, or on-demand by Fury
+
+name: content-growth-loop
+agent: hawk
+trigger:
+  schedule: "0 11 * * *"  # 11 AM EST daily
+  on_demand: fury
+
+steps:
+  - id: memory_recall
+    action: search_memory
+    description: Pull recent content wins/losses before drafting new variants
+    command: python3 scripts/memory-search.py "content performance qualified clicks lead starts compliance" --agent hawk --limit 5 --json
+    use_results: true
+
+  - id: pull_content_metrics
+    action: query_database
+    description: Pull asset volume, review outcomes, and checkpoint performance
+    tool: supabase
+    queries:
+      assets_24h: |
+        SELECT channel, status, COUNT(*) as count
+        FROM content_assets
+        WHERE created_at > NOW() - INTERVAL '24h'
+        GROUP BY channel, status
+      review_outcomes_24h: |
+        SELECT result, COUNT(*) as count
+        FROM content_reviews
+        WHERE checked_at > NOW() - INTERVAL '24h'
+        GROUP BY result
+      checkpoints_7d: |
+        SELECT
+          ca.channel,
+          cp.checkpoint,
+          COUNT(*) as assets,
+          SUM(cp.impressions) as impressions,
+          SUM(cp.clicks) as clicks,
+          SUM(cp.qualified_clicks) as qualified_clicks,
+          SUM(cp.lead_starts) as lead_starts
+        FROM content_performance cp
+        JOIN content_assets ca ON ca.id = cp.asset_id
+        WHERE cp.captured_at > NOW() - INTERVAL '7 days'
+        GROUP BY ca.channel, cp.checkpoint
+
+  - id: draft_assets
+    action: generate_assets
+    description: Draft dual-track batches for email and social using approved voice and lexicon
+    inputs:
+      channels: [email, social]
+      objective_priority: [qualified_clicks, lead_starts, trust_build]
+      variants_per_channel: 5
+      references:
+        - docs/VOICE_GUIDE.md
+        - config/copy_lexicon.yaml
+        - templates/copy-packs/v1-launch-pack.md
+        - skills/ocean-content-loop/templates/email_sequence_blocks.md
+        - skills/ocean-content-loop/templates/social_post_blocks.md
+      output_table: content_assets
+      output_status: draft
+
+  - id: run_preflight
+    action: run_command
+    description: Enforce blocked phrases, CTA allowlist, footer rules, and single-CTA policy before Shield review
+    command: |
+      python3 scripts/content-preflight-lint.py \
+        --channel ${asset.channel} \
+        --asset-file ${asset.file_path} \
+        --lexicon config/copy_lexicon.yaml \
+        --channel-rules skills/ocean-content-loop/rules/channel_requirements.yaml \
+        --json
+    on_fail:
+      - mark_status: blocked
+      - write_note: "Preflight failed. Rewrite required before Shield review."
+
+  - id: shield_gate
+    action: compliance_review
+    description: Shield pass/flag/block gate for every draft that passes preflight
+    reviewer: shield
+    input_table: content_assets
+    output_table: content_reviews
+    ruleset:
+      - docs/COPY_PREFLIGHT_CHECKLIST.md
+      - config/copy_lexicon.yaml
+      - docs/COMPLIANCE_RULES.md
+    outcomes:
+      pass:
+        asset_status: approved
+      flag:
+        asset_status: draft
+        require_rewrite: true
+      block:
+        asset_status: blocked
+
+  - id: publish_approved
+    action: publish_assets
+    description: Publish/send only approved assets
+    filters:
+      status: approved
+      channel: [email, social]
+    destinations:
+      email:
+        tool: email-engine
+      social:
+        tool: social-publisher
+    after_publish:
+      asset_status: published
+      log_to_agent_activity: true
+
+  - id: collect_checkpoints
+    action: checkpoint_metrics
+    description: Capture performance checkpoints at 24h, 72h, and 7d
+    checkpoints: [24h, 72h, 7d]
+    source_table: content_assets
+    output_table: content_performance
+    metrics:
+      - impressions
+      - clicks
+      - qualified_clicks
+      - lead_starts
+      - cpl_proxy
+
+  - id: classify_outcomes
+    action: classify
+    description: Decide scale, hold, kill, or rewrite using qualified intent metrics
+    rules:
+      scale:
+        - qualified_clicks >= 10 at checkpoint IN (72h, 7d)
+        - lead_starts >= 3 at checkpoint IN (72h, 7d)
+        - cpl_proxy <= target_cpl
+      hold:
+        - qualified_clicks BETWEEN 4 AND 9 at checkpoint IN (72h, 7d)
+      kill:
+        - qualified_clicks < 4 at checkpoint = 72h
+        - OR: compliance_flags > 0
+      rewrite:
+        - clicks > 0
+        - qualified_clicks = 0
+
+  - id: write_learning_events
+    action: write_database
+    description: Convert outcomes into durable rules updates
+    tool: supabase
+    table: content_learning_events
+    data:
+      asset_id: ${asset_id}
+      event_type: ${event_type}
+      rule_delta: ${rule_delta}
+      confidence: ${confidence}
+
+  - id: notify_fury
+    action: notify_agent
+    description: Send weekly-ready summary to Fury
+    target_agent: fury
+    message: |
+      Content loop summary (${date})
+      - Published: ${published_count}
+      - Pass/Flag/Block: ${pass_count}/${flag_count}/${block_count}
+      - Qualified clicks: ${qualified_clicks_total}
+      - Lead starts: ${lead_starts_total}
+      - Decisions: ${decision_summary}
+    priority: normal

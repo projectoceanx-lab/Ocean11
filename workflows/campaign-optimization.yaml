@@ -11,7 +11,7 @@ steps:
   - id: memory_recall
     action: search_memory
     description: Search vault for past campaign patterns before optimizing
-    command: python3 scripts/memory-search.py "campaign CPL performance" --agent hawk --limit 3 --json
+    command: python3 scripts/memory-search.py "campaign CPL performance content qualified clicks lead starts" --agent hawk --limit 5 --json
     use_results: true
 
   - id: pull_metrics
@@ -42,10 +42,23 @@ steps:
         JOIN deliveries d ON l.id = d.lead_id
         WHERE d.created_at > NOW() - INTERVAL '7 days'
         GROUP BY l.source
+      content_loop_week: |
+        SELECT
+          ca.channel,
+          cp.checkpoint,
+          COUNT(*) as assets,
+          SUM(cp.impressions) as impressions,
+          SUM(cp.clicks) as clicks,
+          SUM(cp.qualified_clicks) as qualified_clicks,
+          SUM(cp.lead_starts) as lead_starts
+        FROM content_performance cp
+        JOIN content_assets ca ON ca.id = cp.asset_id
+        WHERE cp.captured_at > NOW() - INTERVAL '7 days'
+        GROUP BY ca.channel, cp.checkpoint
 
   - id: analyze_cpl
     action: calculate
-    description: Calculate CPL and ROI by channel
+    description: Calculate CPL/ROI and content quality metrics by channel
     metrics:
       - name: cpl_by_source
         formula: total_spend / lead_count
@@ -59,6 +72,12 @@ steps:
       - name: acceptance_rate_by_source
         formula: accepted / total_delivered
         group_by: source
+      - name: qualified_click_rate_by_channel
+        formula: qualified_clicks / NULLIF(clicks, 0)
+        group_by: channel
+      - name: lead_start_rate_by_channel
+        formula: lead_starts / NULLIF(qualified_clicks, 0)
+        group_by: channel
 
   - id: identify_winners_losers
     action: classify
@@ -122,6 +141,11 @@ steps:
       
       ### A/B Test Updates
       ${ab_test_summary}
+
+      ### Content Loop Health (7d)
+      ${content_loop_summary}
+      - Qualified click rate: ${qualified_click_rate}
+      - Lead start rate: ${lead_start_rate}
       
       ### 7-Day Trend
       - Total spend: ${week_spend}
@@ -141,7 +165,7 @@ steps:
       source: hawk
       backlinks: []
       ---
-      Daily optimization: ${winner_count} winners, ${loser_count} losers. Best CPL: $${best_cpl} (${best_source}). Worst: $${worst_cpl} (${worst_source}). Budget shifts: ${budget_changes}.
+      Daily optimization: ${winner_count} winners, ${loser_count} losers. Best CPL: $${best_cpl} (${best_source}). Worst: $${worst_cpl} (${worst_source}). Budget shifts: ${budget_changes}. Content loop: ${content_decisions}.
     destination: agents/hawk/memory/vault/obs-${date}-${sequence}.md
 
   - id: send_to_captain

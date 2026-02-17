@@ -4,14 +4,14 @@ FDR / NDR Debt Relief Form Filler
 Freedom Debt Relief & National Debt Relief share the same form.
 NDR entry redirects to FDR's apply domain.
 
-3-step flow:
-  1. Debt Amount (slider on FDR / dropdown on NDR)
-  2. State Selection (custom MUI combobox)
-  3. Contact Info (first, last, phone, email)
+Flow:
+  FDR: 3-step flow (debt slider -> state -> contact info)
+  NDR: 2-step flow (debt dropdown -> contact info) then redirects to /personalizesavings
 
 Usage:
     python3 scripts/fdr-ndr-fill.py --offer fdr --dry-run
     python3 scripts/fdr-ndr-fill.py --offer ndr --offer-id 4905
+    python3 scripts/fdr-ndr-fill.py --offer ndr --safe-submit-probe --offer-id 4905
     python3 scripts/fdr-ndr-fill.py --offer fdr --lead-id <uuid> --offer-id 4930
     python3 scripts/fdr-ndr-fill.py --offer fdr --first-name John --last-name Doe \
         --email john@test.com --phone 5125550199 --state TX --debt-amount 25000
@@ -21,6 +21,7 @@ Requires: playwright, httpx, python-dotenv
 import argparse, asyncio, json, os, sys, time, random, uuid
 from pathlib import Path
 from datetime import datetime, timezone
+from urllib.parse import urlparse
 
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -96,6 +97,24 @@ TEST_LEAD = {
     "state": "TX",
     "debt_amount": "25000",
 }
+
+
+def is_ndr_live_submit_request(method: str, url: str) -> bool:
+    """True only for real NDR form submission calls (not page navigation GETs)."""
+    if method.upper() != "POST":
+        return False
+    parsed = urlparse(url)
+    host = parsed.netloc.lower()
+    if "nationaldebtrelief.com" not in host:
+        return False
+    return parsed.path.rstrip("/") == "/details"
+
+
+def should_block_live_submit_request(offer: str, method: str, url: str) -> bool:
+    """Network guard matcher used by safe test mode."""
+    if offer != "ndr":
+        return False
+    return is_ndr_live_submit_request(method, url)
 
 
 def get_supabase_headers():
@@ -205,8 +224,16 @@ async def human_delay(lo=0.4, hi=1.2):
 
 
 async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
-                    headless: bool = True):
+                    headless: bool = True, safe_submit_probe: bool = False):
     from playwright.async_api import async_playwright
+
+    if safe_submit_probe and dry_run:
+        print("[✗] --safe-submit-probe cannot be combined with --dry-run.")
+        return False
+
+    if safe_submit_probe and offer != "ndr":
+        print("[✗] --safe-submit-probe currently supports --offer ndr only.")
+        return False
 
     aff_click_id = str(uuid.uuid4())
     debt_amount = int(lead["debt_amount"].replace(",", "").replace("$", ""))
@@ -224,10 +251,11 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
         print(f"[⚠] Pass --offer-id to use Everflow tracking. Direct URL: {entry_url}")
     print(f"[*] Lead: {lead['first_name']} {lead['last_name']}, ${debt_amount}, {lead['state']}")
     print(f"[*] aff_click_id: {aff_click_id}")
-    print(f"[*] Mode: {'DRY RUN' if dry_run else 'SUBMIT'}")
+    mode = "DRY RUN" if dry_run else ("SAFE SUBMIT PROBE" if safe_submit_probe else "SUBMIT")
+    print(f"[*] Mode: {mode}")
 
     # Cap check
-    if offer_id and not dry_run:
+    if offer_id and not dry_run and not safe_submit_probe:
         if not check_offer_cap(offer_id):
             print("[✗] Offer cap reached — aborting.")
             return False
@@ -254,6 +282,27 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
             ),
         )
         page = await context.new_page()
+        blocked_requests: list[dict[str, str]] = []
+
+        async def safe_submit_route(route):
+            request = route.request
+            if safe_submit_probe and should_block_live_submit_request(offer, request.method, request.url):
+                blocked_requests.append(
+                    {
+                        "method": request.method,
+                        "url": request.url,
+                        "blocked_at": datetime.now(timezone.utc).isoformat(),
+                    }
+                )
+                print(f"[SAFE] Blocked live submit: {request.method} {request.url}")
+                await route.abort("blockedbyclient")
+                return
+            await route.continue_()
+
+        if safe_submit_probe:
+            await page.route("**/*", safe_submit_route)
+            print("[*] Safe submit probe armed: network-level submit blocking is active.")
+
         # Stealth: patch navigator.webdriver, chrome.runtime, etc.
         try:
             from playwright_stealth import Stealth
@@ -321,6 +370,11 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
                 if detected_offer != offer:
                     print(f"[*] Auto-detected offer type: {detected_offer} (overriding --offer={offer})")
                     offer = detected_offer
+
+                if safe_submit_probe and offer != "ndr":
+                    print(f"[✗] Safe submit probe requires NDR landing, got '{offer}'. Aborting.")
+                    await browser.close()
+                    return False
             else:
                 await page.goto(entry_url, wait_until="domcontentloaded", timeout=30000)
                 await page.wait_for_timeout(2000)
@@ -421,11 +475,40 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
                     await browser.close()
                     return True
 
-                print("[!] SUBMITTING (NDR)...")
+                if safe_submit_probe:
+                    print("[!] SAFE SUBMIT PROBE (NDR): clicking submit with network guard.")
+                else:
+                    print("[!] SUBMITTING (NDR)...")
                 await submit_btn.click(timeout=10000)
                 await page.wait_for_timeout(5000)
 
                 current_url = page.url
+
+                if safe_submit_probe:
+                    if not blocked_requests:
+                        print("[✗] Safe submit probe failed: no blocked POST /details was observed.")
+                        ss_path = PROJECT_ROOT / "tmp" / f"ndr-safeprobe-missed-{int(time.time())}.png"
+                        ss_path.parent.mkdir(exist_ok=True)
+                        await page.screenshot(path=str(ss_path), full_page=True)
+                        print(f"  Screenshot: {ss_path}")
+                        await browser.close()
+                        return False
+
+                    blocked = blocked_requests[-1]
+                    print(f"[✓] Safe submit probe blocked request: {blocked['method']} {blocked['url']}")
+                    success = "personalizesavings" not in current_url.lower()
+                    if not success:
+                        print("[✗] Unsafe outcome: reached /personalizesavings despite submit guard.")
+                    else:
+                        print("[✓] Safe probe succeeded: submit path blocked before live prospect creation.")
+
+                    ss_path = PROJECT_ROOT / "tmp" / f"ndr-safeprobe-{int(time.time())}.png"
+                    ss_path.parent.mkdir(exist_ok=True)
+                    await page.screenshot(path=str(ss_path), full_page=True)
+                    print(f"  Screenshot: {ss_path}")
+                    await browser.close()
+                    return success
+
                 content = await page.content()
                 success = (
                     "thank" in content.lower()
@@ -586,6 +669,11 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
                 await browser.close()
                 return True
 
+            if safe_submit_probe:
+                print("[✗] Safe submit probe currently supports NDR only. Aborting before FDR submit.")
+                await browser.close()
+                return False
+
             # Wait for button to be enabled (React validation)
             print("  Waiting for submit button to enable...")
             try:
@@ -649,6 +737,11 @@ def main():
     parser.add_argument("--offer", required=True, choices=["fdr", "ndr"], help="Which offer entry point")
     parser.add_argument("--offer-id", type=int, help="Offer ID for cap check and logging")
     parser.add_argument("--dry-run", action="store_true", help="Fill but don't submit")
+    parser.add_argument(
+        "--safe-submit-probe",
+        action="store_true",
+        help="NDR-only: click submit but block live POST /details so no prospect is created",
+    )
     parser.add_argument("--headless", action="store_true", default=True, help="Run headless (default)")
     parser.add_argument("--no-headless", action="store_true", help="Show browser window")
     parser.add_argument("--lead-id", help="Load lead from Supabase by UUID")
@@ -661,6 +754,11 @@ def main():
     parser.add_argument("--debt-amount", help="Debt amount (e.g. 25000)")
 
     args = parser.parse_args()
+    if args.safe_submit_probe and args.dry_run:
+        parser.error("--safe-submit-probe cannot be combined with --dry-run.")
+    if args.safe_submit_probe and args.offer != "ndr":
+        parser.error("--safe-submit-probe currently supports --offer ndr only.")
+
     headless = not args.no_headless
 
     # Build lead data
@@ -695,6 +793,7 @@ def main():
         dry_run=args.dry_run,
         offer_id=args.offer_id,
         headless=headless,
+        safe_submit_probe=args.safe_submit_probe,
     ))
 
     sys.exit(0 if success else 1)

@@ -1,0 +1,23 @@
+version: 1
+owner: hawk
+updated: 2026-02-17
+
+allowed_claims:
+  - phrase: "see if you qualify"
+    channels: [email, social]
+  - phrase: "explore your options"
+    channels: [email, social]
+  - phrase: "may help"
+    channels: [email, social]
+  - phrase: "could reduce"
+    channels: [email, social]
+  - phrase: "no obligation"
+    channels: [email, social]
+  - phrase: "results vary"
+    channels: [email, social]
+  - phrase: "not a lender"
+    channels: [email, social]
+
+guidance:
+  certainty: "Use soft certainty only (may/could)."
+  cta: "Use exactly one allowlisted CTA per asset."

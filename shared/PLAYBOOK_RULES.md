@@ -66,6 +66,22 @@ _These are non-negotiable. Not guidelines — RULES. Violate them and Fury escal
 
 17. **One agent, one job.** Don't overlap responsibilities. Scout acquires, Shield checks, Forge delivers, Hawk optimizes. If you're doing someone else's job, something is wrong with the workflow.
 
+## Immediate Execution Protocol — SPEED WITH PROOF
+
+This protocol is effective immediately (2026-02-18) for every significant task.
+
+1. **Acknowledge in 5 minutes max.** If an owner is assigned in `shared/CONTEXT.md` and does not acknowledge in 5 minutes, Ocean escalates to Fury.
+
+2. **First execution artifact in 30 minutes max.** Artifact must be concrete evidence of movement (command output, screenshot, DB row, API response, or draft diff). Narratives don't count.
+
+3. **No "done" without evidence receipt.** Completion is valid only when `shared/ACTION_LOG.md` includes an Execution Receipt with timestamps and proof.
+
+4. **Blockers must escalate before SLA breach.** If blocked, owner must log blocker evidence and escalation time in `shared/CONTEXT.md` before the 30-minute artifact deadline.
+
+5. **Compliance-sensitive tasks require Shield gate.** Fast execution never bypasses compliance. Shield veto still applies.
+
+6. **False-complete = auto reopen.** Any task closed without required evidence is reopened immediately and logged in `shared/FAILURES.md`.
+
 ## Memory Rules
 
 18. **Write it down.** No "mental notes." If a form changed, log it in Knowledge Hub. If a buyer complained, log it. If a campaign pattern emerged, log it. Files > memory.
@@ -93,6 +109,7 @@ _These are non-negotiable. Not guidelines — RULES. Violate them and Fury escal
 | Action Taken | MUST Update | What to Write |
 |---|---|---|
 | Form mapped or changed | `shared/KNOWLEDGE_HUB.md` | Field changes, new anti-bot, timing |
+| Any significant task assigned/executed | `shared/CONTEXT.md` + `shared/ACTION_LOG.md` | Task Packet in handoff queue + Execution Receipt (timestamps + evidence) |
 | Form filled (submission) | `docs/OFFER_CAPS.md` + DB | Increment submission count |
 | Postback received | `docs/OFFER_CAPS.md` + DB | Increment conversion count |
 | New buyer/offer discovered | `docs/BUYERS_PLAYBOOK.md` + `docs/OFFER_CAPS.md` | Full offer details |

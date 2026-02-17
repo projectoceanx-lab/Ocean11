@@ -667,3 +667,60 @@ Hidden:  input_127=bachelors, input_128=biweekly, input_129=debt_consolidation, 
   - Every `soul:` path in template config resolves to a real file.
   - Runtime ID comparison against `~/.openclaw/openclaw.json` with `main` normalized to `fury`.
 - Use this before commits that touch agent identity/config/missions.
+
+### Immediate Execution Protocol Pattern (2026-02-18, Ocean)
+- Speed improves only when assignment and closure are both structured.
+- Mandatory pair:
+  - `Task Packet` in `shared/CONTEXT.md` with owner, deadline, first artifact due, and required evidence.
+  - `Execution Receipt` in `shared/ACTION_LOG.md` with `started_at`, `first_artifact_at`, artifact type, verifier, and final status.
+- Operational SLAs:
+  - Acknowledge in <=5 minutes.
+  - First artifact in <=30 minutes.
+  - No "done" status without evidence bundle.
+- Anti-pattern this prevents: narrative updates ("working on it") that show no verifiable movement.
+
+### NDR Live Submit Behavior Pattern (2026-02-18, Ocean)
+- `start.nationaldebtrelief.com` flow is effectively 3-step in practice:
+  - `/apply` debt picker
+  - `/details` contact info
+  - `/personalizesavings` address + DOB soft-pull step
+- Step 2 submit path observed as `POST /details?...` with immediate redirect to `/personalizesavings?...` carrying `prospectId` and `ndrUID`.
+- Phone input auto-formats to `(XXX) XXX-XXXX`; payload carries formatted value, not raw 10 digits.
+- TrustedForm calls fire on submit path (`/certs`, snapshot/fingerprint/events), so human-behavior realism remains non-negotiable.
+- Critical test lesson: DOM `submit` interception is insufficient for JS-managed forms; block at network route level to avoid accidental live prospect creation.
+
+### NDR Safe Submit Probe Guard Pattern (2026-02-18, Ocean)
+- Production-safe mapping path is now: `python3 scripts/fdr-ndr-fill.py --offer ndr --safe-submit-probe --offer-id 4905`.
+- Guard implementation details:
+  - Arms `page.route("**/*")` before navigation.
+  - Blocks only `POST /details` on `*.nationaldebtrelief.com`.
+  - Allows navigation `GET /details` so step progression still works.
+- Success criteria for probe runs:
+  1. at least one blocked request is recorded
+  2. flow does not reach `/personalizesavings`
+- Regression protection exists in `tests/test_fdr_ndr_submit_guard.py` (matcher coverage for method/path/host/offer).
+
+### Dual-Track Content Compounding Pattern (2026-02-18, Ocean)
+- A "viral content system" is only reusable for Ocean if it is converted into deterministic ops with compliance gates.
+- Required loop for debt-relief vertical:
+  - draft variants -> automated preflight lint -> Shield pass/flag/block -> publish approved only -> 24h/72h/7d checkpoint metrics -> rule promotion/blocking.
+- Winner metric hierarchy:
+  1. qualified clicks
+  2. lead starts
+  3. only then broad reach metrics
+- Implementation anchors now in repo:
+  - `workflows/content-growth-loop.yaml`
+  - `scripts/content-preflight-lint.py`
+  - `skills/ocean-content-loop/` templates + rules
+  - `content_*` tables for auditable lifecycle and learning events
+
+### Dynamic HTML Email Template Pattern (2026-02-18, Ocean)
+- Do not hardcode campaign copy into HTML templates.
+- Keep template as structural shell and inject campaign-specific content via payload variables.
+- Recommended syntax:
+  - `{{variable}}` for required content
+  - `{{#if variable}} ... {{/if}}` for optional blocks
+- Renderer in repo: `scripts/render-email-template.py` with strict unresolved-placeholder mode.
+- Current dynamic templates:
+  - `templates/email-system/debt-relief-v2.dynamic.html`
+  - `templates/email-system/personal-loan-cross-sell-v2.dynamic.html`

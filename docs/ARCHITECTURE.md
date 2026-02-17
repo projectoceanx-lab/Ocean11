@@ -10,6 +10,7 @@ Structured YAML workflows define the core business processes. Each workflow is a
 - `compliance-check.yaml` — Shield's regulatory validation
 - `buyer-delivery.yaml` — Signal's matching and routing
 - `campaign-optimization.yaml` — Hawk's analytics and budget optimization
+- `content-growth-loop.yaml` — Hawk + Shield dual-track content loop (draft → gate → publish → learn)
 - `daily-standup.yaml` — Fury's daily orchestration
 
 ### Layer 2: Autonomy (Agent Intelligence)

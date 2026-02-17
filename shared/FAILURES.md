@@ -17,6 +17,13 @@ _Every failure gets logged here with root cause and lesson. If we make the same 
 
 ## Failures
 
+### 2026-02-18 — Ocean 🌊 — NDR Test Run Created Prospect (Interception Bypass)
+**What happened:** During a test intended to validate Step 2 submit behavior without burning a lead, the NDR flow executed a real `POST /details?...` and redirected to `/personalizesavings` with a generated `prospectId`.
+**Root cause:** We used a DOM `submit` event interceptor, but NDR’s JS submit path performs logic that bypassed that control. We blocked at the wrong layer.
+**Impact:** One QA-data prospect record appears to have been created on NDR side. Time cost: additional validation + incident documentation. Reputational/compliance risk is low-to-medium because test data was synthetic, but this is still an avoidable live-side effect.
+**Lesson:** For external forms with JS-managed submission, only network-level route blocking (or fully mocked transport) is trustworthy for "no-submit" tests.
+**Prevention:** Route-level blocking for `POST /details` is now implemented in `scripts/fdr-ndr-fill.py` via `--safe-submit-probe` (NDR-only), plus regression matcher tests in `tests/test_fdr_ndr_submit_guard.py` to protect against accidental guard drift.
+
 ### 2026-02-14 — Shield 🛡️ — PRE-LAUNCH INTEL: Critical Compliance Risks from FTC Enforcement Review
 **What happened:** Pre-launch research identified 3 high-severity compliance risks based on 2024-2025 FTC enforcement patterns in debt relief.
 **Root cause:** These are industry risks, not our failures. Logging preventively so we never become a case study.

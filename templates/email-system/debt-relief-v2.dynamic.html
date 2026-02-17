@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{email_subject}}</title>
+  </head>
+  <body style="margin:0;padding:0;background:#f5f7fb;font-family:Arial,Helvetica,sans-serif;color:#1f2937;">
+    <div style="display:none;max-height:0;overflow:hidden;opacity:0;">
+      {{preheader_text}}
+    </div>
+
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#f5f7fb;padding:24px 12px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;background:#ffffff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+            <tr>
+              <td style="padding:18px 24px;background:{{brand_primary_color}};">
+                <p style="margin:0;font-size:15px;line-height:1.4;color:#ffffff;font-weight:700;">
+                  {{brand_name}}
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:24px;">
+                {{#if hero_kicker}}
+                <p style="margin:0 0 8px 0;font-size:12px;line-height:1.4;color:#6b7280;text-transform:uppercase;letter-spacing:0.04em;">
+                  {{hero_kicker}}
+                </p>
+                {{/if}}
+
+                <h1 style="margin:0 0 14px 0;font-size:24px;line-height:1.25;color:#111827;">
+                  {{headline}}
+                </h1>
+
+                <p style="margin:0 0 12px 0;font-size:16px;line-height:1.6;color:#374151;">
+                  {{intro_line}}
+                </p>
+
+                {{#if body_line_1}}
+                <p style="margin:0 0 12px 0;font-size:16px;line-height:1.6;color:#374151;">
+                  {{body_line_1}}
+                </p>
+                {{/if}}
+
+                {{#if body_line_2}}
+                <p style="margin:0 0 12px 0;font-size:16px;line-height:1.6;color:#374151;">
+                  {{body_line_2}}
+                </p>
+                {{/if}}
+
+                {{#if proof_points_html}}
+                <div style="margin:0 0 16px 0;font-size:15px;line-height:1.6;color:#374151;">
+                  {{proof_points_html}}
+                </div>
+                {{/if}}
+
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="margin:18px 0 14px 0;">
+                  <tr>
+                    <td align="center" style="border-radius:8px;background:{{brand_primary_color}};">
+                      <a href="{{primary_cta_url}}" style="display:inline-block;padding:12px 18px;font-size:15px;line-height:1.2;color:#ffffff;text-decoration:none;font-weight:700;">
+                        {{primary_cta_label}}
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+
+                {{#if helper_text}}
+                <p style="margin:0 0 12px 0;font-size:13px;line-height:1.6;color:#6b7280;">
+                  {{helper_text}}
+                </p>
+                {{/if}}
+
+                <p style="margin:0;font-size:14px;line-height:1.6;color:#374151;">
+                  {{signoff_line}}<br>
+                  {{signature_name}}
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:18px 24px;border-top:1px solid #e5e7eb;background:#f9fafb;">
+                <p style="margin:0 0 8px 0;font-size:12px;line-height:1.5;color:#6b7280;">
+                  {{compliance_disclosure}}
+                </p>
+                <p style="margin:0 0 8px 0;font-size:12px;line-height:1.5;color:#6b7280;">
+                  {{brand_name}} | {{physical_address}}
+                </p>
+                <p style="margin:0;font-size:12px;line-height:1.5;color:#6b7280;">
+                  <a href="{{unsubscribe_url}}" style="color:#4b5563;text-decoration:underline;">Unsubscribe</a>
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

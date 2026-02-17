@@ -11,13 +11,18 @@ _Phase 0 ✅ COMPLETE (Feb 15, 2026). First form filled, first lead stored._
 - **Active Agents:** All agents gearing up under parallel-track execution (no passive standby posture on critical tracks)
 - **Infra update (2026-02-16 23:15 GMT+4):** Ocean postback endpoint deployed on Vercel at `https://ocean11-postback.vercel.app` (health OK). Vision = primary owner, Peter = backup owner.
 - **Vision navigation drill update (2026-02-16 23:55 GMT+4):** Completed deep Everflow postback/navigation drill and published evidence-based runbook at `docs/EVERFLOW_POSTBACK_SPECIALIST_PLAYBOOK.md` (menus, routes, role limitations, implementation checklist, troubleshooting, self-test).
-- **NDR Form Map complete (2026-02-17 01:30 GMT+4):** Full form mapping published at `docs/NDR_FORM_MAP.md`. 2-step form: (1) debt amount dropdown on `/apply`, (2) contact info (first name, last name, email, phone) on `/details`. **No CAPTCHA.** Primary anti-bot: TrustedForm (records mouse/keystrokes for TCPA cert). Also has Datadog RUM, Hotjar session recording, 118 tracking scripts. Hidden fields: TrustedForm cert URL + token + ping URL. Gravity Forms-style field naming. Key blocker: need to test post-submission behavior + phone mask without creating real leads.
+- **NDR Form Map revalidated (2026-02-18 01:49 GST):** `docs/NDR_FORM_MAP.md` updated from 2-step to confirmed 3-step flow: `/apply` → `/details` → `/personalizesavings`. Phone field auto-format confirmed (`(XXX) XXX-XXXX`), Step 2 submit confirmed as `POST /details?...` with redirect carrying `prospectId` + `ndrUID`.
+- **NDR safe-submit guard shipped (2026-02-18 01:57 GST):** `scripts/fdr-ndr-fill.py` now supports `--safe-submit-probe` (NDR-only) with network-level interception that blocks live `POST /details` requests before prospect creation; regression matcher tests added in `tests/test_fdr_ndr_submit_guard.py`.
+- **Content Loop implementation shipped (2026-02-18 01:53 GST):** Dual-track content operations implemented in repo: `workflows/content-growth-loop.yaml`, `scripts/content-preflight-lint.py`, DB migration `db/migrations/003_content_growth_loop_tables.sql`, schema parity in `db/schema.sql`, and full skill pack under `skills/ocean-content-loop/`.
+- **Dynamic HTML email templates shipped (2026-02-18 02:01 GST):** Added non-fixed, variable-driven templates (`templates/email-system/debt-relief-v2.dynamic.html`, `templates/email-system/personal-loan-cross-sell-v2.dynamic.html`) plus renderer script `scripts/render-email-template.py` and variable contract `templates/email-system/dynamic-template-vars.md`.
 - **Model routing update (2026-02-17 00:36 GMT+4):** Fury switched from `openai-codex/gpt-5.3-codex-spark` to `openai-codex/gpt-5.3-codex` in live runtime config (`~/.openclaw/openclaw.json`) and template config (`config/openclaw.yaml`). Gateway restart executed via `openclaw gateway restart`.
 - **Agent alignment hardening (2026-02-17):** Canonical agent IDs standardized (`fury/scout/shield/hawk/forge/watchtower/peter/ocean`) across repo configs and identity docs, stale `captain/signal` template references removed, and drift guard added at `scripts/validate_agent_alignment.sh` (runtime-aware `main` → `fury` normalization).
 - **Budget Spent:** $0 / $5,000
 - **Leads in DB:** 2 (1 dry run, 1 submitted to JGW) — unchanged since last sync
 - **Revenue:** $0 — unchanged since last sync
 - **Latest sync note (2026-02-17 11:44 GST):** Daily all-agent sync complete. No numeric data changes detected (leads/revenue/spend/deliveries unchanged).
+- **Execution protocol update (2026-02-18 01:41 GST):** Immediate Execution Protocol activated. Significant tasks now require Task Packet in handoff queue + Execution Receipt in `shared/ACTION_LOG.md` (5-minute ack SLA, 30-minute first artifact SLA, proof-required closure).
+- **SLA enforcement sweep (2026-02-18 01:49 GST):** Auto-reopen check run for task packets. No tasks had crossed `first_artifact_due` yet, so no reopen actions triggered in this sweep.
 
 ## 📋 MANDATORY READING — All Agents
 
@@ -65,6 +70,7 @@ Every agent MUST read these before acting:
 - **URL:** https://xpbbdmosyrhkoczhcgpt.supabase.co
 - **Tables live:** leads, buyers, campaigns, deliveries, pnl_daily, compliance_log, agent_activity, offer_fields
 - **Tables live (offer caps):** everflow_offers (10 rows, seeded), offer_submissions (0 rows), postback_log (2 rows) — schema applied & verified 2026-02-17 01:30 GMT+4
+- **Tables staged (content loop):** content_assets, content_reviews, content_performance, content_learning_events — migration file committed, Supabase apply pending
 - **Functions live:** check_offer_cap(), increment_submission(), record_conversion(), reset_daily_caps(), reset_weekly_caps() — all verified via RPC
 - **RLS enabled** on all 3 new tables (service_role policy)
 
@@ -111,6 +117,7 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 - Everflow global postback not yet configured to Ocean receiver endpoint (playbook completed; execution owner = Vision, AK execution assist required)
 - Fury direct session key `agent:main:main` remains at historical `206,385` tokens on spark metadata; requires fresh/reset session key to eliminate overflow behavior risk
 - Pipeline movement unchanged this sync (0 acquired / 0 delivered / $0 revenue / $0 spend)
+- Content loop DB migration pending execution in Supabase (`003_content_growth_loop_tables.sql`), so workflow metrics queries are staged but not live yet.
 
 ## Latest Regulatory Intelligence (Fury)
 - Run date: 2026-02-16 (manual trigger)
@@ -127,6 +134,24 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 | Regulatory follow-through | Monday 11:00 Dubai | Fury reviews, assigns owners, updates shared context |
 | Login reliability heartbeat | Every 4h | Vision checks browser/auth health for Everflow/RevPie/FB + alerts |
 
+## Task Packet Standard (Mandatory for Significant Tasks)
+
+Use this packet format in the Handoff Queue. No significant task is "assigned" unless all fields are filled.
+
+```
+task_id:
+from:
+to:
+task:
+priority:
+deadline:
+first_artifact_due:
+definition_of_done:
+required_evidence:
+escalate_if_blocked_by:
+status: queued | active | blocked | done
+```
+
 ## Agent Status Board
 | Agent | Status | Last Active | Current Task |
 |---|---|---|---|
@@ -137,17 +162,24 @@ _Caps (❓) to be filled by AK. See `docs/OFFER_CAPS.md` for full details._
 | Widow 🔍 | 🟡 Standby | 2026-02-17 01:30 GST | NDR map done; next = post-submit behavior + phone-mask test protocol (no real lead burn) |
 | Banner 🔥 | 🟡 Standby | 2026-02-16 15:48 GST | Finalize implementation-ready landing/offer-wall execution plan (no build pre-gate) |
 | Vision 🗼 | 🟢 Active | 2026-02-16 23:55 GST | Execute Everflow global postback setup + E2E validation against Ocean endpoint |
+| Ocean 🌊 | 🟢 Active | 2026-02-18 01:57 GST | Shipped NDR network-level safe-submit guard + regression tests; next step = apply migration 003 in Supabase |
 
 ## Handoff Queue
-<!-- Format: [FROM] → [TO]: description (priority: high/medium/low) -->
-- [FURY] → [VISION]: Configure Everflow global postback to Ocean endpoint, run signed test, and post proof bundle (URL used, request sample, DB row evidence) (priority: high)
-- [FURY] → [PETER]: Maintain backup ownership for postback endpoint and run fallback deployment/debug immediately if Vision is blocked (priority: high)
-- [FURY] → [CAP]: Complete compliance audit for 2 stored leads (TSR/TCPA/consent fields) and log disposition + remediation if any fail (priority: high)
-- [FURY] → [WIDOW]: Add NDR post-submit behavior map + phone input mask constraints + safe test data plan (priority: high)
-- [FURY] → [HAWKEYE]: Refresh channel-specific copy variants and compliance-safe creative matrix; hold launch until Phase 3 traffic gate (priority: medium)
-- [FURY] → [BANNER]: Deliver page-block-level execution plan for high-converting site + offer wall linked to current buyer routing logic (priority: medium)
-- [PETER] → [FURY]: Start/confirm fresh `main` session key to clear historical spark overflow metadata risk (priority: high)
-- [FURY] → [FURY]: Publish daily sync status, explicitly noting no numeric movement unless new evidence lands today (priority: high)
-
+| task_id | from | to | task | priority | deadline (GST) | first_artifact_due (GST) | definition_of_done | required_evidence | escalate_if_blocked_by (GST) | status |
+|---|---|---|---|---|---|---|---|---|---|---|
+| TP-20260218-000 | AK | OCEAN | Implement immediate execution protocol across shared operating docs | high | 2026-02-18 02:00 | 2026-02-18 01:55 | protocol codified in playbook/context/action-log/metrics with live pilot packet | docs diff bundle + context activation note + KPI panel | 2026-02-18 01:55 | done |
+| TP-20260218-010 | OCEAN | OCEAN | Run SLA sweep and auto-reopen overdue tasks without blocker evidence | high | 2026-02-18 01:50 | 2026-02-18 01:49 | sweep completed and overdue tasks reopened if any | timestamped sweep note in context + queue status check | 2026-02-18 01:49 | done (no overdue tasks found) |
+| TP-20260218-011 | AK | OCEAN | Implement Ocean dual-track content loop plan (workflow, schema, skill, guardrails) | high | 2026-02-18 03:00 | 2026-02-18 02:00 | repo includes executable workflow + lint + migration + interfaces docs + skill package | git diff bundle across `workflows/`, `scripts/`, `db/`, `skills/`, `docs/` + syntax smoke tests | 2026-02-18 02:00 | done (Supabase apply pending) |
+| TP-20260218-013 | AK | OCEAN | Add non-fixed dynamic HTML email templates with reusable blocks and renderer utility | high | 2026-02-18 02:30 | 2026-02-18 02:10 | v2 HTML templates + variable contract + render script validated with strict smoke tests | template files + renderer script + render outputs with strict mode | 2026-02-18 02:10 | done |
+| TP-20260218-001 | OCEAN | PETER | Pilot: validate NDR post-submit behavior + phone input mask handling without burning real lead | high | 2026-02-18 12:00 | 2026-02-18 02:10 | behavior map + mask rules added and linked in context | Playwright snapshot + network trace (`tmp_ndr_network.txt`) + `docs/NDR_FORM_MAP.md` update | 2026-02-18 02:10 | done (guard incident closed via TP-20260218-012) |
+| TP-20260218-012 | AK | PETER | Implement route-level NDR test-safe submit guard in filler script to prevent prospect creation during submit-path validation | high | 2026-02-18 02:15 | 2026-02-18 02:00 | NDR test mode blocks `POST /details` at network layer and exposes explicit CLI flag with regression tests | script diff + guard matcher tests + local verification output | 2026-02-18 02:00 | done |
+| TP-20260218-002 | FURY | VISION | Configure Everflow global postback to Ocean endpoint and run signed test | high | 2026-02-18 13:00 | 2026-02-18 02:10 | signed postback reaches endpoint and DB log confirms | URL used, signed request sample, DB row proof | 2026-02-18 02:10 | queued |
+| TP-20260218-003 | FURY | PETER | Maintain backup ownership for postback endpoint and execute fallback if Vision blocked | high | 2026-02-18 13:00 | 2026-02-18 02:10 | fallback path verified and deploy/debug support ready | health response + deployment/run output reference | 2026-02-18 02:10 | queued |
+| TP-20260218-004 | FURY | CAP | Complete compliance audit on 2 stored leads (TSR/TCPA/consent fields) | high | 2026-02-18 15:00 | 2026-02-18 02:10 | both leads dispositioned pass/fail with remediation for failures | audit checklist output + lead-level disposition log | 2026-02-18 02:10 | queued |
+| TP-20260218-005 | FURY | WIDOW | Extend NDR map with safe test data protocol and anti-detection behavior notes | high | 2026-02-18 14:00 | 2026-02-18 02:10 | NDR mapping doc updated with test-safe execution protocol | doc diff + section link + field/mask evidence | 2026-02-18 02:10 | queued |
+| TP-20260218-006 | FURY | HAWKEYE | Refresh channel copy variants and compliance-safe creative matrix (hold launch gate) | medium | 2026-02-18 18:00 | 2026-02-18 02:10 | revised copy pack ready for Shield precheck | copy matrix doc + compliance notes | 2026-02-18 02:10 | queued |
+| TP-20260218-007 | FURY | BANNER | Deliver implementation-ready page-block plan for high-converting site + offer wall | medium | 2026-02-18 18:00 | 2026-02-18 02:10 | page-block spec mapped to routing logic and handoff-ready | spec doc + block-level acceptance criteria | 2026-02-18 02:10 | queued |
+| TP-20260218-008 | PETER | FURY | Start/confirm fresh `main` session key to clear spark overflow metadata risk | high | 2026-02-18 11:00 | 2026-02-18 02:10 | fresh session confirmed and old overflow risk explicitly closed or monitored | sessions output + explicit status note in context | 2026-02-18 02:10 | queued |
+| TP-20260218-009 | FURY | FURY | Publish daily sync status with explicit "no numeric movement" unless evidence changes | high | 2026-02-18 12:00 | 2026-02-18 02:10 | sync note published in context with evidence source timestamp | sync note + evidence timestamp reference | 2026-02-18 02:10 | queued |
 
 - Security update (2026-02-16): POSTBACK_SECRET rotated. Fingerprint: 9Kn168...F6aE
