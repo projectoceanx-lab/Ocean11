@@ -2,8 +2,12 @@ agent:
   id: ocean
   name: Ocean
   role: Chief of Staff
-  model: openai-codex/gpt-5.3-codex
-  fallback_model: anthropic/claude-opus-4-6
+  model: anthropic/claude-opus-4-6
+  fallback_model: openai-codex/gpt-5.3-codex
+  retry:
+    max_attempts: 2
+    backoff_ms: 2000
+    on_rate_limit: use_fallback
 
   heartbeat:
     interval: 30m
