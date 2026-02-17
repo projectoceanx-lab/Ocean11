@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1080" viewBox="0 0 1080 1080">
+  <rect width="1080" height="1080" fill="#eaf4fc"/>
+  <rect x="70" y="120" width="550" height="840" rx="24" fill="#ffffff"/>
+  <rect x="650" y="120" width="360" height="840" rx="24" fill="#3f74a6"/>
+  <text x="110" y="190" font-family="Arial" font-size="44" fill="#264664" font-weight="700">Debt Relief Ad Concept</text>
+  <text x="110" y="260" font-family="Arial" font-size="28" fill="#3c505f">Calm and trustworthy visual direction</text>
+  <text x="680" y="210" font-family="Arial" font-size="42" fill="#ffffff" font-weight="700">Struggling with</text>
+  <text x="680" y="258" font-family="Arial" font-size="42" fill="#ffffff" font-weight="700">unsecured debt?</text>
+  <text x="680" y="330" font-family="Arial" font-size="28" fill="#ffffff">See if debt relief options may help</text>
+  <text x="680" y="365" font-family="Arial" font-size="28" fill="#ffffff">lower what you pay each month.</text>
+  <rect x="690" y="470" width="250" height="70" rx="14" fill="#ffffff"/>
+  <text x="742" y="515" font-family="Arial" font-size="32" fill="#285a8c" font-weight="700">Check Options</text>
+  <text x="680" y="600" font-family="Arial" font-size="28" fill="#ffffff">Quick eligibility check. No obligation.</text>
+  <text x="680" y="760" font-family="Arial" font-size="18" fill="#e1eef9">Not a lender. Results vary based on debt and program terms.</text>
+  <text x="680" y="788" font-family="Arial" font-size="18" fill="#e1eef9">This is an advertisement for debt relief services.</text>
+</svg>

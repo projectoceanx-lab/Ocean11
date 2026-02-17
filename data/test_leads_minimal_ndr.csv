@@ -1,0 +1,6 @@
+lead_id,first_name,last_name,email,phone,debt_amount,source_tag
+AK_TEST_001,David,Murray,dmurray56@comcast.net,6037033449,2500,AK_test
+AK_TEST_002,Judith,Alter,judyalter6@gmail.com,4025476165,1000,AK_test
+AK_TEST_003,Kellie,Dunkin,kelliehaskins68@gmail.com,5806068242,500,AK_test
+AK_TEST_004,Socorro,Arroyo,vickyarvs12@hotmail.com,5156391544,1000,AK_test
+AK_TEST_005,Robert,Kowalik,wally.kowalik8465@gmail.com,5187049198,1000,AK_test

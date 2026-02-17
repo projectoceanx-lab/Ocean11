@@ -31,6 +31,8 @@ blocked_phrases:
 
 required_email_footer:
   - "This is an advertisement"
+  - "not a lender (if applicable)"
+  - "brand name"
   - "valid physical mailing address"
   - "unsubscribe link"
   - "results vary"
@@ -40,6 +42,10 @@ cta_allowlist:
   - "See If You Qualify"
   - "View Matched Options"
   - "Get Free Eligibility Check"
+  - "Explore Debt Relief Options"
+  - "Compare Loan Options"
+  - "Check Loan Eligibility"
+  - "See Available Loan Offers"
 
 cta_blocklist:
   - "Erase Debt Now"

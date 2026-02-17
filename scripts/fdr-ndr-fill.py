@@ -34,6 +34,25 @@ CHROMIUM_PATH = "/Users/arifkhan/Library/Caches/ms-playwright/chromium_headless_
 FDR_URL = "https://www.freedomdebtrelief.com"
 NDR_URL = "https://start.nationaldebtrelief.com/apply"
 
+# Everflow tracking URLs — ALWAYS use these instead of direct buyer URLs
+EVERFLOW_URLS_PATH = PROJECT_ROOT / "config" / "everflow_urls.json"
+
+def load_everflow_url(offer_id: int | None) -> str | None:
+    """Load the Everflow tracking URL for a given offer ID."""
+    if not offer_id:
+        return None
+    try:
+        with open(EVERFLOW_URLS_PATH) as f:
+            urls = json.load(f)
+        entry = urls.get(str(offer_id))
+        if entry and entry.get("url"):
+            return entry["url"]
+        print(f"[!] No Everflow URL found for offer_id={offer_id}")
+        return None
+    except FileNotFoundError:
+        print(f"[!] Everflow URLs file not found: {EVERFLOW_URLS_PATH}")
+        return None
+
 # State name → abbreviation mapping for the combobox
 STATE_MAP = {
     "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas",
@@ -51,17 +70,22 @@ STATE_MAP = {
     "WI": "Wisconsin", "WY": "Wyoming", "DC": "District of Columbia",
 }
 
-# NDR dropdown debt ranges → midpoint values
+# NDR dropdown debt ranges (labels use en-dash per actual form)
 NDR_DEBT_RANGES = [
-    (7500, 14999, "$7,500 - $14,999"),
-    (15000, 19999, "$15,000 - $19,999"),
-    (20000, 29999, "$20,000 - $29,999"),
-    (30000, 39999, "$30,000 - $39,999"),
-    (40000, 49999, "$40,000 - $49,999"),
-    (50000, 59999, "$50,000 - $59,999"),
-    (60000, 69999, "$60,000 - $69,999"),
-    (70000, 79999, "$70,000 - $79,999"),
-    (80000, 100000, "$80,000+"),
+    (0, 4999, "$0 – $4,999"),
+    (5000, 7499, "$5,000 – $7,499"),
+    (7500, 9999, "$7,500 – $9,999"),
+    (10000, 14999, "$10,000 – $14,999"),
+    (15000, 19999, "$15,000 – $19,999"),
+    (20000, 29999, "$20,000 – $29,999"),
+    (30000, 39999, "$30,000 – $39,999"),
+    (40000, 49999, "$40,000 – $49,999"),
+    (50000, 59999, "$50,000 – $59,999"),
+    (60000, 69999, "$60,000 – $69,999"),
+    (70000, 79999, "$70,000 – $79,999"),
+    (80000, 89999, "$80,000 – $89,999"),
+    (90000, 99999, "$90,000 – $99,999"),
+    (100000, 999999, "$100,000+"),
 ]
 
 TEST_LEAD = {
@@ -133,18 +157,26 @@ def check_offer_cap(offer_id: int) -> bool:
 
 
 def log_submission(offer_id: int, lead: dict, aff_click_id: str, success: bool, dry_run: bool, lead_id: str | None = None):
-    """Log to offer_submissions table (matches offer_caps_schema.sql)."""
+    """Log to offer_submissions table (matches offer_caps_schema.sql).
+    
+    NOTE: offer_submissions.lead_id is NOT NULL in the DB schema.
+    If no lead_id is provided (CLI-only / test runs), we skip the DB insert
+    and just log locally. Production runs via the queue always have a lead_id.
+    """
     import httpx
     url, headers = get_supabase_headers()
     headers["Prefer"] = "return=representation"
+
+    if lead_id is None:
+        print(f"[⚠] No lead_id — skipping DB log (CLI/test mode). offer_id={offer_id} click={aff_click_id}")
+        return
+
     row = {
         "offer_id": offer_id,
-        "lead_id": lead_id,  # UUID from leads table (may be None for CLI-only runs)
+        "lead_id": lead_id,
         "everflow_click_id": aff_click_id,
-        "status": "submitted" if success and not dry_run else "submitted",
+        "status": "submitted",
     }
-    # Remove None values
-    row = {k: v for k, v in row.items() if v is not None}
     try:
         resp = httpx.post(f"{url}/rest/v1/offer_submissions", headers=headers, json=row)
         resp.raise_for_status()
@@ -159,9 +191,9 @@ def pick_ndr_debt_label(amount: int) -> str:
     for low, high, label in NDR_DEBT_RANGES:
         if low <= amount <= high:
             return label
-    if amount >= 80000:
-        return "$80,000+"
-    return "$20,000 - $29,999"  # fallback
+    if amount >= 100000:
+        return "$100,000+"
+    return "$20,000 – $29,999"  # fallback
 
 
 def state_abbr_to_name(abbr: str) -> str:
@@ -179,9 +211,17 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
     aff_click_id = str(uuid.uuid4())
     debt_amount = int(lead["debt_amount"].replace(",", "").replace("$", ""))
     state_name = state_abbr_to_name(lead["state"])
-    entry_url = NDR_URL if offer == "ndr" else FDR_URL
 
-    print(f"[*] Entry: {offer.upper()} → {entry_url}")
+    # CRITICAL: Use Everflow tracking URL so clicks are attributed to us
+    everflow_url = load_everflow_url(offer_id)
+    if everflow_url:
+        entry_url = everflow_url
+        print(f"[*] Entry via EVERFLOW: {entry_url}")
+    else:
+        # Fallback to direct URL only if no offer_id provided (local testing only)
+        entry_url = NDR_URL if offer == "ndr" else FDR_URL
+        print(f"[⚠] WARNING: No Everflow URL — using DIRECT entry (clicks NOT tracked!)")
+        print(f"[⚠] Pass --offer-id to use Everflow tracking. Direct URL: {entry_url}")
     print(f"[*] Lead: {lead['first_name']} {lead['last_name']}, ${debt_amount}, {lead['state']}")
     print(f"[*] aff_click_id: {aff_click_id}")
     print(f"[*] Mode: {'DRY RUN' if dry_run else 'SUBMIT'}")
@@ -194,13 +234,7 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
 
     async with async_playwright() as p:
         launch_args = {"headless": headless}
-        # Use specific chromium if available
-        if Path(CHROMIUM_PATH).exists():
-            launch_args["executable_path"] = str(
-                Path(CHROMIUM_PATH) / "headless_shell"
-                if (Path(CHROMIUM_PATH) / "headless_shell").exists()
-                else CHROMIUM_PATH
-            )
+        # Let Playwright find its own installed chromium
         # IPRoyal residential proxy (US) — rotates per session
         proxy_url = os.environ.get("PROXY_URL")
         if proxy_url:
@@ -222,40 +256,193 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
         page = await context.new_page()
         # Stealth: patch navigator.webdriver, chrome.runtime, etc.
         try:
-            from playwright_stealth import stealth_async
-            await stealth_async(page)
+            from playwright_stealth import Stealth
+            s = Stealth()
+            await s.apply_stealth_async(page)
             print("[*] Stealth mode: ON")
-        except ImportError:
-            print("[!] playwright-stealth not installed, running without stealth")
+        except Exception as e:
+            print(f"[!] Stealth setup failed ({e}), running without stealth")
 
         try:
+            # ── Navigate (via Everflow redirect if applicable) ──
+            print(f"[*] Navigating to: {entry_url}")
+
+            if everflow_url:
+                # Everflow redirect chain involves multiple 302s + a final tracking pixel
+                # that may use JS redirect. Strategy: navigate and keep retrying until
+                # we land on the buyer's actual page.
+                try:
+                    await page.goto(entry_url, wait_until="commit", timeout=45000)
+                except Exception:
+                    pass  # ERR_ABORTED is expected during redirect chains
+
+                # Wait for the page to settle on the final destination
+                print("[*] Following Everflow redirect chain...")
+                for attempt in range(20):
+                    await page.wait_for_timeout(1000)
+                    current = page.url
+                    # Check if we've landed on the buyer's page
+                    if any(domain in current.lower() for domain in [
+                        "nationaldebtrelief", "freedomdebtrelief", "apply",
+                    ]):
+                        break
+                    # If page has content, check for JS redirects
+                    if current != "about:blank" and "zkds923" not in current:
+                        try:
+                            content = await page.content()
+                            if len(content) > 500:  # Substantial page loaded
+                                break
+                        except Exception:
+                            pass
+
+                print(f"[*] Landed on: {page.url}")
+                await page.wait_for_timeout(2000)
+
+                # If we're still stuck, the tracking pixel (204) didn't redirect.
+                # This means the offer's tracking is set up to fire a pixel, not redirect.
+                # In that case, we need to visit the direct buyer URL but AFTER the
+                # Everflow click was registered (which it was via the 302 chain).
+                if page.url == "about:blank" or "shhefm9trk" in page.url:
+                    direct_url = NDR_URL if offer == "ndr" else FDR_URL
+                    print(f"[*] Tracking pixel fired (click registered). Navigating to buyer: {direct_url}")
+                    await page.goto(direct_url, wait_until="domcontentloaded", timeout=30000)
+                    await page.wait_for_timeout(2000)
+
+                # Detect which form we actually landed on
+                landed_url = page.url.lower()
+                if "nationaldebtrelief" in landed_url or "start.national" in landed_url:
+                    detected_offer = "ndr"
+                elif "freedomdebtrelief" in landed_url:
+                    detected_offer = "fdr"
+                else:
+                    detected_offer = offer
+                    print(f"[!] Unknown landing domain: {page.url} — using --offer={offer}")
+
+                if detected_offer != offer:
+                    print(f"[*] Auto-detected offer type: {detected_offer} (overriding --offer={offer})")
+                    offer = detected_offer
+            else:
+                await page.goto(entry_url, wait_until="domcontentloaded", timeout=30000)
+                await page.wait_for_timeout(2000)
+
             # ── STEP 1: Debt Amount ──
             print("[1/3] Debt Amount")
-            await page.goto(entry_url, wait_until="domcontentloaded", timeout=30000)
-            await page.wait_for_timeout(2000)  # React hydration
 
             if offer == "ndr":
-                # NDR: select dropdown then click qualify button
-                # Find the select element and pick matching range
+                # NDR: 2-step flow — select debt dropdown, then contact info on /details
                 label = pick_ndr_debt_label(debt_amount)
                 print(f"  NDR dropdown: selecting '{label}'")
-                # Try to find a <select> element
                 select = page.locator("select").first
                 await select.wait_for(timeout=10000)
-                # Select by label text
-                await select.select_option(label=label)
+                # Try by label first, fall back to matching by text content
+                try:
+                    await select.select_option(label=label)
+                except Exception:
+                    # Try with hyphen instead of en-dash
+                    alt_label = label.replace("–", "-")
+                    await select.select_option(label=alt_label)
                 await human_delay()
-                # Click the CTA button
+                # Click CTA — could be "See if You Qualify" or "Let's Go"
                 cta = page.get_by_role("button", name="See if You Qualify").or_(
                     page.get_by_role("link", name="See if You Qualify")
+                ).or_(
+                    page.get_by_role("button", name="Let's Go")
                 ).or_(
                     page.locator("button[type='submit'], a.cta-button, input[type='submit']")
                 )
                 await cta.first.click(timeout=10000)
-                print("  → Redirecting to FDR apply flow...")
-                # Wait for redirect to FDR
-                await page.wait_for_url("**/apply.freedomdebtrelief.com/**", timeout=30000)
+                print("  → Moving to contact info (Step 2)...")
+                # NDR goes to /details with query params — NOT to FDR
+                await page.wait_for_url("**/details**", timeout=30000)
                 await page.wait_for_timeout(2000)
+
+                # ── NDR STEP 2: Contact Info (no state step) ──
+                print("[2/2] Contact Info (NDR)")
+
+                # Use actual form field IDs from NDR_FORM_MAP
+                fn_input = page.locator("input[name='input_3'], input#input_274_3").first
+                try:
+                    await fn_input.wait_for(timeout=10000)
+                except Exception:
+                    fn_input = page.locator("input[placeholder*='First']").first
+                    await fn_input.wait_for(timeout=10000)
+                await fn_input.click()
+                await fn_input.fill(lead["first_name"])
+                await human_delay(0.3, 0.7)
+
+                ln_input = page.locator("input[name='input_4'], input#input_274_4").first
+                try:
+                    await ln_input.wait_for(timeout=5000)
+                except Exception:
+                    ln_input = page.locator("input[placeholder*='Last']").first
+                    await ln_input.wait_for(timeout=5000)
+                await ln_input.click()
+                await ln_input.fill(lead["last_name"])
+                await human_delay(0.3, 0.7)
+
+                em_input = page.locator("input[name='input_8'], input#input_274_8, input[type='email']").first
+                try:
+                    await em_input.wait_for(timeout=5000)
+                except Exception:
+                    em_input = page.locator("input[placeholder*='Email']").first
+                    await em_input.wait_for(timeout=5000)
+                await em_input.click()
+                await em_input.fill(lead["email"])
+                await human_delay(0.3, 0.7)
+
+                phone_digits = ''.join(c for c in lead["phone"] if c.isdigit())
+                ph_input = page.locator("input[name='input_76'], input#phone, input[type='tel']").first
+                try:
+                    await ph_input.wait_for(timeout=5000)
+                except Exception:
+                    ph_input = page.locator("input[placeholder*='Phone']").first
+                    await ph_input.wait_for(timeout=5000)
+                await ph_input.click()
+                await ph_input.type(phone_digits, delay=60)
+                await human_delay(0.3, 0.7)
+
+                await page.keyboard.press("Tab")
+                await page.wait_for_timeout(1500)
+
+                submit_btn = page.locator(
+                    "button:has-text('See My Relief Options'), "
+                    "input[type='submit'], "
+                    "button[type='submit']"
+                ).first
+
+                if dry_run:
+                    print("[DRY RUN] Form filled — NOT submitting.")
+                    ss_path = PROJECT_ROOT / "tmp" / f"ndr-dryrun-{int(time.time())}.png"
+                    ss_path.parent.mkdir(exist_ok=True)
+                    await page.screenshot(path=str(ss_path), full_page=True)
+                    print(f"  Screenshot: {ss_path}")
+                    if offer_id:
+                        log_submission(offer_id, lead, aff_click_id, success=True, dry_run=True)
+                    await browser.close()
+                    return True
+
+                print("[!] SUBMITTING (NDR)...")
+                await submit_btn.click(timeout=10000)
+                await page.wait_for_timeout(5000)
+
+                current_url = page.url
+                content = await page.content()
+                success = (
+                    "thank" in content.lower()
+                    or "results" in current_url.lower()
+                    or "confirmation" in content.lower()
+                    or "details" not in current_url
+                )
+                print(f"[{'✓' if success else '?'}] NDR submission {'successful' if success else 'unclear result'}")
+                ss_path = PROJECT_ROOT / "tmp" / f"ndr-submit-{int(time.time())}.png"
+                ss_path.parent.mkdir(exist_ok=True)
+                await page.screenshot(path=str(ss_path), full_page=True)
+                print(f"  Screenshot: {ss_path}")
+                if offer_id:
+                    log_submission(offer_id, lead, aff_click_id, success=success, dry_run=False)
+                await browser.close()
+                return success
+
             else:
                 # FDR: slider-based. Set the slider value then click Continue.
                 # The slider is an MUI Slider — we can set it via the input or drag.

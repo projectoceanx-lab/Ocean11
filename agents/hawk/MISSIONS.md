@@ -42,9 +42,10 @@
 | Quality distribution | >40% Tier A/B | >60% Tier C/D |
 
 ## 🚧 Blockers
-- No Everflow/RevPie login yet (pending from AK via Fury)
+- ✅ ~~Everflow/RevPie login~~ — resolved Feb 15
+- ✅ ~~Brave API key~~ — resolved Feb 16
 - No email domains purchased yet
-- No Brave API key for competitive research
+- No Facebook ad creatives approved by Shield yet
 
 ## 📝 Notes
 - Hawk is the PERFORMANCE MARKETER — owns all paid + email channels
