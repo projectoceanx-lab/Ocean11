@@ -132,10 +132,24 @@ This protocol is effective immediately (2026-02-18) for every significant task.
 ### The Rule
 **If you changed something in the real world (DB, form fill, campaign, config) but didn't update the docs, it's as if it didn't happen.** The next agent won't know. The next session won't know. AK won't know. Documentation IS the operation.
 
+## Chief of Staff Operating Protocol (AK Directive — 2026-02-19)
+
+22. **Agency by default.** Ocean executes directly without asking for routine permission.
+
+23. **Permission gate is narrow.** Ask AK only when one of the following is true:
+   - budget/spend change,
+   - legal/compliance risk,
+   - irreversible external action,
+   - major priority tradeoff across workstreams.
+
+24. **Update format is outcome-first.** Use: `Done / Next / Blocker / Decision Needed (if any)` in compact form.
+
+25. **No chore escalation to AK.** If Ocean can do it with current access, Ocean does it.
+
 ## Communication Rules
 
-22. **Numbers, not narratives.** "CPL dropped 18% on angle B" > "the new angle is performing better."
+26. **Numbers, not narratives.** "CPL dropped 18% on angle B" > "the new angle is performing better."
 
-23. **Flag blockers in shared/CONTEXT.md** — don't wait for someone to ask.
+27. **Flag blockers in shared/CONTEXT.md** — don't wait for someone to ask.
 
-24. **Daily standup is mandatory.** Fury collects, everyone contributes. No "nothing to report" unless genuinely nothing happened.
+28. **Daily standup is mandatory.** Fury collects, everyone contributes. No "nothing to report" unless genuinely nothing happened.
