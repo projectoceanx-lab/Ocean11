@@ -1,0 +1,11 @@
+date,traffic_source,spend,clicks,leads,approved_leads,revenue,cpl,cpa,approval_rate,epc,cap,cap_used_pct,top_issue,next_action,owner
+2026-02-22,Facebook,0,0,0,0,0,0,0,0,0,0,0,,, 
+2026-02-22,RevPie,0,0,0,0,0,0,0,0,0,0,0,,, 
+2026-02-22,Email,0,0,0,0,0,0,0,0,0,0,0,,, 
+
+# formulas_guidance,,,,,,,,,,,,,,,
+# cpl=spend/leads,,,,,,,,,,,,,,,
+# cpa=spend/approved_leads,,,,,,,,,,,,,,,
+# approval_rate=approved_leads/leads,,,,,,,,,,,,,,,
+# epc=revenue/clicks,,,,,,,,,,,,,,,
+# cap_used_pct=approved_leads/cap,,,,,,,,,,,,,,,

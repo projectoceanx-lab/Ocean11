@@ -1,0 +1,17 @@
+Overnight Launch Kit License
+Copyright (c) 2026 Arif Khan / Project Ocean
+
+Permission is granted to the purchaser to use, edit, and apply these materials
+for personal or internal business use.
+
+You may not:
+1) Resell, sublicense, or redistribute these files as standalone products.
+2) Claim authorship of the original templates.
+3) Upload full kit contents to public repositories or marketplaces.
+
+You may:
+1) Modify templates for your campaigns.
+2) Share filled-in outputs with your internal team or contractors.
+
+This product is provided "as is" without warranty of any kind.
+The buyer is responsible for legal/compliance review before deployment.
