@@ -1,0 +1,4 @@
+Test_ID,Channel,Audience_Angle,Hook,Format,Hypothesis,Primary_Metric,Target,Owner,Status,Result,Decision,Next_Iteration
+CT-001,Meta,Debt Stress,"Cut your payment in half?",UGC Video,"Specific pain hook will improve CTR",CTR,1.8%,Arif,Planned,,, 
+CT-002,TikTok,Young Families,"3 debt mistakes in 2026",Talking Head,"Educational hook increases hold rate",Thumbstop Rate,25%,Arif,Planned,,, 
+CT-003,Meta,Refinance Seekers,"Stop overpaying interest",Static,"Rate-focused offer improves CVR",Landing CVR,18%,Arif,Planned,,, 
