@@ -57,3 +57,5 @@ summary { cursor: pointer; font-weight: 600; }
   .cta, .cta.ghost { width: 100%; }
   .price { font-size: 2rem; }
 }
+
+.micro a { color: #cfe4ff; }
