@@ -80,16 +80,48 @@
     </section>
 
     <section class="section container cta-block" id="cta">
-      <h2>Ready to launch with fewer blind spots?</h2>
-      <p>Secure intro pricing while spots remain in the first 20 buyers batch.</p>
+      <h2>Get launch-ready and we will follow up fast</h2>
+      <p>Reserve your spot now. If checkout is offline, capture your lead below and we will complete invoice manually.</p>
       <button class="cta" id="primaryCta" type="button">Buy Overnight Launch Kit — $79</button>
       <p class="micro urgency">When intro slots are gone, price moves to $129 automatically in next update.</p>
 
-      <div id="manualFallback" class="fallback" hidden>
-        <p><strong>Checkout not connected yet.</strong> Send your buying email and we’ll issue manual invoice + file delivery.</p>
-        <label for="buyerEmail">Email</label>
-        <input id="buyerEmail" type="email" placeholder="you@company.com" autocomplete="email" />
-        <button id="invoiceBtn" class="cta ghost" type="button">Request manual invoice</button>
+            <div id="manualFallback" class="fallback" hidden>
+        <p><strong>Fast fallback lead capture (no API dependency):</strong> submit this form and we save your lead in-browser instantly. Then open a prefilled email draft for manual invoice + delivery.</p>
+
+        <form id="leadCaptureForm" class="lead-form" novalidate>
+          <label for="leadName">Name *</label>
+          <input id="leadName" name="name" type="text" placeholder="Your full name" autocomplete="name" required />
+
+          <label for="leadEmail">Email *</label>
+          <input id="leadEmail" name="email" type="email" placeholder="you@company.com" autocomplete="email" required />
+
+          <label for="leadTelegram">Telegram (optional)</label>
+          <input id="leadTelegram" name="telegram" type="text" placeholder="@username" />
+
+          <label for="leadOffer">Offer interest *</label>
+          <select id="leadOffer" name="offerInterest" required>
+            <option value="">Select your preferred offer</option>
+            <option value="Overnight Launch Kit">Overnight Launch Kit</option>
+            <option value="Creative Testing Sprint Kit">Creative Testing Sprint Kit</option>
+            <option value="Compliance Preflight Pack">Compliance Preflight Pack</option>
+            <option value="Weekly Client Reporting Kit">Weekly Client Reporting Kit</option>
+          </select>
+
+          <label for="leadPainPoint">Main pain point right now *</label>
+          <textarea id="leadPainPoint" name="painPoint" placeholder="What is blocking your launch, conversion, or delivery speed?" required></textarea>
+
+          <button id="saveLeadBtn" class="cta" type="submit">Save lead + continue</button>
+        </form>
+
+        <div id="leadSuccess" class="success-box" hidden>
+          Lead captured. <strong>Next step:</strong> click <strong>Open Email Draft</strong> now so we can issue your manual invoice and send delivery details.
+        </div>
+
+        <div class="lead-actions">
+          <a id="mailtoBtn" class="cta ghost" href="mailto:project.oceanx@gmail.com">Open Email Draft</a>
+          <button id="exportJsonBtn" class="cta ghost" type="button">Export leads JSON</button>
+          <button id="exportCsvBtn" class="cta ghost" type="button">Export leads CSV</button>
+        </div>
       </div>
 
       <p id="ctaMessage" class="micro"></p>

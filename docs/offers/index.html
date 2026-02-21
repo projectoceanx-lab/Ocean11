@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Project Ocean Offers Catalog</title>
-  <meta name="description" content="Choose and buy a Project Ocean execution kit. Checkout + manual invoice fallback both live." />
+  <meta name="description" content="Choose and buy a Project Ocean execution kit. Includes no-API lead fallback capture." />
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; margin: 0; color: #111; background: #f7f9fc; }
     .wrap { max-width: 980px; margin: 0 auto; padding: 32px 20px 48px; }
@@ -16,64 +16,77 @@
     .card { background: #fff; border-radius: 12px; padding: 18px; box-shadow: 0 4px 12px rgba(2,6,23,.08); border: 1px solid #e5e7eb; }
     .price { font-size: 1.6rem; font-weight: 700; margin: 8px 0 4px; }
     .tag { display: inline-block; font-size: .8rem; padding: 4px 8px; background: #fee2e2; color: #991b1b; border-radius: 999px; }
-    .btn { display: inline-block; margin-top: 10px; text-decoration: none; background: #2563eb; color: #fff; padding: 10px 14px; border-radius: 8px; font-weight: 600; }
+    .btn { display: inline-block; margin-top: 10px; text-decoration: none; background: #2563eb; color: #fff; padding: 10px 14px; border-radius: 8px; font-weight: 600; border:0; cursor:pointer; }
     .btn:hover { background: #1d4ed8; }
+    .ghost { background:#fff; color:#1d4ed8; border:1px solid #1d4ed8; }
     .fallback { margin-top: 24px; background: #fff; padding: 16px; border-radius: 12px; border: 1px solid #e5e7eb; }
-    .fallback code { background: #f3f4f6; padding: 2px 6px; border-radius: 6px; }
+    .lead-form{display:grid;gap:8px}.lead-form input,.lead-form select,.lead-form textarea{padding:10px;border:1px solid #cbd5e1;border-radius:8px}
+    .lead-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}.micro{color:#475569;font-size:.92rem}
   </style>
 </head>
 <body>
   <main class="wrap">
     <section class="hero">
       <h1>Project Ocean Offer Catalog</h1>
-      <p>Pick one execution kit and buy now. Goal: ship implementation this week, not “someday”.</p>
-      <div class="alert"><strong>Urgency:</strong> Intro pricing is temporary and can change any time new batch starts.</div>
+      <p>Clear promise: practical implementation kits. Truthful framing: no guaranteed ROI claims.</p>
+      <div class="alert"><strong>Best-fit assumption:</strong> most useful for active operators/teams who need speed + process control.</div>
     </section>
 
     <section class="grid">
       <article class="card">
         <span class="tag">Fastest to immediate use</span>
         <h2>Overnight Launch Kit</h2>
-        <p>Preflight pack to launch a cleaner affiliate funnel by tomorrow morning.</p>
+        <p>Preflight pack to launch cleaner and avoid common day-1 misses.</p>
         <div class="price">$79 <small>(then $129)</small></div>
-        <a class="btn" href="/storefront/overnight-launch-kit/" target="_blank" rel="noopener">Buy / Open Offer</a>
+        <a class="btn" href="/storefront/overnight-launch-kit/" target="_blank" rel="noopener">Open Offer</a>
       </article>
 
       <article class="card">
         <span class="tag">High ROI for ad teams</span>
         <h2>Creative Testing Sprint Kit</h2>
-        <p>Structured 5-day testing system to decide winners faster with less waste.</p>
+        <p>Structured 5-day testing cadence to decide winners with less noise.</p>
         <div class="price">$99 <small>(then $149)</small></div>
-        <a class="btn" href="/storefront/creative-testing-sprint-kit/" target="_blank" rel="noopener">Buy / Open Offer</a>
+        <a class="btn" href="/storefront/creative-testing-sprint-kit/" target="_blank" rel="noopener">Open Offer</a>
       </article>
 
       <article class="card">
         <span class="tag">Protect ad accounts</span>
         <h2>Compliance Preflight Pack</h2>
-        <p>Catch consent and claims risks before they trigger flags or rework.</p>
+        <p>Process checks for claims + consent before launch. Not legal advice.</p>
         <div class="price">$119 <small>(then $179)</small></div>
-        <a class="btn" href="/storefront/compliance-preflight-pack/" target="_blank" rel="noopener">Buy / Open Offer</a>
+        <a class="btn" href="/storefront/compliance-preflight-pack/" target="_blank" rel="noopener">Open Offer</a>
       </article>
 
       <article class="card">
         <span class="tag">Retention + trust</span>
         <h2>Weekly Client Reporting Kit</h2>
-        <p>Turn weekly reports into decision-ready updates clients actually value.</p>
+        <p>Turn weekly metrics into clearer decisions and stronger client trust.</p>
         <div class="price">$69 <small>(then $99)</small></div>
-        <a class="btn" href="/storefront/weekly-client-reporting-kit/" target="_blank" rel="noopener">Buy / Open Offer</a>
+        <a class="btn" href="/storefront/weekly-client-reporting-kit/" target="_blank" rel="noopener">Open Offer</a>
       </article>
     </section>
 
     <section class="fallback">
-      <h3>Fallback purchase path (if checkout button fails)</h3>
-      <ol>
-        <li>Open any offer page and click <strong>Buy Now</strong>.</li>
-        <li>If checkout is offline, use the in-page <strong>Request invoice</strong> fallback form.</li>
-        <li>Or email <code>project.oceanx@gmail.com</code> with subject: <code>Manual Invoice - [Offer Name]</code>.</li>
-        <li>Include buyer email + offer name + quantity. Invoice + file delivery goes out manually.</li>
-      </ol>
-      <p><strong>Direct contact:</strong> project.oceanx@gmail.com (response target: within same business day).</p>
+      <h3>Lead capture fallback (works with no API)</h3>
+      <p class="micro">Capture lead → save to browser localStorage → open prefilled email draft → export JSON/CSV when needed.</p>
+      <form id="leadCaptureForm" class="lead-form" novalidate>
+        <label>Name *</label><input name="name" required />
+        <label>Email *</label><input name="email" type="email" required />
+        <label>Telegram (optional)</label><input name="telegram" />
+        <label>Offer interest *</label>
+        <select name="offerInterest" required><option value="">Select</option><option>Overnight Launch Kit</option><option>Creative Testing Sprint Kit</option><option>Compliance Preflight Pack</option><option>Weekly Client Reporting Kit</option></select>
+        <label>Main pain point *</label><textarea name="painPoint" required></textarea>
+        <button class="btn" type="submit">Save lead + continue</button>
+      </form>
+      <div class="lead-actions">
+        <a id="mailtoBtn" class="btn ghost" href="mailto:project.oceanx@gmail.com">Open Email Draft</a>
+        <button id="exportJsonBtn" class="btn ghost" type="button">Export JSON</button>
+        <button id="exportCsvBtn" class="btn ghost" type="button">Export CSV</button>
+      </div>
+      <p id="ctaMessage" class="micro"></p>
+      <p id="leadSuccess" class="micro" hidden><strong>Success:</strong> lead saved. Next step is sending/opening the email draft now.</p>
     </section>
   </main>
+  <script src="/storefront/catalog-leads.js"></script>
 </body>
 </html>

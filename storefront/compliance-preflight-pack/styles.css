@@ -59,3 +59,13 @@ summary { cursor: pointer; font-weight: 600; }
 }
 
 .micro a { color: #cfe4ff; }
+
+
+.lead-form { margin-top: 12px; display: grid; gap: 10px; text-align: left; }
+.lead-form label { font-size: .9rem; color: #cfe4ff; }
+.lead-form input, .lead-form select, .lead-form textarea {
+  width: 100%; padding: .72rem; border-radius: 8px; border: 1px solid #355286; background: #0a1427; color: var(--text);
+}
+.lead-form textarea { min-height: 92px; resize: vertical; }
+.lead-actions { display:flex; flex-wrap:wrap; gap:10px; margin-top:8px; }
+.success-box { margin-top: 12px; border:1px solid #2e8b57; background:#0f2a1d; color:#c8f7d8; padding:10px 12px; border-radius:10px; }
