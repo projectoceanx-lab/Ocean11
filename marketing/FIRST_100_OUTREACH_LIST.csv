@@ -1,0 +1,101 @@
+priority_rank,tier,target_type,target_name,platform,handle_or_url,why_likely_to_convert,best_offer,first_touch_method
+1,A,X,Alex Hormozi,x.com,@AlexHormozi,B2B operators buying execution assets,Overnight Launch Kit,DM + reply to recent post
+2,A,X,Shaan Puri,x.com,@ShaanVP,startup operator audience with templates appetite,Creative Testing Sprint Kit,DM concise value prop
+3,A,X,Dickie Bush,x.com,@dickiebush,"creator selling systems, process buyers",Weekly Reporting Kit,reply + DM
+4,A,X,Nicolas Cole,x.com,@Nicolascole77,operators and creators who buy playbooks,Overnight Launch Kit,DM direct
+5,A,X,Katelyn Bourgoin,x.com,@KateBour,growth/voice-of-customer audience,Creative Testing Sprint Kit,DM pain-led opener
+6,A,X,Peep Laja,x.com,@peeplaja,CRO-heavy audience likely to buy frameworks,Creative Testing Sprint Kit,DM
+7,A,X,Amanda Natividad,x.com,@amandanat,B2B content+growth operators,Weekly Reporting Kit,DM + comment
+8,A,X,Ross Simmonds,x.com,@TheCoolestCool,content operators managing reporting,Weekly Reporting Kit,DM
+9,A,X,Andrew Gazdecki,x.com,@agazdecki,micro-acquirer operators need launch systems,Overnight Launch Kit,DM
+10,A,X,Justin Welsh,x.com,@thejustinwelsh,solo operators who buy systems,Weekly Reporting Kit,DM short
+11,A,X,Nathan Barry,x.com,@nathanbarry,"creator economy, kit buyers",Weekly Reporting Kit,DM
+12,A,X,Dan Martell,x.com,@danmartell,agency operators/process buyers,Overnight Launch Kit,DM
+13,A,X,Noah Kagan,x.com,@noahkagan,"entrepreneur audience, tactical kits",Overnight Launch Kit,reply + DM
+14,A,X,Hiten Shah,x.com,@hnshah,product/growth operators,Creative Testing Sprint Kit,DM
+15,A,X,Julian Shapiro,x.com,@Julian,growth playbook audience,Creative Testing Sprint Kit,DM
+16,A,X,April Dunford,x.com,@aprildunford,positioning + GTM consultants,Weekly Reporting Kit,DM
+17,A,X,Elena Verna,x.com,@elenaverna,growth teams with testing workflows,Creative Testing Sprint Kit,DM
+18,A,X,Aleyda Solis,x.com,@aleyda,agency/consulting audiences,Weekly Reporting Kit,DM
+19,A,X,Rand Fishkin,x.com,@randfish,"marketer audience, process buyers",Weekly Reporting Kit,DM
+20,A,X,Ann Handley,x.com,@MarketingProfs,marketing operator network,Weekly Reporting Kit,reply + DM
+21,A,X,Corey Haines,x.com,@coreyhainesco,indie founders shipping fast,Overnight Launch Kit,DM
+22,A,X,Arvid Kahl,x.com,@arvidkahl,bootstrap SaaS operators,Overnight Launch Kit,DM
+23,A,X,Rob Lennon,x.com,@thatroblennon,"creator operators, playbook buyers",Weekly Reporting Kit,DM
+24,A,X,Harry Dry,x.com,@harrydry,marketing examples audience,Creative Testing Sprint Kit,DM
+25,A,X,Tibo,x.com,@tibo_maker,maker audience buying templates,Overnight Launch Kit,DM
+26,B,LinkedIn,Chris Walker,linkedin.com,/in/chriswalker171,B2B growth operators,Creative Testing Sprint Kit,connect + note
+27,B,LinkedIn,Dave Gerhardt,linkedin.com,/in/davegerhardt,marketing operators,Weekly Reporting Kit,connect + message
+28,B,LinkedIn,Ethan Smith,linkedin.com,/in/ethan-smith-marketing,agency operators,Weekly Reporting Kit,connect
+29,B,LinkedIn,Gaetano DiNardi,linkedin.com,/in/gaetanodinardi,growth consultants,Creative Testing Sprint Kit,connect
+30,B,LinkedIn,Kevin Indig,linkedin.com,/in/kevin-indig,SEO/growth leaders,Weekly Reporting Kit,connect
+31,B,LinkedIn,Ashley Faus,linkedin.com,/in/ashleyfaus,B2B operators,Weekly Reporting Kit,connect
+32,B,LinkedIn,Liam Moroney,linkedin.com,/in/liammoroney,agency owner audience,Creative Testing Sprint Kit,connect
+33,B,LinkedIn,Cody Schneider,linkedin.com,/in/codyschneider,growth agency buyers,Creative Testing Sprint Kit,connect
+34,B,LinkedIn,Tas Bober,linkedin.com,/in/tasbober,PPC consultant network,Creative Testing Sprint Kit,connect
+35,B,LinkedIn,Navah Hopkins,linkedin.com,/in/navahf,paid media operators,Creative Testing Sprint Kit,connect
+36,B,LinkedIn,Aakriti Gupta,linkedin.com,/in/aakritigupta,growth operators,Overnight Launch Kit,connect
+37,B,LinkedIn,Amanda Natividad,linkedin.com,/in/amandanat,content operators,Weekly Reporting Kit,connect
+38,B,LinkedIn,Tom Orbach,linkedin.com,/in/tomorbach,startup operators,Overnight Launch Kit,connect
+39,B,LinkedIn,Gael Breton,linkedin.com,/in/gaelbreton,affiliate audience,Overnight Launch Kit,connect
+40,B,LinkedIn,Mark Webster,linkedin.com,/in/markwebster,affiliate operators,Overnight Launch Kit,connect
+41,B,LinkedIn,Areej AbuAli,linkedin.com,/in/areej-abuali,marketing leaders,Weekly Reporting Kit,connect
+42,B,LinkedIn,Ross Simmonds,linkedin.com,/in/rosssimmonds,content agencies,Weekly Reporting Kit,connect
+43,B,LinkedIn,Matt Navarra,linkedin.com,/in/mattnavarra,social agencies,Creative Testing Sprint Kit,connect
+44,B,LinkedIn,Will Reynolds,linkedin.com,/in/willreynolds,agency operators,Weekly Reporting Kit,connect
+45,B,LinkedIn,Eric Siu,linkedin.com,/in/ericsiu2,marketing agency network,Creative Testing Sprint Kit,connect
+46,B,LinkedIn,Neil Patel,linkedin.com,/in/neilkpatel,broad marketing audience,Weekly Reporting Kit,connect
+47,B,LinkedIn,Sujan Patel,linkedin.com,/in/sujanpatel,agency/growth operators,Overnight Launch Kit,connect
+48,B,LinkedIn,Kieran Flanagan,linkedin.com,/in/kieranflanagan,growth leadership network,Creative Testing Sprint Kit,connect
+49,B,LinkedIn,Meagen Eisenberg,linkedin.com,/in/meageneisenberg,B2B marketing leaders,Weekly Reporting Kit,connect
+50,B,LinkedIn,Sydney Sloan,linkedin.com,/in/sydneysloan,CMO network,Weekly Reporting Kit,connect
+51,A,Community,Indie Hackers,indiehackers.com,https://www.indiehackers.com,high-intent founders buying execution shortcuts,Overnight Launch Kit,post value thread + DM responders
+52,A,Community,r/Entrepreneur,reddit.com,https://www.reddit.com/r/Entrepreneur/,operators seek tactical resources,Overnight Launch Kit,comment helpful + soft CTA
+53,A,Community,r/marketing,reddit.com,https://www.reddit.com/r/marketing/,marketers discuss reporting/testing,Weekly Reporting Kit,value comment + link on request
+54,A,Community,r/PPC,reddit.com,https://www.reddit.com/r/PPC/,paid media pain = testing systems,Creative Testing Sprint Kit,answer threads + DM
+55,A,Community,r/SEO,reddit.com,https://www.reddit.com/r/SEO/,agencies need reporting workflows,Weekly Reporting Kit,comment + CTA
+56,A,Community,r/Affiliatemarketing,reddit.com,https://www.reddit.com/r/Affiliatemarketing/,affiliate operators launching funnels,Overnight Launch Kit,post checklist excerpt
+57,A,Community,r/smallbusiness,reddit.com,https://www.reddit.com/r/smallbusiness/,small teams need practical kits,Weekly Reporting Kit,comment + offer
+58,A,Community,GrowthHackers,growthhackers.com,https://growthhackers.com,growth audience buys frameworks,Creative Testing Sprint Kit,post case-style summary
+59,A,Community,Hacker News Show HN,news.ycombinator.com,https://news.ycombinator.com/show,"startup operators, feedback + demand",Overnight Launch Kit,Show HN launch post
+60,A,Community,Designer News,designernews.co,https://www.designernews.co,product/marketing crossover operators,Weekly Reporting Kit,share practical guide
+61,B,Community,Traffic Think Tank,trafficthinktank.com,https://trafficthinktank.com,advanced SEO/agency operators,Weekly Reporting Kit,community post
+62,B,Community,Superpath Slack,superpath.co,https://www.superpath.co,content operators likely buyers,Weekly Reporting Kit,community intro post
+63,B,Community,Online Geniuses,onlinegeniuses.com,https://onlinegeniuses.com,large marketing slack community,Creative Testing Sprint Kit,channel post
+64,B,Community,Demand Curve Community,demandcurve.com,https://www.demandcurve.com,growth operators,Creative Testing Sprint Kit,post + DM
+65,B,Community,RevGenius,revgenius.com,https://www.revgenius.com,revenue operators,Weekly Reporting Kit,community post
+66,B,Community,Exit Five,exitfive.com,https://www.exitfive.com,B2B marketers,Weekly Reporting Kit,discussion thread
+67,B,Community,Product Marketing Alliance,pmarketer.com,https://www.productmarketingalliance.com,PMM operators,Weekly Reporting Kit,community post
+68,B,Community,No Code Founders,nocodefounders.com,https://www.nocodefounders.com,bootstrappers need launch process,Overnight Launch Kit,resource drop
+69,B,Community,Makerlog,getmakerlog.com,https://getmakerlog.com,makers shipping quickly,Overnight Launch Kit,build log + CTA
+70,B,Community,MicroConf Connect,microconf.com,https://microconf.com/connect,bootstrapped SaaS operators,Overnight Launch Kit,member post
+71,A,Newsletter,Marketing Examples,marketingexamples.com,https://marketingexamples.com/newsletter,audience buys tactical templates,Creative Testing Sprint Kit,sponsorship or featured tool pitch
+72,A,Newsletter,Demand Curve,demandcurve.com,https://www.demandcurve.com/newsletter,growth execution audience,Creative Testing Sprint Kit,tool/resource submission
+73,A,Newsletter,Stacked Marketer,stackedmarketer.com,https://www.stackedmarketer.com,marketer-heavy readers,Weekly Reporting Kit,partner pitch
+74,A,Newsletter,TLDR Marketing,tldr.tech/marketing,https://tldr.tech/marketing,operators seeking quick wins,Overnight Launch Kit,sponsor inquiry
+75,A,Newsletter,Growth Daily,growthdaily.com,https://www.growthdaily.com,growth audience,Creative Testing Sprint Kit,resource mention pitch
+76,A,Newsletter,Geekout by Matt Navarra,geekout.mattnavarra.com,https://geekout.mattnavarra.com,social marketers,Creative Testing Sprint Kit,sponsor outreach
+77,A,Newsletter,The Hustle,thehustle.co,https://thehustle.co,operator-heavy SMB audience,Overnight Launch Kit,sponsor inquiry
+78,A,Newsletter,Not a Newsletter,notanewsletter.co,https://notanewsletter.co,startup ops audience,Overnight Launch Kit,feature request
+79,B,Newsletter,VeryGoodCopy,verygoodcopy.com,https://www.verygoodcopy.com/newsletter,copy/growth operators,Weekly Reporting Kit,resource pitch
+80,B,Newsletter,Growth Unhinged,growthunhinged.com,https://www.growthunhinged.com,PLG growth operators,Creative Testing Sprint Kit,partner outreach
+81,B,Newsletter,Bens Bites,bensbites.co,https://www.bensbites.co,founder/operator subscribers,Overnight Launch Kit,ad inquiry
+82,B,Newsletter,Lenny’s Newsletter,lennysnewsletter.com,https://www.lennysnewsletter.com,product/growth buyers,Weekly Reporting Kit,sponsor waitlist outreach
+83,B,Newsletter,The Daily Carnage,carney.co,https://www.carney.co/the-daily-carnage,marketing teams,Creative Testing Sprint Kit,resource inclusion
+84,B,Newsletter,Social Media Examiner,socialmediaexaminer.com,https://www.socialmediaexaminer.com/newsletter/,agency/social operators,Weekly Reporting Kit,partner pitch
+85,B,Newsletter,Search Engine Journal,searchenginejournal.com,https://www.searchenginejournal.com/newsletter/,SEO + PPC practitioners,Creative Testing Sprint Kit,tool mention pitch
+86,C,Directory,Product Hunt,producthunt.com,https://www.producthunt.com,high-discovery launch surface,Overnight Launch Kit,launch listing + comment follow-up
+87,C,Directory,Gumroad Discover,gumroad.com,https://gumroad.com/discover,digital product buyers,Weekly Reporting Kit,list product + outreach to buyers
+88,C,Directory,Payhip Marketplace,payhip.com,https://payhip.com,template buyers,Overnight Launch Kit,marketplace listing
+89,C,Directory,Lemon Squeezy Discover,lemonsqueezy.com,https://www.lemonsqueezy.com,SaaS/operator buyers,Creative Testing Sprint Kit,listing + intro promo
+90,C,Directory,Acquire.com Resources,acquire.com,https://acquire.com,acqui-hire founders/operators,Overnight Launch Kit,direct founder outreach
+91,C,Podcast/Media,My First Million community,mfm,https://www.mfmpod.com,operator-heavy audience,Overnight Launch Kit,community post
+92,C,Podcast/Media,Indie Bites,indiebites.com,https://www.indiebites.com,indie founders,Overnight Launch Kit,feature pitch
+93,C,Podcast/Media,Marketing Against The Grain,hubspot.com,https://www.hubspot.com/podcasts/marketing-against-the-grain,growth practitioners,Creative Testing Sprint Kit,resource pitch
+94,C,Podcast/Media,State of Demand Gen,refine labs,https://www.refine.com/state-of-demand-gen,B2B growth teams,Weekly Reporting Kit,guest resource pitch
+95,C,Agency,Single Grain,singlegrain.com,https://www.singlegrain.com,agency team can use kits internally,Creative Testing Sprint Kit,cold email ops lead
+96,C,Agency,NoGood,nogood.io,https://nogood.io,growth agency process buyers,Weekly Reporting Kit,cold email growth manager
+97,C,Agency,CXL Agency partners,cxl.com,https://cxl.com,CRO-heavy audience,Creative Testing Sprint Kit,partner outreach
+98,C,Agency,WebFX,webfx.com,https://www.webfx.com,large agency teams need reporting systems,Weekly Reporting Kit,ops contact email
+99,C,Agency,KlientBoost,klientboost.com,https://www.klientboost.com,paid media operators,Creative Testing Sprint Kit,paid media director outreach
+100,C,Agency,Directive Consulting,directiveconsulting.com,https://directiveconsulting.com,B2B performance teams,Weekly Reporting Kit,ops lead outreach
