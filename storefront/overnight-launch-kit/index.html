@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Overnight Launch Kit | Project Ocean</title>
-  <meta name="description" content="Launch your debt leadgen micro-funnel tomorrow morning with practical templates and checklists." />
+  <meta name="description" content="Launch your debt leadgen micro-funnel with practical templates, QA checklists, and day-1 decision controls." />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -12,13 +12,16 @@
     <div class="container">
       <p class="eyebrow">PROJECT OCEAN</p>
       <h1>Overnight Launch Kit</h1>
-      <p class="sub">A practical launch pack for affiliate/debt leadgen operators who need to move fast without guessing.</p>
+      <p class="sub">A practical launch pack for affiliate/debt leadgen operators who need to move fast without sloppy errors.</p>
       <div class="price-box">
         <span class="price">$79</span>
-        <span class="price-note">Intro (first 20 buyers), then $129</span>
+        <span class="price-note">Intro pricing (first 20 buyers), then $129</span>
       </div>
-      <a class="cta" id="buyNow" href="#cta">Get the Kit</a>
-      <p class="micro">Immediate download after payment setup. If checkout is not connected yet, use manual invoice fallback.</p>
+      <div class="cta-row">
+        <a class="cta" id="buyNow" href="#cta">Get the Kit</a>
+        <a class="cta ghost" href="#faq">See FAQ</a>
+      </div>
+      <p class="micro">One-time payment. No subscription. Instant file access after checkout setup.</p>
     </div>
   </header>
 
@@ -28,31 +31,60 @@
       <div class="grid">
         <article class="card">
           <h3>Launch Readiness Scorecard</h3>
-          <p>Score your setup before spending. Find red flags in offer setup, tracking, compliance, and ops.</p>
+          <p>Score your setup before spending. Flag red/yellow gaps in offer setup, tracking, compliance, and ops.</p>
         </article>
         <article class="card">
           <h3>Debt Funnel QA Checklist</h3>
-          <p>Pre-flight checks for claims, consent copy, tracking, routing, and mobile UX.</p>
+          <p>Pre-flight checks for claim safety, consent, tracking, routing, and mobile UX.</p>
         </article>
         <article class="card">
           <h3>Daily Performance Control Sheet</h3>
-          <p>Simple KPI dashboard for spend, CPL, approval rate, cap pacing, and next actions.</p>
+          <p>Simple KPI command sheet for spend, CPL, approval rate, cap pacing, and next action ownership.</p>
         </article>
       </div>
     </section>
 
     <section class="section alt">
-      <div class="container">
-        <h2>Why this sells</h2>
-        <ul class="bullets">
-          <li>Prevents avoidable launch-day mistakes that burn budget</li>
-          <li>Turns scattered execution into one clear operating flow</li>
-          <li>Built for operators, not theory-heavy marketers</li>
-        </ul>
+      <div class="container two-col">
+        <div>
+          <h2>Built for fast, controlled launches</h2>
+          <ul class="bullets">
+            <li>Prevents avoidable launch-day mistakes that burn budget</li>
+            <li>Turns scattered execution into one repeatable operating flow</li>
+            <li>Designed for operators, not theory-heavy marketers</li>
+          </ul>
+        </div>
+        <div class="panel">
+          <h3>Best fit</h3>
+          <ul class="bullets">
+            <li>Solo affiliates and small leadgen teams</li>
+            <li>Operators entering debt offers</li>
+            <li>Founders who need launch discipline quickly</li>
+          </ul>
+          <h3>Not for you if</h3>
+          <ul class="bullets">
+            <li>You expect done-for-you integrations</li>
+            <li>You need legal/compliance advice from this product</li>
+          </ul>
+        </div>
       </div>
     </section>
 
-    <section class="section container">
+    <section class="section container cta-block" id="cta">
+      <h2>Ready to launch cleaner tomorrow?</h2>
+      <p>Start with the intro price while available.</p>
+      <button class="cta" id="primaryCta" type="button">Buy Overnight Launch Kit — $79</button>
+      <div id="manualFallback" class="fallback" hidden>
+        <p><strong>Checkout not connected yet.</strong> Fallback: send your buying email and we will invoice manually.</p>
+        <label for="buyerEmail">Email</label>
+        <input id="buyerEmail" type="email" placeholder="you@company.com" autocomplete="email" />
+        <button id="invoiceBtn" class="cta ghost" type="button">Request manual invoice</button>
+      </div>
+      <p id="ctaMessage" class="micro"></p>
+      <p class="micro legal">For educational/operational use only. You are responsible for legal/compliance review before deployment.</p>
+    </section>
+
+    <section class="section container" id="faq">
       <h2>FAQ</h2>
       <details>
         <summary>Is this for beginners?</summary>
@@ -66,13 +98,6 @@
         <summary>Can I reuse it across campaigns?</summary>
         <p>Yes, for your own internal campaigns. Resale/redistribution is not allowed.</p>
       </details>
-    </section>
-
-    <section class="section container cta-block" id="cta">
-      <h2>Ready to launch cleaner tomorrow?</h2>
-      <p>Start with the intro price while available.</p>
-      <button class="cta" id="primaryCta">Buy Overnight Launch Kit — $79</button>
-      <p id="ctaMessage" class="micro"></p>
     </section>
   </main>
 

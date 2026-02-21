@@ -16,6 +16,12 @@ Affiliate and debt leadgen operators preparing to launch or relaunch a funnel wi
 3. Use `daily-performance-control-sheet.csv` as your day-1/day-2 command center.
 4. Publish the included storefront and drive traffic from your audience/email/social.
 
+## Launch safety gates (do not skip)
+- Do not send paid traffic until checkout URL is tested end-to-end.
+- Keep a manual invoice fallback active if checkout is down.
+- Add legal pages (privacy/terms/disclosures) before launch if not already live.
+- Run one real test purchase flow before announcing publicly.
+
 ## Suggested sales mechanics
 - Intro offer: **$79** for first 20 buyers
 - Standard price after proof: **$129**

@@ -34,3 +34,6 @@ Why:
 
 ## Positioning line
 “Launch your debt leadgen micro-funnel in one morning with fewer blind spots and cleaner decision control.”
+
+## Risk control note
+This product provides operational templates/checklists only. It does not provide legal, financial, or compliance advice; buyer remains responsible for final regulatory review.
