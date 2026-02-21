@@ -1,0 +1,55 @@
+priority_score,channel_type,platform,name_or_handle,url,audience_fit,reach_style,outreach_angle,assumption_note
+98,community,Reddit,r/Affiliatemarketing,https://www.reddit.com/r/Affiliatemarketing/,High,Post + comment,Share launch preflight checklist value and ask for feedback,Assume self-promo allowed only with value-first post
+97,community,Reddit,r/EntrepreneurRideAlong,https://www.reddit.com/r/EntrepreneurRideAlong/,High,Build-in-public post,Document overnight launch workflow and include soft CTA,Assume transparent case-study format gets accepted
+96,community,Reddit,r/juststart,https://www.reddit.com/r/juststart/,Medium,Comment threads,Offer free mini checklist then link full kit,Assume affiliate operators present though mixed audience
+95,community,Reddit,r/PPC,https://www.reddit.com/r/PPC/,Medium,Comment + resource post,Position as QA/control tool for paid traffic launches,Assume moderators remove direct sales posts
+94,community,Reddit,r/marketing,https://www.reddit.com/r/marketing/,Medium,Value post,Publish common launch mistakes and checklist snippet,Assume broad marketing audience lowers direct conversion
+93,community,Reddit,r/smallbusiness,https://www.reddit.com/r/smallbusiness/,Medium,Discussion thread,Angle on avoiding ad budget waste with preflight docs,Assume some leadgen operators in audience
+92,community,Reddit,r/Entrepreneur,https://www.reddit.com/r/Entrepreneur/,Medium,AMA-style post,Share launch SOP and invite DMs for kit,Assume strict moderation on links
+91,community,IndieHackers,Indie Hackers Startups,https://www.indiehackers.com/,High,Build log post,Show practical launch ops pack and lessons learned,Assume audience includes solo operators
+90,community,IndieHackers,Indie Hackers Growth,https://www.indiehackers.com/group/growth,High,Thread + replies,Discuss conversion leaks in first 48h and toolkit,Assume group access required
+89,community,X,#affiliatemarketing hashtag,https://x.com/hashtag/affiliatemarketing,High,Thread + reply farming,Post micro-case + CTA for intro pricing,Assume hashtag traffic quality varies
+88,community,X,#mediabuying hashtag,https://x.com/hashtag/mediabuying,High,Thread,Angle on launch controls for media buyers,Assume stronger fit for paid traffic operators
+87,community,X,#leadgeneration hashtag,https://x.com/hashtag/leadgeneration,High,Thread + DM follow-up,Show checklist utility for leadgen launch hygiene,Assume outbound DMs accepted by target accounts
+86,account,X,@charlesngo,https://x.com/charlesngo,High,Reply chain,Reference campaign process discipline insights,Assume public replies can attract adjacent audience
+85,account,X,@stmforum,https://x.com/stmforum,High,Reply + mention,Angle: operator-first SOP product for affiliates,Assume audience likely high-quality but skeptical
+84,account,X,@afflift,https://x.com/afflift,High,Reply + community mention,Share launch checklist snippets and ask for critique,Assume warm audience for affiliate resources
+83,account,X,@milesbeckler,https://x.com/milesbeckler,Medium,Reply,Discuss checklist-led execution for small operators,Assume audience broader than debt affiliate niche
+82,account,X,@nichepursuits,https://x.com/nichepursuits,Medium,Reply,Position as practical monetization ops toolkit,Assume content-led audience with partial fit
+81,account,X,@NiallOfficial,https://x.com/NiallOfficial,Medium,Reply,Angle on direct response launch speed with controls,Assume variable responsiveness
+80,account,X,@IndieHackers,https://x.com/IndieHackers,Medium,Reply to relevant posts,Show maker story + first buyer push,Assume high noise channel
+79,account,X,@alexhormozi,https://x.com/AlexHormozi,Low,Reply,Use objection-handling angle inspired by value equation,Assume massive audience low direct fit
+78,community,Facebook,Affiliate Marketing Ninjas,https://www.facebook.com/groups/affiliatemarketingninjas/,High,Value post,Post launch checklist framework + invite beta buyers,Assume admin approval needed
+77,community,Facebook,Affiliate SEO Mastermind,https://www.facebook.com/groups/affiliateseomastermind/,Medium,Discussion post,Angle on reducing wasted test days via SOPs,Assume SEO-heavy members still buy ops tools
+76,community,Facebook,AffiliateFix Group,https://www.facebook.com/groups/affiliatefix/,High,Thread + comments,Share launch QA mistakes list and soft pitch,Assume strict no-spam policy
+75,community,Facebook,Media Buyers Hub,https://www.facebook.com/groups/mediabuyershub/,High,Post,Offer performance control sheet as useful free sample,Assume group name variants exist; verify exact URL
+74,community,Facebook,Lead Generation Group,https://www.facebook.com/groups/leadgeneration/,High,Post + DM,Angle on lead quality controls pre-launch,Assume high competition for attention
+73,community,Facebook,ClickBank Affiliates,https://www.facebook.com/groups/clickbankaffiliates/,Medium,Post,Position as transferable launch framework,Assume not debt-specific but affiliate-friendly
+72,community,Facebook,Performance Marketing World,https://www.facebook.com/groups/performancemarketingworld/,High,Resource post,Show practical template stack and use cases,Assume acceptance with educational framing
+71,community,Facebook,CPA Marketing Mastermind,https://www.facebook.com/groups/cpamarketingmastermind/,High,Post + comments,Angle on campaign preflight for CPA offers,Assume URL/group name to verify before posting
+70,community,Facebook,Digital Marketing Questions,https://www.facebook.com/groups/digitalmarketingquestions/,Medium,Comment support,Help members troubleshoot launch gaps then pitch,Assume broad audience lowers conversion
+69,community,Facebook,Ad Buyers & Media Buyers,https://www.facebook.com/groups/adbuyers/,Medium,Post,Angle on daily control sheet for buyer teams,Assume group may be private
+68,community,Forum,AffiliateFix Forum,https://www.affiliatefix.com/,High,Forum thread,Share checklist framework + launch story,Assume signature/link policy may restrict CTA
+67,community,Forum,BlackHatWorld Affiliate Section,https://www.blackhatworld.com/forums/affiliate-marketing.32/,Medium,Thread,Angle on reducing burn from rushed launches,Assume moderation + mixed quality traffic
+66,community,Forum,Warrior Forum PPC,https://www.warriorforum.com/pay-per-click-search-engine-marketing/,Medium,Thread,Offer launch preflight template insight,Assume older forum audience but still active buyers
+65,community,Forum,Stack That Money Forum,https://stmforum.com/,High,Case post,Share process improvements from checklist use,Assume paid community gate
+64,community,Forum,AffLIFT Forum,https://afflift.com/f/,High,Case study thread,Show practical SOP with measured assumptions,Assume strong affiliate operator fit
+63,newsletter,Newsletter,AffLIFT Newsletter,https://afflift.com/blog/,High,Sponsorship/pitch,Pitch toolkit as practical operator resource,Assume paid placement needed
+62,newsletter,Newsletter,Niche Pursuits Newsletter,https://www.nichepursuits.com/,Medium,Sponsor inquiry,Angle on monetization ops toolkit,Assume audience broader than core ICP
+61,newsletter,Newsletter,TL;DR Marketing,https://tldrmarketing.com/,Medium,Sponsor inquiry,Angle: launch checklist for small marketing teams,Assume less affiliate-specific
+60,newsletter,Newsletter,Demand Curve Newsletter,https://www.demandcurve.com/newsletter,Medium,Sponsor inquiry,Angle on tactical launch systems for lean teams,Assume startup-heavy audience
+59,newsletter,Newsletter,Geekout by Matt Navarra,https://www.geekoutnewsletter.com/,Low,Sponsor inquiry,Position as growth operator toolkit,Assume weak niche fit but broad reach
+58,account,X,@affdaily,https://x.com/affdaily,High,Reply + DM,Share launch checklist snippet and intro offer,Assume account active in affiliate conversations
+57,account,X,@Odys_global,https://x.com/odys_global,Medium,Reply,Angle on monetization execution discipline,Assume adjacent audience
+56,account,X,@gaelbreton,https://x.com/gaelbreton,Medium,Reply,Show process-first launch method for affiliates,Assume content audience may convert slower
+55,account,X,@authorityhacker,https://x.com/authorityhacker,Medium,Reply,Angle on systemizing offer launch execution,Assume SEO-heavy audience partial fit
+54,account,X,@iPullRank,https://x.com/ipullrank,Low,Reply,Discuss QA + tracking discipline,Assume less direct buyer intent
+53,account,X,@marketingmax,https://x.com/MarketingMax,Low,Reply,Share operator checklist concepts,Assume generic audience
+52,community,Discord,Traffic Think Tank (community),https://trafficthinktank.com/,Medium,Community post,Angle on launch SOP for paid traffic teams,Assume paid entry and rules apply
+51,community,Discord,Online Geniuses,https://onlinegeniuses.com/,Medium,Channel discussion,Offer launch checklist free excerpt then CTA,Assume self-promo channel restrictions
+50,community,Slack,Measure Slack Community,https://www.measure.chat/,Low,Discussion,Angle on measurement and launch controls,Assume analytics audience may still buy
+49,community,IndieHackers,Indie Hackers Marketing,https://www.indiehackers.com/group/marketing,High,Discussion thread,Share first 10 sales challenge and templates,Assume community accepts transparent selling
+48,community,Reddit,r/SideProject,https://www.reddit.com/r/SideProject/,Medium,Launch post,Pitch as practical digital ops kit,Assume side project audience mixed quality
+47,community,Reddit,r/DigitalMarketing,https://www.reddit.com/r/DigitalMarketing/,High,Value post,Post “launch QA checklist” value-first with CTA,Assume moderation against hard selling
+46,community,Reddit,r/SEO,https://www.reddit.com/r/SEO/,Low,Comment only,Angle on conversion/ops crossover,Assume low immediate fit for debt leadgen
+45,community,Facebook,Affiliate World Forum Group,https://www.facebook.com/groups/affiliateworldforum/,High,Case post,Angle on preventing launch-day budget leak,Assume exact group URL should be verified before use

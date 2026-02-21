@@ -2,6 +2,10 @@
 
 ## Included
 - `PRODUCT.md` — offer overview + target buyer + pricing guidance
+- `OFFER_LADDER.md` — core + upsell + done-with-you pricing and scripts
+- `SALES_PLAYBOOK.md` — 72-hour daily cadence to target first 10 sales
+- `OUTREACH_PROSPECTS.csv` — prioritized channel/account list for distribution
+- `LAUNCH_OUTREACH_TRACKER.csv` — pipeline tracker for outreach execution
 - `assets/hero.svg` — product hero visual
 - `bundle/launch-readiness-scorecard.md`
 - `bundle/debt-lead-funnel-qa-checklist.md`
