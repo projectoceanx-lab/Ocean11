@@ -1,0 +1,7 @@
+Date,Channel,Campaign,Spend,Impressions,Clicks,CTR %,LP Visits,Checkout Starts,Checkout Start Rate %,Purchases,Visitor->Purchase CVR %,Checkout Completion %,Gross Revenue,Refunds,Refund Amount,Net Revenue,CAC,ROAS,Notes
+2026-02-21,X,overnight_launch_week,0,0,0,=IFERROR(F2/E2,0),0,0,=IFERROR(I2/H2,0),0,=IFERROR(K2/H2,0),=IFERROR(K2/I2,0),=K2*79,0,0,=N2-P2,=IFERROR(D2/K2,0),=IFERROR(Q2/D2,0),template row
+2026-02-21,Email,overnight_launch_week,0,0,0,=IFERROR(F3/E3,0),0,0,=IFERROR(I3/H3,0),0,=IFERROR(K3/H3,0),=IFERROR(K3/I3,0),=K3*79,0,0,=N3-P3,=IFERROR(D3/K3,0),=IFERROR(Q3/D3,0),template row
+2026-02-21,DM,overnight_launch_week,0,0,0,=IFERROR(F4/E4,0),0,0,=IFERROR(I4/H4,0),0,=IFERROR(K4/H4,0),=IFERROR(K4/I4,0),=K4*79,0,0,=N4-P4,=IFERROR(D4/K4,0),=IFERROR(Q4/D4,0),template row
+2026-02-21,Affiliate,overnight_launch_week,0,0,0,=IFERROR(F5/E5,0),0,0,=IFERROR(I5/H5,0),0,=IFERROR(K5/H5,0),=IFERROR(K5/I5,0),=K5*79,0,0,=N5-P5,=IFERROR(D5/K5,0),=IFERROR(Q5/D5,0),template row
+2026-02-21,YouTube,overnight_launch_week,0,0,0,=IFERROR(F6/E6,0),0,0,=IFERROR(I6/H6,0),0,=IFERROR(K6/H6,0),=IFERROR(K6/I6,0),=K6*79,0,0,=N6-P6,=IFERROR(D6/K6,0),=IFERROR(Q6/D6,0),template row
+TOTAL,All,overnight_launch_week,=SUM(D2:D6),=SUM(E2:E6),=SUM(F2:F6),=IFERROR(F7/E7,0),=SUM(H2:H6),=SUM(I2:I6),=IFERROR(I7/H7,0),=SUM(K2:K6),=IFERROR(K7/H7,0),=IFERROR(K7/I7,0),=SUM(N2:N6),=SUM(O2:O6),=SUM(P2:P6),=SUM(Q2:Q6),=IFERROR(D7/K7,0),=IFERROR(Q7/D7,0),weekly rollup
