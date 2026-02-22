@@ -1,6 +1,6 @@
 # HEARTBEAT.md — Forge
 
-Every 15 min:
+Every 6 hour:
 1. Check active funnel/CRO tasks and pending spec requests.
 2. Review latest conversion signals (drop-offs, step friction, offer mismatch).
 3. Validate that any proposed test includes success and kill criteria.

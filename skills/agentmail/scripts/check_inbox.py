@@ -31,24 +31,46 @@ except ImportError:
     print("Error: agentmail package not found. Install with: pip install agentmail")
     sys.exit(1)
 
-def format_timestamp(iso_string):
+def format_timestamp(value):
     """Format ISO timestamp for display"""
     try:
-        dt = datetime.fromisoformat(iso_string.replace('Z', '+00:00'))
+        if isinstance(value, datetime):
+            dt = value
+        else:
+            iso_string = str(value)
+            dt = datetime.fromisoformat(iso_string.replace('Z', '+00:00'))
         return dt.strftime('%Y-%m-%d %H:%M:%S')
     except:
-        return iso_string
+        return str(value)
+
+def _to_dict(obj):
+    """Normalize SDK models to dicts"""
+    if isinstance(obj, dict):
+        return obj
+    if hasattr(obj, 'model_dump'):
+        return obj.model_dump()
+    if hasattr(obj, 'dict'):
+        return obj.dict()
+    return vars(obj)
+
 
 def print_message_summary(message):
     """Print a summary of a message"""
-    from_addr = message.get('from', [{}])[0].get('email', 'Unknown')
-    from_name = message.get('from', [{}])[0].get('name', '')
-    subject = message.get('subject', '(no subject)')
-    timestamp = format_timestamp(message.get('timestamp', ''))
-    preview = message.get('preview', message.get('text', ''))[:100]
-    
-    print(f"📧 {message.get('message_id', 'N/A')}")
-    print(f"   From: {from_name} <{from_addr}>" if from_name else f"   From: {from_addr}")
+    m = _to_dict(message)
+    from_field = m.get('from') or m.get('from_') or 'Unknown'
+    if isinstance(from_field, list):
+        from_addr = from_field[0].get('email', 'Unknown') if from_field else 'Unknown'
+        from_name = from_field[0].get('name', '') if from_field else ''
+        from_display = f"{from_name} <{from_addr}>" if from_name else from_addr
+    else:
+        from_display = str(from_field)
+
+    subject = m.get('subject', '(no subject)')
+    timestamp = format_timestamp(str(m.get('timestamp', '')))
+    preview = (m.get('preview') or m.get('text') or '')[:100]
+
+    print(f"📧 {m.get('message_id', 'N/A')}")
+    print(f"   From: {from_display}")
     print(f"   Subject: {subject}")
     print(f"   Time: {timestamp}")
     if preview:

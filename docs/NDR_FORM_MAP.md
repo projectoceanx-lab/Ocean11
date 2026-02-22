@@ -221,6 +221,7 @@ No reCAPTCHA, hCaptcha, or Turnstile detected on either step. This could change 
 
 7. **Test-safe interception (implemented):** `scripts/fdr-ndr-fill.py` now supports `--safe-submit-probe` (NDR-only), which hard-blocks network `POST /details?...` requests before prospect creation while still exercising submit flow.
    - Example: `python3 scripts/fdr-ndr-fill.py --offer ndr --safe-submit-probe --offer-id 4905`
+   - Live proof (2026-02-18 02:07 GST, direct mode): blocked request logged as `POST https://start.nationaldebtrelief.com/details?...` with screenshot `tmp/ndr-safeprobe-1771366020.png`.
 
 ---
 

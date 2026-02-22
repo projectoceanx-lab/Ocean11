@@ -699,6 +699,9 @@ Hidden:  input_127=bachelors, input_128=biweekly, input_129=debt_consolidation, 
   1. at least one blocked request is recorded
   2. flow does not reach `/personalizesavings`
 - Regression protection exists in `tests/test_fdr_ndr_submit_guard.py` (matcher coverage for method/path/host/offer).
+- Runtime verification note (2026-02-18 02:07 GST):
+  - Direct-entry probe succeeded and logged `[SAFE] Blocked live submit: POST .../details`.
+  - For deterministic safety checks, blank proxy env vars in-command if `.env` defaults are unstable: `PROXY_URL='' PROXY_HOST='' PROXY_PORT='' PROXY_USER='' PROXY_PASS=''`.
 
 ### Dual-Track Content Compounding Pattern (2026-02-18, Ocean)
 - A "viral content system" is only reusable for Ocean if it is converted into deterministic ops with compliance gates.

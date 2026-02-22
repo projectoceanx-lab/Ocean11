@@ -379,6 +379,20 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
                 await page.goto(entry_url, wait_until="domcontentloaded", timeout=30000)
                 await page.wait_for_timeout(2000)
 
+            # ── Dismiss cookie banner if present ──
+            try:
+                cookie_btn = page.locator(
+                    "button:has-text('Accept'), button:has-text('Got it'), "
+                    "button:has-text('I agree'), button:has-text('OK'), "
+                    "button:has-text('Close'), [aria-label='close'], "
+                    "#onetrust-accept-btn-handler"
+                ).first
+                await cookie_btn.click(timeout=3000)
+                print("[*] Dismissed cookie/consent banner")
+                await page.wait_for_timeout(500)
+            except Exception:
+                pass  # No cookie banner, continue
+
             # ── STEP 1: Debt Amount ──
             print("[1/3] Debt Amount")
 
@@ -509,18 +523,150 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
                     await browser.close()
                     return success
 
-                content = await page.content()
-                success = (
-                    "thank" in content.lower()
-                    or "results" in current_url.lower()
-                    or "confirmation" in content.lower()
-                    or "details" not in current_url
+                # Strict post-submit completion flow
+                print("[*] Verifying NDR terminal completion (strict mode)...")
+
+                # If we land on personalize savings, complete that step too (address + DOB + submit)
+                if "personalizesavings" in page.url.lower():
+                    print("[*] Reached /personalizesavings — completing final form...")
+
+                    address_value = lead.get("address1") or "123 Main St"
+                    # NDR expects MM-DD-YYYY on this step
+                    dob_value = lead.get("date_of_birth") or "01-01-1985"
+
+                    # Address field (autocomplete first, then manual input fallback)
+                    addr_input = page.locator(
+                        "input[placeholder*='Address' i], input[name*='address' i], input[id*='address' i]"
+                    ).first
+                    await addr_input.wait_for(timeout=15000)
+                    await addr_input.click()
+                    await addr_input.fill(address_value)
+                    await human_delay(0.6, 1.2)
+
+                    # Try selecting autocomplete suggestion if shown
+                    try:
+                        suggestion = page.locator("[role='option'], li:has-text(',')").first
+                        await suggestion.wait_for(timeout=3000)
+                        await suggestion.click()
+                        print("[*] Address suggestion selected")
+                    except Exception:
+                        # If no suggestion, try manual mode if available
+                        try:
+                            manual_btn = page.locator("text=Enter it manually").first
+                            await manual_btn.click(timeout=2000)
+                            await human_delay(0.2, 0.5)
+                        except Exception:
+                            pass
+
+                    # DOB field
+                    dob_input = page.get_by_label("Date of Birth").or_(
+                        page.locator("input[placeholder*='Date of Birth' i], input[name*='dob' i], input[id*='dob' i], input[type='date']").first
+                    )
+                    try:
+                        await dob_input.first.wait_for(timeout=10000)
+                    except Exception:
+                        # Fallback: second visible text/date input on personalize form
+                        dob_input = page.locator("input[type='text'], input[type='date']").nth(1)
+                        await dob_input.wait_for(timeout=10000)
+                    await dob_input.first.click()
+                    # NDR expects MM-DD-YYYY. Convert from YYYY-MM-DD if needed.
+                    normalized_dob = dob_value
+                    if len(dob_value) == 10 and dob_value[4] == "-" and dob_value[7] == "-":
+                        yyyy, mm, dd = dob_value.split("-")
+                        normalized_dob = f"{mm}-{dd}-{yyyy}"
+                    elif "/" in dob_value:
+                        mm, dd, yyyy = dob_value.split("/")
+                        normalized_dob = f"{mm.zfill(2)}-{dd.zfill(2)}-{yyyy}"
+
+                    await dob_input.first.fill(normalized_dob)
+                    await human_delay(0.4, 0.9)
+
+                    # Final submit on personalize step
+                    final_submit = page.locator("button:has-text('Submit'), input[type='submit'], button[type='submit']").first
+                    await final_submit.click(timeout=10000)
+                    print("[*] Submitted personalize savings final step")
+
+                    # Some NDR variants show an extra "Confirm Your Details" step
+                    try:
+                        confirm_btn = page.locator("button:has-text('Confirm'), text=Confirm").first
+                        await confirm_btn.wait_for(timeout=5000)
+                        await confirm_btn.click(timeout=5000)
+                        print("[*] Clicked final 'Confirm' on details modal")
+                    except Exception:
+                        pass
+
+                    # Wait for terminal transition away from personalize form
+                    try:
+                        await page.wait_for_function(
+                            """() => {
+                                const u = window.location.href.toLowerCase();
+                                const t = (document.body?.innerText || '').toLowerCase();
+                                const terminalCues = [
+                                    'thank you',
+                                    'we received your application',
+                                    'application received',
+                                    'someone from our team will get in touch',
+                                    'we will contact you',
+                                    'next step',
+                                    'check your options',
+                                    'results'
+                                ];
+                                const terminalText = terminalCues.some(c => t.includes(c));
+                                const stillForm = t.includes('personalize your savings') && t.includes('address') && t.includes('date of birth');
+                                return (terminalText || u.includes('results') || u.includes('thank')) && !stillForm;
+                            }""",
+                            timeout=60000,
+                        )
+                    except Exception:
+                        pass
+
+                current_url = page.url
+                body_text = (await page.locator("body").inner_text()).lower()
+                content = (await page.content()).lower()
+
+                # HARD success checks (no generic disclaimer matches)
+                terminal_markers = [
+                    "we received your application",
+                    "application received",
+                    "someone from our team will get in touch",
+                    "we will contact you",
+                    "your next step",
+                    "check your options",
+                    "results",
+                ]
+                marker = next((m for m in terminal_markers if m in body_text or m in content), None)
+
+                still_on_personalize_form = (
+                    "personalize your savings" in body_text
+                    and "address" in body_text
+                    and "date of birth" in body_text
                 )
-                print(f"[{'✓' if success else '?'}] NDR submission {'successful' if success else 'unclear result'}")
-                ss_path = PROJECT_ROOT / "tmp" / f"ndr-submit-{int(time.time())}.png"
+
+                success = bool(
+                    (marker or "results" in current_url.lower() or "thank" in current_url.lower())
+                    and not still_on_personalize_form
+                )
+
+                print(f"[*] Final URL: {current_url}")
+                print(f"[*] Still on personalize form: {still_on_personalize_form}")
+                if marker:
+                    print(f"[*] Terminal marker detected: '{marker}'")
+
+                print(f"[{'✓' if success else '✗'}] NDR terminal completion {'confirmed' if success else 'NOT confirmed'}")
+                ts = int(time.time())
+                ss_path = PROJECT_ROOT / "tmp" / f"ndr-submit-{ts}.png"
                 ss_path.parent.mkdir(exist_ok=True)
                 await page.screenshot(path=str(ss_path), full_page=True)
                 print(f"  Screenshot: {ss_path}")
+
+                excerpt_path = PROJECT_ROOT / "tmp" / f"ndr-submit-{ts}.txt"
+                with open(excerpt_path, "w") as f:
+                    f.write(f"URL: {current_url}\n")
+                    f.write(f"Terminal marker: {marker or 'NONE'}\n")
+                    f.write(f"Still on personalize form: {still_on_personalize_form}\n\n")
+                    f.write((await page.locator("body").inner_text())[:8000])
+                print(f"  Confirmation text: {excerpt_path}")
+
                 if offer_id:
                     log_submission(offer_id, lead, aff_click_id, success=success, dry_run=False)
                 await browser.close()
@@ -534,78 +680,92 @@ async def fill_form(lead: dict, offer: str, dry_run: bool, offer_id: int | None,
                 print(f"  FDR slider: setting to ${debt_amount:,}")
 
                 # Try to find and interact with slider input
-                try:
-                    slider_input = page.locator("input[type='range']").first
-                    await slider_input.wait_for(timeout=8000)
-                    await slider_input.fill(str(debt_amount))
-                    await slider_input.dispatch_event("input")
-                    await slider_input.dispatch_event("change")
-                except Exception:
-                    # Fallback: use JS to set slider value
-                    await page.evaluate(f"""(() => {{
-                        const input = document.querySelector('input[type="range"]');
-                        if (input) {{
-                            const nativeSetter = Object.getOwnPropertyDescriptor(
-                                HTMLInputElement.prototype, 'value').set;
-                            nativeSetter.call(input, '{debt_amount}');
-                            input.dispatchEvent(new Event('input', {{bubbles: true}}));
-                            input.dispatchEvent(new Event('change', {{bubbles: true}}));
-                        }}
-                    }})()""")
+                # FDR slider is hidden behind custom UI — use JS to set value
+                await page.evaluate(f"""(() => {{
+                    const input = document.querySelector('input[type="range"]');
+                    if (input) {{
+                        const nativeSetter = Object.getOwnPropertyDescriptor(
+                            HTMLInputElement.prototype, 'value').set;
+                        nativeSetter.call(input, '{debt_amount}');
+                        input.dispatchEvent(new Event('input', {{bubbles: true}}));
+                        input.dispatchEvent(new Event('change', {{bubbles: true}}));
+                    }}
+                }})()""")
 
                 await human_delay()
 
-                # Click Continue
-                continue_btn = page.get_by_role("button", name="Continue").or_(
-                    page.get_by_role("link", name="Continue")
+                # Click Continue — FDR uses a link that redirects to apply.freedomdebtrelief.com
+                continue_btn = page.get_by_role("link", name="Continue").or_(
+                    page.get_by_role("button", name="Continue")
                 ).or_(
-                    page.locator("button:has-text('Continue')")
+                    page.locator("a:has-text('Continue'), button:has-text('Continue')")
                 )
                 await continue_btn.first.click(timeout=10000)
                 print("  → Moving to state selection...")
-                await page.wait_for_url("**/home/states**", timeout=30000)
+                # Wait for state page — could be on apply.freedomdebtrelief.com or same domain
+                try:
+                    await page.wait_for_url("**/home/states**", timeout=15000)
+                except Exception:
+                    # Fallback: wait for any page with state selection
+                    await page.wait_for_url("**states**", timeout=15000)
                 await page.wait_for_timeout(2000)
 
             # ── STEP 2: State Selection ──
             print(f"[2/3] State: {lead['state']} ({state_name})")
 
-            # Custom MUI combobox — searchable. Click to open, type state name, select.
-            # Look for the combobox input
-            combo_input = page.locator(
-                "input[role='combobox'], "
-                "input[aria-autocomplete='list'], "
-                "input[placeholder*='state' i], "
-                "input[placeholder*='State' i], "
-                "input[aria-label*='state' i]"
-            ).first
+            # State selection — handle combobox (FDR apply page) or native <select>
+            # State selection — use get_by_role which handles aria roles properly
+            # FDR apply page uses a combobox labeled "State"
+            combo = page.get_by_role("combobox", name="State").or_(
+                page.get_by_role("combobox").first
+            )
+            select_el = page.locator("select").first
 
             try:
-                await combo_input.wait_for(timeout=10000)
-            except Exception:
-                # Broader search: any visible text input on the states page
-                combo_input = page.locator("input[type='text']").first
-                await combo_input.wait_for(timeout=10000)
+                await combo.first.wait_for(timeout=8000)
+                await combo.first.click()
+                await human_delay(0.3, 0.6)
 
-            # Clear existing value and type state name
-            await combo_input.click()
-            await human_delay(0.3, 0.6)
-            await combo_input.fill("")
-            await combo_input.type(state_name, delay=50)
-            await human_delay(0.5, 1.0)
+                # Type state name to filter the dropdown
+                await combo.first.fill(state_name)
+                await human_delay(0.5, 1.0)
 
-            # Wait for dropdown option and click it
-            option = page.locator(
-                f"li[role='option']:has-text('{state_name}'), "
-                f"[role='option']:has-text('{state_name}'), "
-                f".MuiAutocomplete-option:has-text('{state_name}')"
-            ).first
-            try:
-                await option.wait_for(timeout=5000)
-                await option.click()
-            except Exception:
-                # Fallback: press Enter to select first match
-                await page.keyboard.press("ArrowDown")
-                await page.keyboard.press("Enter")
+                # Click the matching option
+                option = page.get_by_role("option", name=state_name).or_(
+                    page.locator(f"li:has-text('{state_name}')")
+                ).first
+                try:
+                    await option.wait_for(timeout=5000)
+                    await option.click()
+                except Exception:
+                    # If fill didn't filter, try typing character by character
+                    await combo.first.fill("")
+                    await combo.first.type(state_name, delay=random.randint(40, 80))
+                    await human_delay(0.5, 1.0)
+                    await page.keyboard.press("ArrowDown")
+                    await human_delay(0.1, 0.3)
+                    await page.keyboard.press("Enter")
+                print(f"  Selected via combobox: {state_name}")
+            except Exception as e:
+                print(f"  Combobox failed ({e}), trying <select>...")
+                # Fallback: native <select> dropdown
+                try:
+                    await select_el.wait_for(timeout=5000)
+                    try:
+                        await select_el.select_option(label=state_name)
+                    except Exception:
+                        await select_el.select_option(value=lead["state"])
+                    print(f"  Selected via <select> dropdown: {state_name}")
+                except Exception:
+                    # Last resort: click any input and type
+                    any_input = page.locator("input").first
+                    await any_input.wait_for(timeout=5000)
+                    await any_input.click()
+                    await any_input.type(state_name, delay=50)
+                    await page.keyboard.press("ArrowDown")
+                    await page.keyboard.press("Enter")
+                    print(f"  Selected via fallback input: {state_name}")
+
             await human_delay()
 
             # Click Next

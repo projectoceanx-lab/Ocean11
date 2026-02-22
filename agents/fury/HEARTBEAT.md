@@ -1,10 +1,6 @@
 # HEARTBEAT.md — Fury
 
-Every 30 min:
-1. Review agent reports and standup summaries
-2. Check P&L — revenue vs spend trending
-3. Identify blockers across the pipeline
-4. Check buyer relationship status and acceptance rates
+
 
 ## Memory Vault
 5. **Recall** — Before making decisions, search vault for context:

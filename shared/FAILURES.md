@@ -17,6 +17,13 @@ _Every failure gets logged here with root cause and lesson. If we make the same 
 
 ## Failures
 
+### 2026-02-18 — Ocean 🌊 — NDR Safe-Probe Verification Failed on Everflow+Proxy Path
+**What happened:** Two live verification attempts (`--safe-submit-probe --offer-id 4905`) failed before guard assertion due to route instability: one timed out on `Page.goto` to NDR after Everflow redirect; another hit a page variant where expected debt dropdown selector was not visible in time.
+**Root cause:** Combined Everflow redirect chain + proxy defaults from `.env` introduced non-deterministic page state for this verification window.
+**Impact:** ~10-15 minutes delay before runtime safety proof was captured.
+**Lesson:** Validate safety guards in a deterministic harness first (direct destination, controlled env), then layer attribution/proxy complexity as a separate check.
+**Prevention:** Use direct-entry probe command with proxy env vars blanked for guard verification, then run Everflow/proxy path checks as secondary reliability testing.
+
 ### 2026-02-18 — Ocean 🌊 — NDR Test Run Created Prospect (Interception Bypass)
 **What happened:** During a test intended to validate Step 2 submit behavior without burning a lead, the NDR flow executed a real `POST /details?...` and redirected to `/personalizesavings` with a generated `prospectId`.
 **Root cause:** We used a DOM `submit` event interceptor, but NDR’s JS submit path performs logic that bypassed that control. We blocked at the wrong layer.

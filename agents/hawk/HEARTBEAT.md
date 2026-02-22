@@ -1,6 +1,6 @@
 # HEARTBEAT.md — Hawk
 
-Every 30 min:
+Every 6 hours:
 1. Pull campaign metrics (spend, leads, CPL) from active sources
 2. Identify winners and losers
 3. Recommend budget shifts if data supports it

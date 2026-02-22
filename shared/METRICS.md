@@ -21,12 +21,12 @@ _Protocol activated: 2026-02-18 01:41 GST_
 | Metric | Today | Yesterday | 7-Day Avg | Target |
 |---|---|---|---|---|
 | Ack SLA Pass Rate (<=5m) | N/A (ack timestamp not instrumented) | — | — | >=95% |
-| First Artifact SLA Pass Rate (<=30m) | 100% (4/4) | — | — | >=90% |
-| Evidence-Complete Closure Rate | 100% (4/4) | — | — | >=90% |
-| Reopen Rate | 0% (0/4) | — | — | <=10% |
+| First Artifact SLA Pass Rate (<=30m) | 100% (6/6) | — | — | >=90% |
+| Evidence-Complete Closure Rate | 100% (6/6) | — | — | >=90% |
+| Reopen Rate | 0% (0/6) | — | — | <=10% |
 | False-Complete Incidents | 0 | — | — | 0 |
 
-_Execution KPI source: `shared/ACTION_LOG.md` entries `OCN-PROT-001`, `OCN-NDR-001`, `OCN-SLA-001`, and `OCN-NDR-002`, checked 2026-02-18 01:58 GST._
+_Execution KPI source: `shared/ACTION_LOG.md` entries `OCN-PROT-001`, `OCN-NDR-001`, `OCN-SLA-001`, `OCN-NDR-002`, `OCN-EMAIL-001`, and `OCN-NDR-003`, checked 2026-02-18 02:07 GST._
 
 ## By Source
 | Source | Leads | CPL | Quality Avg | Status |
@@ -57,4 +57,4 @@ _Last checked: 2026-02-14 23:53 GMT+4 by Watchtower_
 | Infrastructure status | Pre-launch — Supabase, Ringba, FastDebt all pending |
 
 ## Alerts
-<!-- Watchtower flags anomalies here -->
+- 2026-02-19 11:30 GST: Daily all-agent sync run confirmed **no numeric movement** (acquired=0, delivered=0, revenue=$0, spend=$0). Execution anomaly persists: queued task packets are past first-artifact SLA without new receipts.

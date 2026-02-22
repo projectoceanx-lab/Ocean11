@@ -36,6 +36,25 @@ _Agents log intent before acting and outcome after. Fury reviews and scores._
 <!-- Agents write entries below. Newest first. -->
 <!-- Archived weekly by Fury. -->
 
+### 2026-02-18 02:07 GST — Ocean 🌊 — OCN-NDR-003
+**Intent:** Execute a live runtime proof of the new NDR safe-submit guard to confirm it blocks real submit traffic in-browser (not just in unit tests).
+**Expected outcome:** `--safe-submit-probe` run records a blocked `POST /details` request and does not proceed to `/personalizesavings`.
+**Risk:** External form variance (tracking redirects, proxy path, dynamic rendering) could prevent reaching the submit boundary and invalidate the verification attempt.
+**Precedent:** `OCN-NDR-002` delivered code + tests, but runtime validation was still pending.
+**Task packet ref:** `TP-20260218-012` in `shared/CONTEXT.md`.
+---
+**Actual outcome:** Live probe succeeded using direct NDR entry with proxy env vars blanked: submit click triggered and was blocked at network layer (`POST https://start.nationaldebtrelief.com/details?...`), and script returned success with screenshot artifact `tmp/ndr-safeprobe-1771366020.png`.
+**Delta:** Everflow+proxy path remained noisy for this verification run; direct entry provided deterministic guard proof. Attribution tracking was intentionally bypassed for safety validation only.
+**Self-score:** 5/5
+**Execution Receipt:**
+- started_at: 2026-02-18 02:04 GST
+- first_artifact_at: 2026-02-18 02:05 GST
+- artifact_type: live guarded browser run output + blocked-request evidence + screenshot
+- completion_evidence: command output includes `[SAFE] Blocked live submit: POST .../details` and `[✓] Safe probe succeeded`; screenshot at `tmp/ndr-safeprobe-1771366020.png`
+- verifier: terminal output from `python3 scripts/fdr-ndr-fill.py --offer ndr --safe-submit-probe` (direct mode)
+- status: done
+---
+
 ### 2026-02-18 02:01 GST — Ocean 🌊 — OCN-EMAIL-001
 **Intent:** Add non-fixed HTML email templates so campaigns can swap copy blocks, CTAs, and optional sections without editing template structure each time.
 **Expected outcome:** Dynamic v2 HTML templates plus a renderer utility that supports payload-driven variable injection and conditional blocks.
